@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_bookstore2">
+
+   <!-- <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_bookstore"/>-->
+
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:id="@+id/bv2"
+        android:background="#e4e4e4"
+        app:menu="@menu/menu2"
+        app:labelVisibilityMode="labeled"
+        />
+    <com.lianggao.whut.androidebook.Adapter.NoScrollViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/vp2"
+        />
+    <!--app:itemIconTint="@drawable/bottom_navigation_selector"-->
+    <!--app:itemTextColor="@drawable/bottom_navigation_selector"-->
+
+</LinearLayout>
+
+
