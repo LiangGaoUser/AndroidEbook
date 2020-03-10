@@ -185,12 +185,8 @@ public class FlipperLayout extends ViewGroup {
 
                 //是否停止滑动判断
                 //当暂停时如果没有上一页或者下一页时停止
-//                if (mMode == MODE_NONE
-//                        && ((mDirection == MOVE_TO_LEFT && mListener.whetherHasNextPage()) || (mDirection == MOVE_TO_RIGHT && mListener
-//                        .whetherHasPreviousPage()))) {
-//                    mMode = MODE_MOVE;
-//                }
-
+             /*  if (mMode == MODE_NONE && ((mDirection == MOVE_TO_LEFT && mListener.whetherHasNextPage()) || (mDirection == MOVE_TO_RIGHT && mListener.whetherHasPreviousPage()))) {
+                    mMode = MODE_MOVE;         }*/
                 if (mMode == MODE_NONE
                         && ((mDirection == MOVE_TO_LEFT && mListener.whetherHasNextPage()) || (mDirection == MOVE_TO_RIGHT
                         && index > 1))) {

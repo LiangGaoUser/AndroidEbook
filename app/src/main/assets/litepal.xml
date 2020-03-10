@@ -7,7 +7,7 @@
     <list> <!--用于设定数据库的映射关系-->
         <mapping class="com.lianggao.whut.androidebook.Model.MyPage"/>
     </list>
-    <list>
+    <!--<list>
         <mapping class="com.lianggao.whut.androidebook.Model.Student"/>
-    </list>
+    </list>-->
 </litepal>

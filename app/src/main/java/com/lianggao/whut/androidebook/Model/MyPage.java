@@ -1,12 +1,5 @@
 package com.lianggao.whut.androidebook.Model;
-
-
-
 import org.litepal.crud.DataSupport;
-/**
- * Author: duanlei
- * Date: 2015-12-10
- */
 public class MyPage extends DataSupport {
 
 

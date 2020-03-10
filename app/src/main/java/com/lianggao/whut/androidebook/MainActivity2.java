@@ -5,10 +5,12 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.Model.MyPage;
 import com.lianggao.whut.androidebook.Utils.CharsetDetector;
@@ -139,7 +141,7 @@ public class MainActivity2 extends Activity implements OnClickListener, TouchLis
 
     @Override
     public void onClick(View v) {
-
+        Toast.makeText(MainActivity2.this,"触摸",Toast.LENGTH_LONG).show();
     }
 
     @Override

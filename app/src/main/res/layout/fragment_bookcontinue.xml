@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_bookcontinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="fragment_bookcontinue"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        />
+    <Button
+        android:id="@+id/beginReadBtn"
+        android:layout_below="@+id/fragment_bookcontinue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始阅读"/>
+</RelativeLayout>
+
+
+
+
+
