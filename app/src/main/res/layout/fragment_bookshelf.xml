@@ -1,8 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_bookshelf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="fragment_bookshelf"
-        android:textSize="20dp"/>
+        android:textSize="20dp"/>-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <TextView
+        android:id="@+id/id_tv_book_number"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:text="共0本书"/>
+
+    <TextView
+        android:id="@+id/id_tv_book_menu"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/id_tv_book_number"
+        android:gravity="right"
+        android:hint="@string/bookshelf_menu"
+        android:textSize="20sp"
+        />
+    <TextView
+        android:id="@+id/id_tv_book_search"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:hint="@string/bookshelf_search"
+        android:textSize="20sp"
+        android:layout_toLeftOf="@+id/id_tv_book_menu"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        />
+    <com.lianggao.whut.androidebook.View.BookShelfGridView
+        android:id="@+id/BookShelfGridView"
+        android:layout_below="@id/id_tv_book_number"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="20dp"
+
+
+        />
+
+    <SlidingDrawer
+        android:id="@+id/sliding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:content="@+id/allApps"
+        android:handle="@+id/imageViewIcon"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/imageViewIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本地"
+            android:textSize="18dp" />
+
+        <GridView
+            android:id="@+id/allApps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_bookshelf_everybook"
+            android:columnWidth="60dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:padding="10dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" />
+
+
+    </SlidingDrawer>
+
+
+
+
+
+
+
+
+</RelativeLayout>
+
+

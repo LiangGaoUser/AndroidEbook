@@ -1,8 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_bookstore_book"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="match_parent"
+     android:layout_width="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="fragment_bookstore_book"
-        android:textSize="20dp"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/localConvenientBanner"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:autoTurningTime="3000"
+            app:canLoop="true"/>
+
+        <ImageView
+            android:id="@+id/id_iv_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorLiteGreen"
+            android:layout_below="@+id/localConvenientBanner"
+            />
+        <TextView
+            android:id="@+id/id_tv_empty2"
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/id_iv_divider2"
+            android:background="@color/colorLiteGreen">
+
+        </TextView>
+        <TextView
+            android:id="@+id/id_tv_book_hot"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/id_tv_empty2"
+            android:gravity="left|end"
+            android:background="@color/colorWhite"
+            android:drawableRight="@drawable/img_bookstore_book_recommend"
+            android:padding="2dp"
+            android:text="每日热门"></TextView>
+
+        <ScrollView
+            android:id="@+id/id_sv_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/id_tv_book_hot">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_book_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+            </android.support.v7.widget.RecyclerView>
+        </ScrollView>
+
+        <ImageView
+            android:id="@+id/id_iv_divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorLiteGreen"
+            android:layout_below="@+id/id_sv_recyclerview"
+           />
+        <TextView
+            android:id="@+id/id_tv_empty"
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/id_iv_divider"
+            android:background="@color/colorLiteGreen">
+
+        </TextView>
+        <TextView
+            android:id="@+id/id_tv_book_keyword"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/id_tv_empty"
+            android:gravity="left|end"
+            android:background="@color/colorWhite"
+            android:drawableRight="@drawable/img_bookstore_book_recommend"
+            android:padding="2dp"
+            android:text="今日推荐"></TextView>
+
+        <com.lianggao.whut.androidebook.View.BookGridView
+            android:id="@+id/id_book_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@+id/id_tv_book_keyword"
+            android:background="@drawable/ic_book_recycler_background"
+            android:columnWidth="90dp"
+            android:horizontalSpacing="20dp"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </RelativeLayout>
+    </ScrollView>

@@ -100,29 +100,20 @@ public class FragmentBookStore extends ViewPageFragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.item_tab12:
+                    case R.id.item_tab_book:
                         mVp.setCurrentItem(0);
                         number=0;
                         return true;
 
-                    case R.id.item_tab22:
+                    case R.id.item_tab_kind:
                         mVp.setCurrentItem(1);
                         //initView2();
                         number=1;
                         return true;
 
-                    case R.id.item_tab32:
+                    case R.id.item_tab_list:
                         mVp.setCurrentItem(2);
                         number=2;
-                        return true;
-
-                    case R.id.item_tab42:
-                        mVp.setCurrentItem(3);
-                        number=3;
-                        return true;
-                    case R.id.item_tab52:
-                        number=4;
-                        mVp.setCurrentItem(4);
                         return true;
                 }
                 return false;
@@ -163,11 +154,14 @@ public class FragmentBookStore extends ViewPageFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         BottomAdapter adapter = new BottomAdapter(getFragmentManager());
-        adapter.addFragment(new FragmentBookShelf());//0
+        /*adapter.addFragment(new FragmentBookShelf());//0
         adapter.addFragment(new FragmentBookStoreBook());//1
         adapter.addFragment(new FragmentContinue());//2
         adapter.addFragment(new FragmentClassTable());//3
-        adapter.addFragment(new FragmentSelfInfo());//4
+        adapter.addFragment(new FragmentSelfInfo());//4*/
+        adapter.addFragment(new FragmentBookStoreBook());
+        adapter.addFragment(new FragmentBookStoreBook());
+        adapter.addFragment(new FragmentBookStoreBook());
         viewPager.setAdapter(adapter);
     }
 }

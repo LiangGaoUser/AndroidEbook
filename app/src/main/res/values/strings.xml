@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidEbook</string>
+    <!--定义使用的icon字体-->
+    <string name="bookshelf_etc">&#xe603;</string>
+    <string name="bookshelf_search">&#xe635;</string>
+    <string name="bookshelf_menu">&#xe600;</string>
 </resources>

@@ -2,25 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_tab12"
+        android:id="@+id/item_tab_book"
         android:icon="@drawable/icon_tab_bookshelf_normal"
-        android:title="书架" />
+        android:title="图书" />
     <item
-        android:id="@+id/item_tab22"
+        android:id="@+id/item_tab_kind"
         android:icon="@drawable/icon_tab_bookstore_normal"
-        android:title="书城"
+        android:title="分类"
         />
     <item
-        android:id="@+id/item_tab32"
+        android:id="@+id/item_tab_list"
         android:icon="@drawable/icon_tab_bookcontinue_normal"
-        android:title="继续" />
-    <item
-        android:id="@+id/item_tab42"
-        android:icon="@drawable/icon_tab_me_normal"
-        android:title="课表" />
-    <item
-        android:id="@+id/item_tab52"
-        android:icon="@drawable/icon_tab_me_normal"
-        android:title="我的" />
+        android:title="书单" />
+
 
 </menu>

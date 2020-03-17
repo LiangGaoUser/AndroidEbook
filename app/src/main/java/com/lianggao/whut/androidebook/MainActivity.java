@@ -25,7 +25,6 @@ import com.lianggao.whut.androidebook.Fragment.FragmentContinue;
 import com.lianggao.whut.androidebook.Fragment.FragmentClassTable;
 import com.lianggao.whut.androidebook.Fragment.FragmentSelfInfo;
 
-
 public class MainActivity extends FragmentActivity {
     private BottomNavigationView mBv;
     private ViewPager mVp;;
@@ -38,6 +37,9 @@ public class MainActivity extends FragmentActivity {
         initView();
 
     }
+
+
+
     private void initView() {
         Log.i("MainActivity","initView");
         mBv = (BottomNavigationView) findViewById(R.id.bv);
