@@ -1,0 +1,30 @@
+{
+  "id": "1684801",
+  "name": "电子书",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8632516",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "10869511",
+      "name": "菜单",
+      "font_class": "menu",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "5508057",
+      "name": "三点省略号",
+      "font_class": "Group",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    }
+  ]
+}
