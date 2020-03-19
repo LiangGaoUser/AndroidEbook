@@ -25,6 +25,7 @@
         <activity android:name=".Activity_ViewGroup"></activity>
         <activity android:name=".Activity_RecyclerView"></activity>
         <activity android:name=".MainActivity3"></activity>
+        <activity android:name=".Activity_SearchView"></activity>
     </application>
 
 </manifest>

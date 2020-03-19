@@ -6,7 +6,7 @@ android {
     sourceSets.main.jniLibs.srcDirs = ['libs']
     defaultConfig {
         applicationId "com.lianggao.whut.androidebook"
-        minSdkVersion 15
+        minSdkVersion 19//15改成19因为，search用到的框架至少要19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -35,6 +35,10 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    //tab
+    implementation 'it.neokree:MaterialTabs:0.11'
+    //search
+    implementation 'com.carson_ho:SearchLayout:1.0.1'
 
 
     testImplementation 'junit:junit:4.12'

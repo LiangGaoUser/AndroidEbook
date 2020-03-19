@@ -9,10 +9,19 @@
         android:layout_width="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         >
+        <TextView
+            android:id="@+id/id_tv_search"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:hint="@string/bookshelf_search"
+            android:textSize="20sp"
+            android:background="@drawable/shape_book_search"
+            />
         <com.bigkoo.convenientbanner.ConvenientBanner
             android:id="@+id/localConvenientBanner"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:layout_below="@+id/id_tv_search"
             app:autoTurningTime="3000"
             app:canLoop="true"/>
 

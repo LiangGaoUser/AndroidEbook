@@ -1,5 +1,7 @@
 package com.lianggao.whut.androidebook.Fragment;
 
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.lianggao.whut.androidebook.Activity_SearchView;
 import com.lianggao.whut.androidebook.Adapter.BookGridViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.R;
@@ -45,6 +48,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private GridView gridView;
     private BookGridViewAdapter bookGridViewAdapter;
 
+    private TextView tv_search;//搜索框
 
 
     //顶部广告栏控件，加载本地图片
@@ -79,6 +83,18 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
 
             localConvenientBanner = (ConvenientBanner)rootView.findViewById(R.id.localConvenientBanner);
+
+            tv_search=(TextView)rootView.findViewById(R.id.id_tv_search);
+            Typeface iconfont= Typeface.createFromAsset(this.getActivity().getAssets(), "iconfont/iconfont.ttf");
+            tv_search.setTypeface(iconfont);
+            tv_search.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(getActivity(), Activity_SearchView.class);
+                    startActivity(intent);
+
+                }
+            });
             init();
 
 

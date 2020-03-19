@@ -1,3 +1,4 @@
+/*
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.os.Bundle;
@@ -38,7 +39,8 @@ public class FragmentBookStore extends ViewPageFragment {
         Log.i("MainActivityBook","onCreateView");
         rootView=inflater.inflate(R.layout.fragment_bookstore,container,false);
 
-        /*Button button = (Button)rootView.findViewById(R.id.button_bookstore);
+        */
+/*Button button = (Button)rootView.findViewById(R.id.button_bookstore);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,13 +48,15 @@ public class FragmentBookStore extends ViewPageFragment {
                 Toast.makeText(getContext(),"点击了按钮",Toast.LENGTH_LONG).show();
 
             }
-        });*/
+        });*//*
+
         initView();
         return rootView;
     }
 
 
-   /* @Override
+   */
+/* @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if(isVisibleToUser){
             //Log.i("MainActivityBook","MainActivity出现时这里可以加载数据");
@@ -60,7 +64,8 @@ public class FragmentBookStore extends ViewPageFragment {
             //Log.i("MainActivityBook","退出时执行操作");
         }
         super.setUserVisibleHint(isVisibleToUser);
-    }*/
+    }*//*
+
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
@@ -138,12 +143,14 @@ public class FragmentBookStore extends ViewPageFragment {
             }
         });
         //禁止ViewPager滑动
-       /* mVp.setOnTouchListener(new View.OnTouchListener() {
+       */
+/* mVp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
             }
-        });*/
+        });*//*
+
 
 
 
@@ -154,13 +161,138 @@ public class FragmentBookStore extends ViewPageFragment {
 
     private void setupViewPager(ViewPager viewPager) {
         BottomAdapter adapter = new BottomAdapter(getFragmentManager());
-        /*adapter.addFragment(new FragmentBookShelf());//0
+        */
+/*adapter.addFragment(new FragmentBookShelf());//0
         adapter.addFragment(new FragmentBookStoreBook());//1
         adapter.addFragment(new FragmentContinue());//2
         adapter.addFragment(new FragmentClassTable());//3
-        adapter.addFragment(new FragmentSelfInfo());//4*/
+        adapter.addFragment(new FragmentSelfInfo());//4*//*
+
         adapter.addFragment(new FragmentBookStoreBook());
         adapter.addFragment(new FragmentBookStoreBook());
+        adapter.addFragment(new FragmentBookStoreBook());
+        viewPager.setAdapter(adapter);
+    }
+}
+*/
+package com.lianggao.whut.androidebook.Fragment;
+
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.lianggao.whut.androidebook.Adapter.BottomAdapter;
+import com.lianggao.whut.androidebook.Adapter.NoScrollViewPager;
+import com.lianggao.whut.androidebook.R;
+
+import java.util.List;
+
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
+public class FragmentBookStore extends ViewPageFragment implements MaterialTabListener {
+
+    private BottomNavigationView mBv;
+    private ViewPager pager;
+    private static int number = 0;
+
+    private MaterialTabHost tabHost;
+    private BottomAdapter adapter;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
+            return rootView;
+        }
+        Log.i("MainActivityBook", "onCreateView");
+        rootView = inflater.inflate(R.layout.fragment_bookstore, container, false);
+        initView();
+        return rootView;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void initView() {
+        Log.i("MainActivityBook", "initView");
+        pager = (ViewPager) rootView.findViewById(R.id.vp2);
+        tabHost = (MaterialTabHost) rootView.findViewById(R.id.bv2);
+        tabHost.setPrimaryColor(R.color.colorGray);
+        tabHost.setTextColor(Color.WHITE);
+        adapter = new BottomAdapter(getFragmentManager());
+        setupViewPager(pager);
+        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                // when user do a swipe the selected tab change
+                tabHost.setSelectedNavigationItem(position);
+            }
+
+        });
+        tabHost.addTab(
+                tabHost.newTab()
+                        .setText("图书")
+                        .setTabListener(this)
+        );
+        tabHost.addTab(
+                tabHost.newTab()
+                        .setText("分类")
+                        .setTabListener(this)
+        );
+        tabHost.addTab(
+                tabHost.newTab()
+                        .setText("书单")
+                        .setTabListener(this)
+        );
+       /* for (int i = 0; i <3; i++) {
+            tabHost.addTab(
+                    tabHost.newTab()
+                            .setText("年后")
+                            .setTabListener(this)
+            );
+        }*/
+
+    }
+
+    @Override
+    public void onTabSelected(MaterialTab tab) {
+        pager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(MaterialTab tab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(MaterialTab tab) {
+
+    }
+    private void setupViewPager(ViewPager viewPager) {
+        BottomAdapter adapter = new BottomAdapter(getFragmentManager());
+        adapter.addFragment(new FragmentBookStoreBook());
+        adapter.addFragment(new FragmentBookShelf());
         adapter.addFragment(new FragmentBookStoreBook());
         viewPager.setAdapter(adapter);
     }

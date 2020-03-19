@@ -9,5 +9,5 @@
     <color name="colorGreen">#00CC66</color>
     <color name="colorLiteGreen">#ecf7f7</color>
     <color name="colorThinWhite">#f9f7f7</color>
-
+    <color name="colorVeryThinWhite">#EDEDED</color>
 </resources>
