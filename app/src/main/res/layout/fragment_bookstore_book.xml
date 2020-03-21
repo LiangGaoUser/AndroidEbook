@@ -40,16 +40,17 @@
             android:background="@color/colorLiteGreen">
 
         </TextView>
-        <TextView
+        <com.lianggao.whut.androidebook.View.DrawableTextView
             android:id="@+id/id_tv_book_hot"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_below="@+id/id_tv_empty2"
             android:gravity="left|end"
             android:background="@color/colorWhite"
-            android:drawableRight="@drawable/img_bookstore_book_recommend"
+            android:drawableRight="@drawable/icon_book_more2"
             android:padding="2dp"
-            android:text="每日热门"></TextView>
+            android:text="每日热门"
+        />
 
         <ScrollView
             android:id="@+id/id_sv_recyclerview"
@@ -78,22 +79,23 @@
             android:background="@color/colorLiteGreen">
 
         </TextView>
-        <TextView
-            android:id="@+id/id_tv_book_keyword"
+        <com.lianggao.whut.androidebook.View.DrawableTextView
+            android:id="@+id/id_tv_book_recommend"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_below="@+id/id_tv_empty"
             android:gravity="left|end"
             android:background="@color/colorWhite"
-            android:drawableRight="@drawable/img_bookstore_book_recommend"
+            android:drawableRight="@drawable/icon_book_more2"
             android:padding="2dp"
-            android:text="今日推荐"></TextView>
+            android:text="今日推荐"
+            />
 
         <com.lianggao.whut.androidebook.View.BookGridView
             android:id="@+id/id_book_gridview"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/id_tv_book_keyword"
+            android:layout_height="200dp"
+            android:layout_below="@+id/id_tv_book_recommend"
             android:background="@drawable/ic_book_recycler_background"
             android:columnWidth="90dp"
             android:horizontalSpacing="20dp"
@@ -103,5 +105,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/id_iv_divider3"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/colorGreen"
+            android:layout_below="@+id/id_book_gridview"
+            />
+        <TextView
+            android:id="@+id/id_tv_empty3"
+            android:layout_height="10dp"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/id_iv_divider3"
+            android:background="@color/colorLiteGreen">
+        </TextView>
+        <com.lianggao.whut.androidebook.View.DrawableTextView
+            android:id="@+id/id_tv_book_maylike"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/id_tv_empty3"
+            android:gravity="left|end"
+            android:background="@color/colorWhite"
+            android:drawableRight="@drawable/icon_book_more2"
+            android:padding="2dp"
+            android:text="猜您喜欢"
+            />
+        <ScrollView
+            android:id="@+id/id_sv_recyclerview2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/id_tv_book_maylike">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_book_recyclerview2"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+            </android.support.v7.widget.RecyclerView>
+        </ScrollView>
+
+
+
     </RelativeLayout>
     </ScrollView>

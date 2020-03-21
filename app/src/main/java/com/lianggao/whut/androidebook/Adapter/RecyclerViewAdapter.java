@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_kind_list;//书的种类集合
     private LayoutInflater inflater;
+    private OnItemClickListener onItemClickListener;//接口1
+    private OnItemLongClickListener onItemLongClickListener;//接口2
     public RecyclerViewAdapter(Context context,List<Integer>book_post_list,List<String>book_name_list,List<String>book_author_list,List<String>book_kind_list,List<String>book_shortcontent_list){
         inflater=LayoutInflater.from(context);
         this.book_post_list=book_post_list;
@@ -59,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final RecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tvBookAuthor.setText(book_author_list.get(i));
         myViewHolder.tvBookName.setText(book_name_list.get(i));
         //myViewHolder.tvBookPost.setBackgroundResource(book_post_list.get(i));
@@ -70,27 +73,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        /* Bitmap bitmap= BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.img_bookshelf_everybook);
         Bitmap bitmap1=createReflectionBitmap(bitmap);
         myViewHolder.tvBookPost.setImageBitmap(bitmap1);*/
+
+       //判断是否在activity中设置监听，回调
+       if(onItemClickListener!=null){
+           myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+               @Override
+               public void onClick(View v) {
+                   int position=myViewHolder.getLayoutPosition();
+                   onItemClickListener.onItemClick(myViewHolder.itemView,position);
+               }
+           });
+
+       }
+       if(onItemLongClickListener!=null){
+           myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+               @Override
+               public boolean onLongClick(View v) {
+                   int position=myViewHolder.getLayoutPosition();
+                   onItemLongClickListener.onItemLongClick(myViewHolder.itemView,position);
+                   return true;
+               }
+           });
+
+       }
     }
 
     @Override
     public int getItemCount() {
         return book_name_list.size();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         private ImageView tvBookPost;
@@ -107,4 +118,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvBookKind=(TextView)itemView.findViewById(R.id.id_tv_book_kind);
         }
     }
+    /**
+     * @description:    recycleview需要自己设置监听器，先设置两个接口
+     * @param:
+     * @return:
+     * @author:         梁高
+     * @time:           2020/3/20
+     */
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+    }
+    public interface OnItemLongClickListener{
+        void onItemLongClick(View view,int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
+    }
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener=onItemLongClickListener;
+    }
+
 }
