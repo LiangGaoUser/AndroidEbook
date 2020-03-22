@@ -39,6 +39,8 @@ dependencies {
     implementation 'it.neokree:MaterialTabs:0.11'
     //search
     implementation 'com.carson_ho:SearchLayout:1.0.1'
+    //阴影效果
+    implementation 'com.yinglan.shadowimageview:shadowimageview:1.0.4'
 
 
     testImplementation 'junit:junit:4.12'

@@ -1,5 +1,6 @@
 package com.lianggao.whut.androidebook.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.lianggao.whut.androidebook.MainActivity;
 import com.lianggao.whut.androidebook.R;
+import com.yinglan.shadowimageview.ShadowImageView;
 
 import java.util.List;
 
@@ -49,16 +51,19 @@ public class BookShelfGridViewAdapter extends BaseAdapter {
 
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView==null){
             viewHolder=new ViewHolder();
             convertView= inflater.inflate(R.layout.part_activity_everybook,null);
-            viewHolder.textView=(TextView)convertView.findViewById(R.id.id_tv_book_img);
+            //viewHolder.textView=(TextView)convertView.findViewById(R.id.id_tv_book_img);
+            viewHolder.textView=(ShadowImageView)convertView.findViewById(R.id.id_tv_book_img);
             viewHolder.textViewContent=(TextView)convertView.findViewById(R.id.id_tv_book_content);
             viewHolder.textViewAlreadyRead=(TextView)convertView.findViewById(R.id.id_book_already_read);
             viewHolder.textViewBookEtc=(TextView)convertView.findViewById(R.id.id_ib_book_etc);
+
             convertView.setTag(viewHolder);
         }else{
             viewHolder=(ViewHolder)convertView.getTag();
@@ -72,10 +77,14 @@ public class BookShelfGridViewAdapter extends BaseAdapter {
         viewHolder.textView.setBackgroundResource(book_post_list.get(position));
         viewHolder.textViewContent.setText(book_name_list.get(position));
         viewHolder.textViewAlreadyRead.setText("已读%"+book_percent_list.get(position).toString());
+        viewHolder.textView.setImageShadowColor(R.color.colorGray);
+
+        viewHolder.textView.setImageResource(book_post_list.get(position));
         return convertView;
     }
     private class ViewHolder{
-        private TextView textView;//书的封面
+        //private TextView textView;//书的封面
+        private ShadowImageView textView;
         private TextView textViewContent;//书的名字
         private TextView textViewAlreadyRead;//已经读了多少
         private TextView textViewBookEtc;//省略号

@@ -1,41 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<TextView
-    android:id="@+id/id_tv_book_number"
-    android:layout_width="100dp"
-    android:layout_height="40dp"
-    android:layout_marginTop="10dp"
-    android:text="共0本书"/>
-
-<TextView
-android:id="@+id/id_tv_book_menu"
-android:layout_width="40dp"
-android:layout_height="40dp"
-android:layout_alignParentEnd="true"
-android:layout_alignParentRight="true"
-android:layout_alignTop="@+id/id_tv_book_number"
-android:gravity="right"
-android:hint="@string/bookshelf_menu"
-android:textSize="20sp"
-    />
-<TextView
-android:id="@+id/id_tv_book_search"
-android:layout_width="50dp"
-android:layout_height="40dp"
-android:hint="@string/bookshelf_search"
-android:textSize="20sp"
-android:layout_toLeftOf="@+id/id_tv_book_menu"
-android:layout_marginTop="10dp"
-android:layout_marginLeft="100dp"
-    />
--->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
+    <TextView
+        android:id="@+id/id_tv_bookshelf_search"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:hint="@string/bookshelf_search"
+        android:textSize="20sp"
+        android:background="@drawable/shape_book_search"
+        />
 
 
 
@@ -47,7 +24,8 @@ android:layout_marginLeft="100dp"
         app:navigationIcon="@android:drawable/arrow_down_float"
         android:background="@color/colorPurple"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_below="@+id/id_tv_bookshelf_search">
 
         <Button
             android:text="Button"
@@ -55,6 +33,10 @@ android:layout_marginLeft="100dp"
             android:layout_height="wrap_content"/>
 
     </android.support.v7.widget.Toolbar>
+
+
+
+        />&ndash;&gt;
     <com.lianggao.whut.androidebook.View.BookShelfGridView
         android:id="@+id/BookShelfGridView"
         android:layout_below="@id/toolbar"
@@ -71,7 +53,6 @@ android:layout_marginLeft="100dp"
 
 
         />
-
     <SlidingDrawer
         android:id="@+id/sliding"
         android:layout_width="match_parent"
@@ -106,13 +87,38 @@ android:layout_marginLeft="100dp"
 
     </SlidingDrawer>
 
+</RelativeLayout>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        app:logo="@mipmap/ic_launcher"
+        app:title="This is title"
+        app:subtitle="subtitle"
+        app:navigationIcon="@android:drawable/arrow_down_float"
+        android:background="@color/colorPurple"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
+    </android.support.v7.widget.Toolbar>
+    <GridView
+        android:id="@+id/id_gv_bookshelf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="20dp"
+        >
 
-
-
-
-
-
-</RelativeLayout>
-
+    </GridView>
+</LinearLayout>
 
