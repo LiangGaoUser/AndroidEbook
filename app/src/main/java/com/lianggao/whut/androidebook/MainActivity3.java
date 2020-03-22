@@ -31,6 +31,7 @@ import java.util.List;
 import static org.litepal.LitePalApplication.getContext;
 
 //用来测试带有阴影的图片和文字 BlurMaskFilterView EmbossMaskFilterView  MainActivity3.xml
+//实现分类页面，activity_main3,已经合并到FragmentBookStoreKind
 public class MainActivity3 extends Activity {
     //private ImageView imageView;
     private RecyclerView recyclerView;

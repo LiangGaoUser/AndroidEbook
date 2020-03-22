@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +35,14 @@ public class FragmentBookShelf extends ViewPageFragment {
     private BookShelfGridView bookShelfGridView;//书架布局类
     //private Button back_Btn;//书架中的返回按钮
     private BookShelfGridViewAdapter bookShelfGridViewAdapter;
-    private TextView  id_tv_book_number;
+    /*private TextView  id_tv_book_number;
     private TextView id_tv_book_menu;
-    private TextView id_tv_book_search;
+    private TextView id_tv_book_search;*/
     private List<String> book_name_list;//书名集合
     private List<Integer>book_post_list;//书的封面集合
     private List<Integer>book_percent_list;//书的已读百分比集合
     private List<Boolean>book_download_list;//书是否已经下载的集合
+    private Toolbar toolbar;
     //    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,13 +52,13 @@ public class FragmentBookShelf extends ViewPageFragment {
             initData();
             bookShelfGridViewAdapter=new BookShelfGridViewAdapter(getContext(),book_name_list,book_post_list,book_percent_list,book_download_list);
             bookShelfGridView.setAdapter(bookShelfGridViewAdapter);
-            id_tv_book_number=(TextView)rootView.findViewById(R.id.id_tv_book_number);
+            /*id_tv_book_number=(TextView)rootView.findViewById(R.id.id_tv_book_number);
             id_tv_book_menu=(TextView)rootView.findViewById(R.id.id_tv_book_menu);
-            id_tv_book_search=(TextView)rootView.findViewById(R.id.id_tv_book_search);
+            id_tv_book_search=(TextView)rootView.findViewById(R.id.id_tv_book_search);*/
 
-            Typeface iconfont= Typeface.createFromAsset(this.getActivity().getAssets(), "iconfont/iconfont.ttf");
+            /*Typeface iconfont= Typeface.createFromAsset(this.getActivity().getAssets(), "iconfont/iconfont.ttf");
             id_tv_book_menu.setTypeface(iconfont);
-            id_tv_book_search.setTypeface(iconfont);
+            id_tv_book_search.setTypeface(iconfont);*/
 
            /* back_Btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,6 +73,25 @@ public class FragmentBookShelf extends ViewPageFragment {
                     Toast.makeText(getContext(),"点击了书本"+position,Toast.LENGTH_LONG).show();
                 }
             });*/
+            toolbar=(Toolbar)rootView.findViewById(R.id.toolbar);
+            toolbar.inflateMenu(R.menu.menu_bookshelf_toolbar);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.toolbar_search:
+                            Log.i("haha", "toolbar_search");
+                            return true;
+                        case R.id.toolbar_action1:
+                            Log.i("haha", "toolbar_action1");
+                            return true;
+                        case R.id.toolbar_action2:
+                            Log.i("haha", "toolbar_action2");
+                            return true;
+                    }
+                    return true;
+                }
+            });
 
         }
         return rootView;
@@ -144,7 +168,35 @@ public class FragmentBookShelf extends ViewPageFragment {
         }
     }
 
+    /*@Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_bookshelf_toolbar, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toolbar_search:
+                Log.i("haha", "toolbar_search");
+                return true;
+            case R.id.toolbar_action1:
+                Log.i("haha", "toolbar_action1");
+                return true;
+            case R.id.toolbar_action2:
+                Log.i("haha", "toolbar_action2");
+                return true;
+        }
+        return true;
+    }
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        AppCompatActivity appCompatActivity= (AppCompatActivity) getActivity();
+        Toolbar toolbar= (Toolbar) appCompatActivity.findViewById(R.id.toolbar);
+        appCompatActivity.setSupportActionBar(toolbar);
+        super.onActivityCreated(savedInstanceState);
+    }*/
 }

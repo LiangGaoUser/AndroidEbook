@@ -10,4 +10,6 @@
     <color name="colorLiteGreen">#ecf7f7</color>
     <color name="colorThinWhite">#f9f7f7</color>
     <color name="colorVeryThinWhite">#EDEDED</color>
+    <color name="colorPurple">#3F3F5D</color>
+
 </resources>

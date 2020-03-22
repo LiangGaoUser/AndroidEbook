@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.View.BookPageView;
-
+//翻页页面的实现，还不知道如何结合
 public class Activity_BookPage extends FragmentActivity {
     private BookPageView bookPageView;
     private float x,y,width,height;
