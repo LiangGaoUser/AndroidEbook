@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--fragment_bookstore.xml中用不到-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+    <item
+        android:id="@+id/toolbar_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="search"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/toolbar_action1"
+        android:title="新书导入"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toolbar_action2"
+        android:title="批量删除"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/toolbar_action3"
+        android:title="书架历史"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/toolbar_action4"
+        android:title="书籍分类"
+        app:showAsAction="never"/>
+
+</menu>

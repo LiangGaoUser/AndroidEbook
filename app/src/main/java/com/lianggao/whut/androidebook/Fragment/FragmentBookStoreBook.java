@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +36,10 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class FragmentBookStoreBook extends Fragment implements OnItemClickListener {
     private View rootView;
@@ -67,10 +70,12 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private List<Integer> localImages = new ArrayList<>();
     //本地图片
     private Integer[] imagesInteger = new Integer[] { R.drawable.img_test_lunbotu, R.drawable.img_test_lunbotu, R.drawable.img_test_lunbotu};
-
-
-
-
+    //修改为gridview和simpleAdapter
+    private List<Map<String, Object>> data_list;
+    private SimpleAdapter sim_adapter;
+    private List<String>book_name_list3;//书的名字集合
+    private List<String>book_author_list3;//书的作者集合
+    private List<Integer>book_post_list3;//书的图片集合
 
 
 
@@ -102,7 +107,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
 
 
-            //gridview展示图书
+            /*//gridview展示图书
             gridView = (GridView) rootView.findViewById(R.id.id_book_gridview);
             initdata2();
             bookGridViewAdapter = new BookGridViewAdapter(getContext(), book_name_list2, book_post_list2, book_author_list2);
@@ -112,7 +117,26 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                     Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
                 }
             });
-            gridView.setAdapter(bookGridViewAdapter);
+            gridView.setAdapter(bookGridViewAdapter);*/
+
+
+            gridView=(GridView)rootView.findViewById(R.id.id_book_gridview);
+            data_list = new ArrayList<Map<String, Object>>();
+            //新建适配器,这里的book_progress应该为book_author,但是不用修改
+            String [] from ={"book_post","book_name","book_progress"};
+            int [] to = {R.id.book_post,R.id.book_name,R.id.book_progress};
+            getData();
+            sim_adapter = new SimpleAdapter(getContext(), data_list,R.layout.part_activity_book_gridview_new, from, to);
+            gridView.setAdapter(sim_adapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+
 
             //轮播图
             localConvenientBanner = (ConvenientBanner) rootView.findViewById(R.id.localConvenientBanner);
@@ -277,5 +301,25 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         //停止翻页
         localConvenientBanner.stopTurning();
         //netConvenientBanner.stopTurning();
+    }
+    public List<Map<String, Object>> getData(){
+        //cion和iconName的长度是相同的，这里任选其一都可以
+        book_name_list3=new LinkedList<>();
+        book_post_list3=new LinkedList<>();
+        book_author_list3=new LinkedList<>();
+        for(int i=0;i<20;i++){
+            book_name_list3.add("爆裂无声"+i);
+            book_post_list3.add(R.drawable.img_bookshelf_everybook);
+            book_author_list3.add("雨果");
+        }
+        for(int i=0;i<20;i++){
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("book_post", book_post_list3.get(i));
+            map.put("book_name", book_name_list3.get(i));
+            map.put("book_progress",book_author_list3.get(i));
+            data_list.add(map);
+        }
+
+        return data_list;
     }
 }
