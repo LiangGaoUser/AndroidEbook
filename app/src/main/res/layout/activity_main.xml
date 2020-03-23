@@ -22,7 +22,8 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:id="@+id/bv"
-        android:background="#e4e4e4"
+
+        android:background="?android:attr/windowBackground"
         app:menu="@menu/menu"
         app:labelVisibilityMode="labeled"
         />

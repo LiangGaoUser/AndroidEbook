@@ -1,12 +1,14 @@
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -30,7 +33,10 @@ import com.lianggao.whut.androidebook.Adapter.BookGridViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
+import com.lianggao.whut.androidebook.View.LabelGridView;
 import com.lianggao.whut.androidebook.View.LocalImageHolderView;
+import com.wangjie.shadowviewhelper.ShadowProperty;
+import com.wangjie.shadowviewhelper.ShadowViewDrawable;
 
 import org.w3c.dom.Text;
 
@@ -40,6 +46,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import static com.bigkoo.convenientbanner.utils.ScreenUtil.dip2px;
 
 public class FragmentBookStoreBook extends Fragment implements OnItemClickListener {
     private View rootView;
@@ -53,10 +61,16 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_kind_list;//书的种类集合
 
+    private List<Integer> book_post_list_1;//书的封面集合
+    private List<String>book_name_list_1;//书的名字集合
+    private List<String>book_author_list_1;//书的作者集合
+    private List<String>book_shortcontent_list_1;//书的简介集合
+    private List<String>book_kind_list_1;//书的种类集合
+
     private List<String>book_name_list2;//书的名字集合
     private List<String>book_author_list2;//书的作者集合
     private List<Integer>book_post_list2;//书的图片集合
-    private GridView gridView;
+    private LabelGridView gridView;
     private BookGridViewAdapter bookGridViewAdapter;
 
     private TextView tv_search;//搜索框
@@ -78,13 +92,45 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private List<Integer>book_post_list3;//书的图片集合
 
 
-
-
+    private View linerlayout_hot;
+    private View linerlayout_recommed;
+    private View linerlayout_maylike;
+    private View linerlayout_banner;
+    private View text;
+    private View searchView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView==null) {
+
+
             rootView = inflater.inflate(R.layout.fragment_bookstore_book, null);
+
+            linerlayout_hot=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_hot);
+            linerlayout_recommed=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_recommend);
+            linerlayout_maylike=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_maylike);
+            linerlayout_banner=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_banner);
+            searchView=(TextView)rootView.findViewById(R.id.id_tv_search);
+            //text=(TextView)rootView.findViewById(R.id.text);
+            ShadowProperty sp = new ShadowProperty()
+                    .setShadowColor(R.color.colorGreen)
+                    .setShadowDy(dip2px(getContext(), 0f))
+                    .setShadowRadius(dip2px(getContext(), 3))
+
+                    .setShadowSide(ShadowProperty.LEFT | ShadowProperty.RIGHT | ShadowProperty.BOTTOM|ShadowProperty.TOP);
+            ShadowViewDrawable sd = new ShadowViewDrawable(sp, Color.TRANSPARENT, 0, 0);
+            ViewCompat.setBackground(linerlayout_hot, sd);
+            ViewCompat.setLayerType(linerlayout_hot, ViewCompat.LAYER_TYPE_SOFTWARE, null);
+            /*ViewCompat.setBackground(text, sd);
+            ViewCompat.setLayerType(text, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
+            /*ViewCompat.setBackground(linerlayout_recommed, sd);
+            ViewCompat.setLayerType(linerlayout_recommed, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
+            ViewCompat.setBackground(linerlayout_banner, sd);
+            ViewCompat.setLayerType(linerlayout_banner , ViewCompat.LAYER_TYPE_SOFTWARE, null);
+            ViewCompat.setBackground(linerlayout_maylike, sd);
+            ViewCompat.setLayerType(linerlayout_maylike , ViewCompat.LAYER_TYPE_SOFTWARE, null);
+            ViewCompat.setBackground(searchView, sd);
+            ViewCompat.setLayerType(searchView , ViewCompat.LAYER_TYPE_SOFTWARE, null);
             //图书列表
             recyclerView = (RecyclerView) rootView.findViewById(R.id.id_book_recyclerview);
             initdata();
@@ -101,7 +147,14 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
             recyclerView2 = (RecyclerView) rootView.findViewById(R.id.id_book_recyclerview2);
             initdata3();
-            recyclerViewAdapter2 = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
+            recyclerViewAdapter2 = new RecyclerViewAdapter(getContext(), book_post_list_1, book_name_list_1, book_author_list_1, book_kind_list_1, book_shortcontent_list_1);
+            recyclerViewAdapter2.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Toast.makeText(getContext(),"点击了recycleview第"+position+"个位置",Toast.LENGTH_LONG).show();
+                }
+            });
+
             recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView2.setAdapter(recyclerViewAdapter2);
 
@@ -120,7 +173,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
             gridView.setAdapter(bookGridViewAdapter);*/
 
 
-            gridView=(GridView)rootView.findViewById(R.id.id_book_gridview);
+            gridView=(LabelGridView)rootView.findViewById(R.id.id_book_gridview);
             data_list = new ArrayList<Map<String, Object>>();
             //新建适配器,这里的book_progress应该为book_author,但是不用修改
             String [] from ={"book_post","book_name","book_progress"};
@@ -215,23 +268,23 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
     }
     public void initdata3(){
-        /*book_post_list=new LinkedList<>();
-        book_name_list=new LinkedList<>();
-        book_author_list=new LinkedList<>();
-        book_shortcontent_list=new LinkedList<>();
-        book_kind_list=new LinkedList<>();*/
+        book_post_list_1=new LinkedList<>();
+        book_name_list_1=new LinkedList<>();
+        book_author_list_1=new LinkedList<>();
+        book_shortcontent_list_1=new LinkedList<>();
+        book_kind_list_1=new LinkedList<>();
         //将集合清空，进行重复使用
-        book_post_list.clear();
+        /*book_post_list.clear();
         book_name_list.clear();
         book_author_list.clear();
         book_shortcontent_list.clear();
-        book_kind_list.clear();
+        book_kind_list.clear();*/
         for(int i=0;i<3;i++){
-            book_author_list.add("梁高");
-            book_name_list.add("离开的每一种方式");
-            book_post_list.add(R.drawable.img_bookshelf_everybook);
-            book_shortcontent_list.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
-            book_kind_list.add("世界名著");
+            book_author_list_1.add("梁高");
+            book_name_list_1.add("离开的每一种方式");
+            book_post_list_1.add(R.drawable.img_bookshelf_everybook);
+            book_shortcontent_list_1.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
+            book_kind_list_1.add("世界名著");
         }
     }
     private void initViews() {
@@ -307,12 +360,12 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         book_name_list3=new LinkedList<>();
         book_post_list3=new LinkedList<>();
         book_author_list3=new LinkedList<>();
-        for(int i=0;i<20;i++){
+        for(int i=0;i<6;i++){
             book_name_list3.add("爆裂无声"+i);
             book_post_list3.add(R.drawable.img_bookshelf_everybook);
             book_author_list3.add("雨果");
         }
-        for(int i=0;i<20;i++){
+        for(int i=0;i<6;i++){
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("book_post", book_post_list3.get(i));
             map.put("book_name", book_name_list3.get(i));

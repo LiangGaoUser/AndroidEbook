@@ -293,7 +293,7 @@ public class FragmentBookStore extends ViewPageFragment implements MaterialTabLi
         BottomAdapter adapter = new BottomAdapter(getFragmentManager());
         adapter.addFragment(new FragmentBookStoreBook());
         adapter.addFragment(new FragmentBookStoreKind());
-        adapter.addFragment(new FragmentBookStoreBook());
+        adapter.addFragment(new FragmentBookStoreList());
         viewPager.setAdapter(adapter);
     }
 }
