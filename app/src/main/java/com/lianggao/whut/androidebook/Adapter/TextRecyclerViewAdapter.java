@@ -1,8 +1,11 @@
 package com.lianggao.whut.androidebook.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.BookNameTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,9 +29,15 @@ public class TextRecyclerViewAdapter extends RecyclerView.Adapter<TextRecyclerVi
     private RecyclerViewAdapter recyclerViewAdapter;
     private OnItemClickListener onItemClickListener;//接口1
     private OnItemLongClickListener onItemLongClickListener;//接口2
+    private int kindNumber;
+    private List<Boolean>isClicks;
     public TextRecyclerViewAdapter(Context context,List<String>bookKind_list){
         inflater=LayoutInflater.from(context);
         this.bookKind_list=bookKind_list;
+        isClicks=new ArrayList<>();
+        for(int i=0;i<bookKind_list.size();i++){
+            isClicks.add(false);
+        }
     }
 
 
@@ -38,19 +48,41 @@ public class TextRecyclerViewAdapter extends RecyclerView.Adapter<TextRecyclerVi
         return new MyViewHolder(itemView);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull final TextRecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final TextRecyclerViewAdapter.MyViewHolder myViewHolder, final int i) {
+        final int j=i;
         myViewHolder.tvbookKind.setText(bookKind_list.get(i));
+
+
+        if(isClicks.get(i)){
+           // myViewHolder.tvbookKind.setTextColor(Color.parseColor("#00a0e9"));
+            myViewHolder.itemView.setBackgroundColor(Color.parseColor("#817F95"));
+        }else{
+           // myViewHolder.tvbookKind.setTextColor(Color.parseColor("#ffffff"));
+            myViewHolder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+
+
+
         //判断是否在activity中设置监听，回调
         if(onItemClickListener!=null){
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    int position=myViewHolder.getLayoutPosition();
-                    onItemClickListener.onItemClick(myViewHolder.itemView,position);
+                    for(int i = 0; i <isClicks.size();i++){
+                        isClicks.set(i,false);
+                    }
+                    isClicks.set(i,true);
+                    notifyDataSetChanged();
+                    //int position=myViewHolder.getLayoutPosition();
+                    //Log.i("!!!",j+" "+position);//1
+                    onItemClickListener.onItemClick(myViewHolder.itemView,i);//该方法返回FragmentBookStoreKind中进行调用2后再返回继续执行
+
+                   // Log.i("!!!!",j+" "+position);//3
+
                 }
             });
-
         }
         if(onItemLongClickListener!=null){
             myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
@@ -96,4 +128,11 @@ public class TextRecyclerViewAdapter extends RecyclerView.Adapter<TextRecyclerVi
         this.onItemLongClickListener=onItemLongClickListener;
     }
 
+    public int getKindNumber() {
+        return kindNumber;
+    }
+
+    public void setKindNumber(int kindNumber) {
+        this.kindNumber = kindNumber;
+    }
 }

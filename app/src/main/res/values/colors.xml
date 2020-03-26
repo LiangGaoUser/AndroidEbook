@@ -11,5 +11,8 @@
     <color name="colorThinWhite">#f9f7f7</color>
     <color name="colorVeryThinWhite">#EDEDED</color>
     <color name="colorPurple">#3F3F5D</color>
+    <color name="colorLitePurple">#817F95</color>
+    <color name="colorLitePurple2">#00a0e9</color>
+    <color name="colorLitePurple3">#00a0e9</color>
 
 </resources>

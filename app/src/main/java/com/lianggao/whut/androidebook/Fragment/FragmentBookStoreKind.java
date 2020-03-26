@@ -1,24 +1,32 @@
 package com.lianggao.whut.androidebook.Fragment;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.Adapter.KindRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.TextRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.R;
+import com.wangjie.shadowviewhelper.ShadowProperty;
+import com.wangjie.shadowviewhelper.ShadowViewDrawable;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.bigkoo.convenientbanner.utils.ScreenUtil.dip2px;
 import static org.litepal.LitePalApplication.getContext;
 
 public class FragmentBookStoreKind extends Fragment {
@@ -34,15 +42,44 @@ public class FragmentBookStoreKind extends Fragment {
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_kind_list;//书的种类集合
+
+    private View recyclekindView;
+    private View recyclebookView;
+    private View linerlayout_book;
+    private View linerlayout_kind;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.fragment_bookstore_kind,null);
+
+        recyclekindView=(RecyclerView)rootView.findViewById(R.id.id_recycleview_kind);
+        recyclebookView=(RecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+        linerlayout_kind=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_kind);
+        linerlayout_book=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_book);
+        ShadowProperty sp = new ShadowProperty()
+                .setShadowColor(R.color.colorGreen)
+                .setShadowDy(dip2px(getContext(), 0f))
+                .setShadowRadius(dip2px(getContext(), 3))
+
+                .setShadowSide(ShadowProperty.LEFT | ShadowProperty.RIGHT | ShadowProperty.BOTTOM|ShadowProperty.TOP);
+        ShadowViewDrawable sd = new ShadowViewDrawable(sp, Color.TRANSPARENT, 0, 0);
+
+
+        /*ViewCompat.setBackground(linerlayout_kind, sd);
+        ViewCompat.setLayerType(linerlayout_kind, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
+        ViewCompat.setBackground(linerlayout_book, sd);
+        ViewCompat.setLayerType(linerlayout_book, ViewCompat.LAYER_TYPE_SOFTWARE, null);
+
         initData();
         textrecyclerViewAdapter=new TextRecyclerViewAdapter(getContext(),bookKindList);
         textrecyclerViewAdapter.setOnItemClickListener(new TextRecyclerViewAdapter.OnItemClickListener() {
+
             @Override
             public void onItemClick(View view, int position) {
+                Log.i("!!!+",position+"");
+                textrecyclerViewAdapter.setKindNumber(position);
+                textrecyclerViewAdapter.notifyDataSetChanged();
                 if(position==1){
                     initdata3();
                     recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
@@ -72,8 +109,8 @@ public class FragmentBookStoreKind extends Fragment {
     }
     void initData(){
         bookKindList=new LinkedList<>();
-        for(int i=0;i<30;i++){
-            bookKindList.add("玄幻");
+        for(int i=0;i<12;i++){
+            bookKindList.add("玄幻"+i);
         }
     }
 

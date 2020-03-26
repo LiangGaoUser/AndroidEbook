@@ -3,8 +3,8 @@
     android:id="@+id/id_book_item"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#FFFFFF"
     android:orientation="vertical"
+
     >
     <TextView
         android:id="@+id/id_tv_book_kind_name"
@@ -13,9 +13,11 @@
         android:gravity="center_horizontal"
         android:paddingTop="8dp"
         android:text="武侠"
-        android:textColor="#80000000"
+        android:textColor="#000"
         android:textSize="10dp"
-        android:textStyle="normal"/>
+        android:textStyle="normal"
+
+        />
 
 
 </RelativeLayout>
