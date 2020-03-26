@@ -111,26 +111,8 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
             linerlayout_maylike=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_maylike);
             linerlayout_banner=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_banner);
             searchView=(TextView)rootView.findViewById(R.id.id_tv_search);
-            //text=(TextView)rootView.findViewById(R.id.text);
-            ShadowProperty sp = new ShadowProperty()
-                    .setShadowColor(R.color.colorGreen)
-                    .setShadowDy(dip2px(getContext(), 0f))
-                    .setShadowRadius(dip2px(getContext(), 3))
 
-                    .setShadowSide(ShadowProperty.LEFT | ShadowProperty.RIGHT | ShadowProperty.BOTTOM|ShadowProperty.TOP);
-            ShadowViewDrawable sd = new ShadowViewDrawable(sp, Color.TRANSPARENT, 0, 0);
-            ViewCompat.setBackground(linerlayout_hot, sd);
-            ViewCompat.setLayerType(linerlayout_hot, ViewCompat.LAYER_TYPE_SOFTWARE, null);
-            /*ViewCompat.setBackground(text, sd);
-            ViewCompat.setLayerType(text, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
-            /*ViewCompat.setBackground(linerlayout_recommed, sd);
-            ViewCompat.setLayerType(linerlayout_recommed, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
-            ViewCompat.setBackground(linerlayout_banner, sd);
-            ViewCompat.setLayerType(linerlayout_banner , ViewCompat.LAYER_TYPE_SOFTWARE, null);
-            ViewCompat.setBackground(linerlayout_maylike, sd);
-            ViewCompat.setLayerType(linerlayout_maylike , ViewCompat.LAYER_TYPE_SOFTWARE, null);
-            ViewCompat.setBackground(searchView, sd);
-            ViewCompat.setLayerType(searchView , ViewCompat.LAYER_TYPE_SOFTWARE, null);
+
             //图书列表
             recyclerView = (RecyclerView) rootView.findViewById(R.id.id_book_recyclerview);
             initdata();

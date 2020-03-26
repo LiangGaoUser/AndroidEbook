@@ -57,19 +57,7 @@ public class FragmentBookStoreKind extends Fragment {
         recyclebookView=(RecyclerView)rootView.findViewById(R.id.id_recycleview_book);
         linerlayout_kind=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_kind);
         linerlayout_book=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_book);
-        ShadowProperty sp = new ShadowProperty()
-                .setShadowColor(R.color.colorGreen)
-                .setShadowDy(dip2px(getContext(), 0f))
-                .setShadowRadius(dip2px(getContext(), 3))
 
-                .setShadowSide(ShadowProperty.LEFT | ShadowProperty.RIGHT | ShadowProperty.BOTTOM|ShadowProperty.TOP);
-        ShadowViewDrawable sd = new ShadowViewDrawable(sp, Color.TRANSPARENT, 0, 0);
-
-
-        /*ViewCompat.setBackground(linerlayout_kind, sd);
-        ViewCompat.setLayerType(linerlayout_kind, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
-        ViewCompat.setBackground(linerlayout_book, sd);
-        ViewCompat.setLayerType(linerlayout_book, ViewCompat.LAYER_TYPE_SOFTWARE, null);
 
         initData();
         textrecyclerViewAdapter=new TextRecyclerViewAdapter(getContext(),bookKindList);

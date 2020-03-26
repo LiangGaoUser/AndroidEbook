@@ -9,39 +9,116 @@
         android:layout_width="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         >
-        <TextView
-            android:id="@+id/id_tv_search"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:hint="@string/bookshelf_search"
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/shape_book_search"
-            />
-        <LinearLayout
-            android:id="@+id/id_linerlayout_banner"
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/id_tv_search"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-            <com.bigkoo.convenientbanner.ConvenientBanner
-                android:id="@+id/localConvenientBanner"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="1dp"
+
+
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="6dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <TextView
+                android:id="@+id/id_tv_search"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="37dp"
+                android:hint="@string/bookshelf_search"
+                android:textSize="20sp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+
+                android:background="@drawable/shape_book_search"
+                />
+        </android.support.v7.widget.CardView>
+
+
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_bannner"
+            android:layout_below="@+id/cardview_book_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="1dp"
+
+
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="6dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+            <LinearLayout
+                android:id="@+id/id_linerlayout_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/id_tv_search"
-                app:autoTurningTime="3000"
-                app:canLoop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="8dp"/>
-        </LinearLayout>
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/localConvenientBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_below="@+id/id_tv_search"
+                    app:autoTurningTime="3000"
+                    app:canLoop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="8dp"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_hot"
+            android:layout_below="@+id/cardview_book_bannner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="1dp"
+
+
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="6dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            >
+
         <LinearLayout
             android:id="@+id/id_linerlayout_hot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/id_linerlayout_banner"
+            android:layout_below="@+id/cardview_book_hot"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
             <com.lianggao.whut.androidebook.View.DrawableTextView
@@ -73,13 +150,39 @@
                 </android.support.v7.widget.RecyclerView>
             </ScrollView>
         </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_recommned"
+            android:layout_below="@+id/cardview_book_hot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="1dp"
+
+
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="6dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            >
         <LinearLayout
             android:id="@+id/id_linerlayout_recommend"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@color/colorThinWhite"
-            android:layout_below="@+id/id_linerlayout_hot"
+            android:layout_below="@+id/cardview_book_hot"
             android:layout_marginTop="20dp">
             <com.lianggao.whut.androidebook.View.DrawableTextView
                 android:id="@+id/id_tv_book_recommend"
@@ -95,58 +198,45 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="3dp"
                 />
-            <!--<GridView
-                android:id="@+id/id_book_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
 
-                android:columnWidth="90dp"
-                android:horizontalSpacing="20dp"
-                android:numColumns="auto_fit"
-                android:verticalSpacing="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                />-->
             <com.lianggao.whut.androidebook.View.LabelGridView
                 android:id="@+id/id_book_gridview"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:columnWidth="90dp"
                 android:numColumns="auto_fit"
-                android:horizontalSpacing="20dp"
-                android:verticalSpacing="10dp"
-                />
-
-            <!--<ScrollView
-                android:id="@+id/id_sv_recyclerview3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="5dp">
-                <com.lianggao.whut.androidebook.View.LabelGridView
-                    android:id="@+id/id_book_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnWidth="90dp"
-                    android:numColumns="auto_fit"
-                    android:horizontalSpacing="20dp"
-                    android:verticalSpacing="20dp"
-                    >
-
-                </com.lianggao.whut.androidebook.View.LabelGridView>
-            </ScrollView>-->
-
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="10dp" />
         </LinearLayout>
+        </android.support.v7.widget.CardView>
 
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_book_hot_rank"
+            android:layout_below="@+id/cardview_book_recommned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="1dp"
+
+
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="6dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+
+            android:foreground="?android:attr/selectableItemBackground"
+            >
         <LinearLayout
             android:id="@+id/id_linerlayout_maylike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/id_linerlayout_recommend"
+            android:layout_below="@+id/cardview_book_recommned"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
             <com.lianggao.whut.androidebook.View.DrawableTextView
@@ -179,5 +269,6 @@
                 </android.support.v7.widget.RecyclerView>
             </ScrollView>
         </LinearLayout>
+        </android.support.v7.widget.CardView>
     </RelativeLayout>
     </ScrollView>
