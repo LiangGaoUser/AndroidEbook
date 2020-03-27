@@ -175,18 +175,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
             //轮播图
             localConvenientBanner = (ConvenientBanner) rootView.findViewById(R.id.localConvenientBanner);
-            //点击搜索textview进入到搜索界面
-            tv_search = (TextView) rootView.findViewById(R.id.id_tv_search);
-            Typeface iconfont = Typeface.createFromAsset(this.getActivity().getAssets(), "iconfont/iconfont.ttf");
-            tv_search.setTypeface(iconfont);
-            tv_search.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), Activity_SearchView.class);
-                    startActivity(intent);
 
-                }
-            });
             init();
             //对更多图片进行监听并设置大小
             drawableTextView_hot = (DrawableTextView) rootView.findViewById(R.id.id_tv_book_hot);

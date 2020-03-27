@@ -177,7 +177,9 @@ public class FragmentBookStore extends ViewPageFragment {
 */
 package com.lianggao.whut.androidebook.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -187,6 +189,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -194,8 +197,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lianggao.whut.androidebook.Activity_SearchView;
 import com.lianggao.whut.androidebook.Adapter.BottomAdapter;
 import com.lianggao.whut.androidebook.Adapter.NoScrollViewPager;
 import com.lianggao.whut.androidebook.R;
@@ -214,7 +219,8 @@ public class FragmentBookStore extends ViewPageFragment implements MaterialTabLi
 
     private MaterialTabHost tabHost;
     private BottomAdapter adapter;
-
+    private TextView id_tv_search;//搜索图标
+    private CardView cardview_book_search;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Nullable
     @Override
@@ -236,10 +242,26 @@ public class FragmentBookStore extends ViewPageFragment implements MaterialTabLi
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initView() {
         Log.i("MainActivityBook", "initView");
+
+        id_tv_search=(TextView)rootView.findViewById(R.id.id_tv_search);
+        Typeface iconfont = Typeface.createFromAsset(this.getActivity().getAssets(), "iconfont/iconfont.ttf");
+        id_tv_search.setTypeface(iconfont);
+        cardview_book_search=(CardView)rootView.findViewById(R.id.cardview_book_search);
+        cardview_book_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Activity_SearchView.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         pager = (ViewPager) rootView.findViewById(R.id.vp2);
         tabHost = (MaterialTabHost) rootView.findViewById(R.id.bv2);
-        tabHost.setPrimaryColor(R.color.colorGray);
-        tabHost.setTextColor(Color.WHITE);
+
+        tabHost.setPrimaryColor(Color.WHITE);
+        tabHost.setTextColor(Color.BLACK);
         adapter = new BottomAdapter(getFragmentManager());
         setupViewPager(pager);
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -265,6 +287,7 @@ public class FragmentBookStore extends ViewPageFragment implements MaterialTabLi
                         .setText("书单")
                         .setTabListener(this)
         );
+
        /* for (int i = 0; i <3; i++) {
             tabHost.addTab(
                     tabHost.newTab()

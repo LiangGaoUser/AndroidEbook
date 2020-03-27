@@ -1,6 +1,7 @@
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lianggao.whut.androidebook.Activity_BookDetail;
+import com.lianggao.whut.androidebook.Activity_SearchView;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
 import com.lianggao.whut.androidebook.View.ImageView;
@@ -52,17 +55,7 @@ public class FragmentBookStoreList extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.fragment_bookstore_list,null);
-       /* shadowImageView=(ShadowImageView)rootView.findViewById(R.id.shadow);
-        shadowImageView.setImageRadius(90);
-        shadowImageView.setImageResource(R.drawable.img_booklist_recommend1);
-        shadowImageView.setImageShadowColor(R.color.colorGray);
-
-        shadowImageView2=(ShadowImageView)rootView.findViewById(R.id.shadow2);
-        shadowImageView2.setImageRadius(-310);
-        shadowImageView2.setImageResource(R.drawable.img_booklist_recommend1);
-        shadowImageView2.setImageShadowColor(R.color.colorLiteGreen);*/
         gridView=(GridView)rootView.findViewById(R.id.id_gv_book_list);
-
         data_list = new ArrayList<Map<String, Object>>();
         //新建适配器
         String [] from ={"book_post","book_name","book_progress"};
@@ -74,22 +67,12 @@ public class FragmentBookStoreList extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),"点击gridview"+position+"个",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), Activity_BookDetail.class);
+                startActivity(intent);
+                //Toast.makeText(getContext(),"点击gridview"+position+"个",Toast.LENGTH_SHORT).show();
             }
         });
-        /*view3=(android.widget.ImageView)rootView.findViewById(R.id.id_tv_book_list3);
-        view4=(TextView)rootView.findViewById(R.id.id_tv_book_list4);*/
-        ShadowProperty sp = new ShadowProperty()
-                .setShadowColor(R.color.colorGreen)
-                .setShadowDy(dip2px(getContext(), 0f))
-                .setShadowRadius(dip2px(getContext(), 3))
 
-                .setShadowSide(ShadowProperty.LEFT | ShadowProperty.RIGHT | ShadowProperty.BOTTOM|ShadowProperty.TOP);
-        ShadowViewDrawable sd = new ShadowViewDrawable(sp, Color.TRANSPARENT, 0, 0);
-
-        /*ViewCompat.setBackground(view3, sd);
-        ViewCompat.setBackground(view4, sd);*/
-      /*  ViewCompat.setLayerType(view4, ViewCompat.LAYER_TYPE_SOFTWARE, null);*/
 
         return rootView;
     }

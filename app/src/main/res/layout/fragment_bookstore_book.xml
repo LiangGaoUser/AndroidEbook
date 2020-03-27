@@ -10,48 +10,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         >
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_book_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            android:layout_marginTop="1dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="1dp"
-
-
-            app:cardBackgroundColor="@color/colorWhite"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="5dp"
-            app:cardMaxElevation="6dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
-
-            android:foreground="?android:attr/selectableItemBackground"
-            >
-            <TextView
-                android:id="@+id/id_tv_search"
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:hint="@string/bookshelf_search"
-                android:textSize="20sp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-
-                android:background="@drawable/shape_book_search"
-                />
-        </android.support.v7.widget.CardView>
 
 
 
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardview_book_bannner"
-            android:layout_below="@+id/cardview_book_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="1dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
