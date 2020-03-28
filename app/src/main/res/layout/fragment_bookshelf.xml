@@ -88,6 +88,11 @@
     </SlidingDrawer>
 
 </RelativeLayout>-->
+
+    <!--app:navigationIcon="@android:drawable/arrow_down_float"
+     app:subtitle="subtitle"
+     app:logo="@mipmap/ic_launcher"
+      app:title="我的书架"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -96,15 +101,11 @@
     android:background="@color/colorWhite">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        app:logo="@mipmap/ic_launcher"
-        app:title="This is title"
-        app:subtitle="subtitle"
-        app:navigationIcon="@android:drawable/arrow_down_float"
         android:background="@color/colorPurple"
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <Button
-            android:text="Button"
+            android:text="切换视图"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

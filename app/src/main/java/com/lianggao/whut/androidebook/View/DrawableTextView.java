@@ -13,7 +13,7 @@ import android.view.View;
  */
 public class DrawableTextView extends android.support.v7.widget.AppCompatTextView {
     public DrawableRightClickListener drawableRightClickListener;
-
+    public DrawableTopClickListener drawableTopClickListener;
     public DrawableTextView(Context context) {
         super(context);
     }
@@ -35,10 +35,23 @@ public class DrawableTextView extends android.support.v7.widget.AppCompatTextVie
         this.drawableRightClickListener = drawableRightClickListener;
     }
 
+    public DrawableTopClickListener getDrawableTopClick() {
+        return drawableTopClickListener;
+    }
+
+    public void setDrawableTopClick(DrawableTopClickListener drawableTopClickListener) {
+        this.drawableTopClickListener = drawableTopClickListener;
+    }
+
     //为了方便,直接写了一个内部类的接口
     public interface DrawableRightClickListener {
         void onDrawableRightClickListener(View view);
     }
+
+    public interface DrawableTopClickListener {
+        void onDrawableTopClickListener(View view);
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -55,6 +68,16 @@ public class DrawableTextView extends android.support.v7.widget.AppCompatTextVie
                     return false;
                 }
 
+               /* if (drawableTopClickListener != null) {
+                    // getCompoundDrawables获取是一个数组，数组0,1,2,3,对应着左，上，右，下 这4个位置的图片，如果没有就为null
+                    Drawable topDrawable = getCompoundDrawables()[1];
+                    //判断的依据是获取点击区域相对于屏幕的x值比我(获取TextView的最右边界减去边界宽度)大就可以判断点击在Drawable上
+                    if (topDrawable != null && event.getRawY() <= (getBottom() + topDrawable.getBounds().height())) {
+                        drawableTopClickListener.onDrawableTopClickListener(this);
+                    }
+                    //此处不能设置成false,否则drawable不会触发点击事件,如果设置,TextView会处理事件
+                    return false;
+                }*/
                 break;
 
         }

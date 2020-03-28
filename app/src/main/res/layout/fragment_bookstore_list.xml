@@ -14,13 +14,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
 
             app:cardBackgroundColor="@color/colorLiteGreen"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="5dp"
-            app:cardMaxElevation="6dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
 
@@ -133,8 +133,8 @@
             android:layout_height="wrap_content"
 
             android:layout_marginTop="1dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:layout_marginBottom="1dp"
 
 
