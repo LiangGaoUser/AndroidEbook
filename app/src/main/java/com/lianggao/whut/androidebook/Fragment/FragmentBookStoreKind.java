@@ -17,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.Adapter.KindRecyclerViewAdapter;
+import com.lianggao.whut.androidebook.Adapter.LoadMoreAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.TextRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.R;
+import com.lianggao.whut.androidebook.View.LoadMoreRecyclerView;
 import com.wangjie.shadowviewhelper.ShadowProperty;
 import com.wangjie.shadowviewhelper.ShadowViewDrawable;
 
@@ -32,10 +34,14 @@ import static org.litepal.LitePalApplication.getContext;
 public class FragmentBookStoreKind extends Fragment {
     private View rootView;
     private RecyclerView recyclerView;
-    private RecyclerView recyclerView1;
+    //private RecyclerView recyclerView1;
     private TextRecyclerViewAdapter textrecyclerViewAdapter;
-    private RecyclerViewAdapter recyclerViewAdapter;
-    private KindRecyclerViewAdapter kindRecyclerViewAdapter;
+   // private RecyclerViewAdapter recyclerViewAdapter;
+   // private KindRecyclerViewAdapter kindRecyclerViewAdapter;
+    private LoadMoreRecyclerView loadMoreRecyclerView;
+    private LoadMoreAdapter loadMoreAdapter;
+
+
     private List<String> bookKindList;
     private List<Integer> book_post_list;//书的封面集合
     private List<String>book_name_list;//书的名字集合
@@ -70,9 +76,12 @@ public class FragmentBookStoreKind extends Fragment {
                 textrecyclerViewAdapter.notifyDataSetChanged();
                 if(position==1){
                     initdata3();
-                    recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
-                    recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView1.setAdapter(recyclerViewAdapter);
+                    //recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
+                   // recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+                    //recyclerView1.setAdapter(recyclerViewAdapter);
+                    loadMoreAdapter=new LoadMoreAdapter();
+                    loadMoreRecyclerView.setManager2();
+                    loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
                 }
                 Toast.makeText(getContext(),"第"+position+"个",Toast.LENGTH_LONG).show();
             }
@@ -81,7 +90,7 @@ public class FragmentBookStoreKind extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(textrecyclerViewAdapter);
 
-        initdata2();
+        /*initdata2();
         recyclerView1=(RecyclerView)rootView.findViewById(R.id.id_recycleview_book);
         recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
         recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
@@ -92,7 +101,21 @@ public class FragmentBookStoreKind extends Fragment {
             }
         });
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView1.setAdapter(recyclerViewAdapter);
+        recyclerView1.setAdapter(recyclerViewAdapter);*/
+
+
+
+        loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+        loadMoreRecyclerView.setManager();
+        loadMoreAdapter=new LoadMoreAdapter();
+        loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
+
+
+
+
+
+
+
         return rootView;
     }
     void initData(){
