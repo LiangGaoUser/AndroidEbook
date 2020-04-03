@@ -1,175 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="match_parent"
+android:layout_width="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<RelativeLayout
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <RelativeLayout
+    android:layout_height="match_parent"
+    >
+    <android.support.v7.widget.CardView
+        android:id="@+id/gridview_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+
+        app:cardBackgroundColor="@color/colorLiteGreen"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+
         >
-        <android.support.v7.widget.CardView
-            android:id="@+id/gridview_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-
-            app:cardBackgroundColor="@color/colorLiteGreen"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="0dp"
-            app:cardMaxElevation="0dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
-
-            >
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="3dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="3dp"
-                        android:layout_marginLeft="5dp"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        >
-                        <ImageView
-                            android:id="@+id/id_tv_book_list5"
-                            android:layout_width="220dp"
-                            android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:background="@drawable/img_booklist_recommend1"
-                           />
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="3dp"
-                        android:layout_marginRight="5dp"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        >
-                        <ImageView
-                            android:id="@+id/id_tv_book_list6"
-                            android:layout_width="220dp"
-                            android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:background="@drawable/img_booklist_recommend1"
-                            />
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="3dp"
-                    android:orientation="horizontal">
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="3dp"
-                        android:layout_marginLeft="5dp"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-
-                        >
-                        <ImageView
-                            android:id="@+id/id_tv_book_list7"
-                            android:layout_width="220dp"
-                            android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:background="@drawable/img_booklist_recommend1"
-                            />
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="3dp"
-                        android:layout_marginRight="5dp"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="3dp"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        >
-                        <ImageView
-                            android:id="@+id/id_tv_book_list8"
-                            android:layout_width="220dp"
-                            android:layout_height="60dp"
-                            android:scaleType="fitXY"
-                            android:background="@drawable/img_booklist_recommend1"
-                            />
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/gridview_book_list"
-            android:layout_below="@+id/gridview_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="1dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="1dp"
-
-
-            app:cardBackgroundColor="@color/colorWhite"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="5dp"
-            app:cardMaxElevation="6dp"
-            app:cardPreventCornerOverlap="true"
-            app:cardUseCompatPadding="true"
-
-            android:foreground="?android:attr/selectableItemBackground"
-            >
-            <LinearLayout
-                android:id="@+id/id_linerlayout_recommend"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/colorThinWhite"
-                android:layout_marginTop="20dp">
-                <TextView
-                    android:layout_width="match_parent"
+                android:orientation="horizontal">
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="所有书单"/>
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:layout_marginLeft="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    >
+                    <ImageView
+                        android:id="@+id/id_tv_book_list5"
+                        android:layout_width="220dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/img_booklist_recommend1"
+                        />
+                </android.support.v7.widget.CardView>
 
-                <com.lianggao.whut.androidebook.View.LabelGridView
-                    android:id="@+id/id_gv_book_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:columnWidth="90dp"
-                    android:numColumns="auto_fit"
-                    android:horizontalSpacing="1dp"
-                    android:verticalSpacing="10dp" />
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    >
+                    <ImageView
+                        android:id="@+id/id_tv_book_list6"
+                        android:layout_width="220dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/img_booklist_recommend1"
+                        />
+                </android.support.v7.widget.CardView>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
 
-    </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal">
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:layout_marginLeft="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+
+                    >
+                    <ImageView
+                        android:id="@+id/id_tv_book_list7"
+                        android:layout_width="220dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/img_booklist_recommend1"
+                        />
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="3dp"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    >
+                    <ImageView
+                        android:id="@+id/id_tv_book_list8"
+                        android:layout_width="220dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/img_booklist_recommend1"
+                        />
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/gridview_book_list"
+        android:layout_below="@+id/gridview_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="1dp"
+
+
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+
+        android:foreground="?android:attr/selectableItemBackground"
+        >
+        <LinearLayout
+            android:id="@+id/id_linerlayout_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/colorThinWhite"
+            android:layout_marginTop="20dp">
+
+
+            <com.lianggao.whut.androidebook.View.DrawableTextView
+                android:id="@+id/id_tv_all_booklist"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="left|end"
+                android:background="@color/colorWhite"
+                android:drawableRight="@drawable/icon_book_more2"
+                android:padding="2dp"
+                android:text="所有书单"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="3dp"
+                />
+            <com.lianggao.whut.androidebook.View.LabelGridView
+                android:id="@+id/id_gv_book_list"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:columnWidth="90dp"
+                android:numColumns="auto_fit"
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="10dp" />
+
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
 </ScrollView>

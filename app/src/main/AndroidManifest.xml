@@ -29,7 +29,8 @@
         <activity android:name=".Activity_SearchView"></activity>
         <activity android:name=".Activity_BookShelfAddBar"></activity>
         <activity android:name=".Activity_BookDetail"></activity>
-
+        <activity android:name=".MainActivity_Login"></activity>
+        <activity android:name=".Activity_More_BookList"></activity>
     </application>
 
 </manifest>

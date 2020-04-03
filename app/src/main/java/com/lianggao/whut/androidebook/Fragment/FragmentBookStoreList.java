@@ -1,6 +1,7 @@
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -21,12 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.Activity_BookDetail;
-import com.lianggao.whut.androidebook.Activity_SearchView;
+import com.lianggao.whut.androidebook.Activity_More_BookList;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
-import com.lianggao.whut.androidebook.View.ImageView;
-import com.wangjie.shadowviewhelper.ShadowProperty;
-import com.wangjie.shadowviewhelper.ShadowViewDrawable;
 import com.yinglan.shadowimageview.ShadowImageView;
 
 import java.util.ArrayList;
@@ -39,8 +37,9 @@ import static com.bigkoo.convenientbanner.utils.ScreenUtil.dip2px;
 
 public class FragmentBookStoreList extends Fragment {
     private View rootView;
-    /*private ShadowImageView shadowImageView;
-    private ShadowImageView shadowImageView2;*/
+private ShadowImageView shadowImageView;
+    private ShadowImageView shadowImageView2;
+
     private LinearLayout linearLayout_book_list;
     private GridView gridView;
     private SimpleAdapter simpleAdapter;
@@ -50,6 +49,7 @@ public class FragmentBookStoreList extends Fragment {
     private List<Integer>booklist_number_list;//书的数目
     private View view1,view2,view3,view4;
     private CardView cardView;
+    private DrawableTextView moreBookList;
     @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
@@ -73,7 +73,18 @@ public class FragmentBookStoreList extends Fragment {
             }
         });
 
+        moreBookList=(DrawableTextView)rootView.findViewById(R.id.id_tv_all_booklist);
+        Drawable drawable = getResources().getDrawable(R.drawable.icon_book_more2);
+        drawable.setBounds(0, 0, 50, 50);
+        moreBookList.setCompoundDrawables(null, null, drawable, null);
+        moreBookList.setDrawableRightClick(new DrawableTextView.DrawableRightClickListener() {
+            @Override
+            public void onDrawableRightClickListener(View view) {
+                Intent intent=new Intent(getActivity(), Activity_More_BookList.class);
+                startActivity(intent);
 
+            }
+        });
         return rootView;
     }
     public List<Map<String, Object>> getData(){
