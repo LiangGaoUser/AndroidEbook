@@ -3,6 +3,13 @@
     package="com.lianggao.whut.androidebook">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
+
     <application
         android:name=".App.MyApplication"
         android:allowBackup="true"
@@ -31,6 +38,28 @@
         <activity android:name=".Activity_BookDetail"></activity>
         <activity android:name=".MainActivity_Login"></activity>
         <activity android:name=".Activity_More_BookList"></activity>
+        <activity android:name=".Activity_QQ"></activity>
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1110404432" />
+                <!-- 100380359 100381104 222222 -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
+
+
     </application>
 
 </manifest>

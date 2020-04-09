@@ -1,10 +1,14 @@
 package com.lianggao.whut.androidebook.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,25 +18,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.lianggao.whut.androidebook.Model.QQLoginManager;
 import com.lianggao.whut.androidebook.R;
+import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.shehuan.niv.NiceImageView;
+import com.tencent.tauth.UiError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class FragmentSelfInfo extends ViewPageFragment {
+public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager.QQLoginListener {
     private TextView textViewYueLi;
     private TextView textViewNote;
     private TextView textViewThought;
@@ -43,12 +55,46 @@ public class FragmentSelfInfo extends ViewPageFragment {
     private TextView textViewSetting;
     private NiceImageView niceImageView;
     private PopupWindow pop;
+
+
+
+
+    private QQLoginManager.QQLoginListener qqLoginListener;
+    private QQLoginManager qqLoginManager;
+    private final int  MSG_LOGIN_SUCCESS=1;
+    private final int MSG_LOGIN_CANCLE=0;
+    private final int MSG_LOGIN_ERROR=-1;
+    private TextView textView;//存放姓名
+    private String nickname;
+    private String flag;
+    @SuppressLint("HandlerLeak")
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+                case MSG_LOGIN_SUCCESS:
+                    System.out.println("登录成功"+nickname+"  "+flag);
+                    Bitmap bitmap=(Bitmap)msg.obj;
+                    niceImageView.setImageBitmap(bitmap);
+                    textView.setText(nickname);
+                    break;
+            }
+        }
+    };
+
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootView==null){
             rootView=inflater.inflate(R.layout.fragment_selfinfo,null);
         }
+
+
+        qqLoginManager=new QQLoginManager("1110404432",getContext(),this);
+
         niceImageView=(NiceImageView)rootView.findViewById(R.id.id_niv);
         textViewYueLi=(TextView)rootView.findViewById(R.id.id_book_yeuli) ;
         textViewNote=(TextView)rootView.findViewById(R.id.id_book_note) ;
@@ -59,6 +105,7 @@ public class FragmentSelfInfo extends ViewPageFragment {
         textViewSetting=(TextView)rootView.findViewById(R.id.id_book_setting) ;
         textViewPlan=(TextView)rootView.findViewById(R.id.id_book_plan);
 
+        textView=(TextView)rootView.findViewById(R.id.id_tv_name) ;
 
         Drawable back= getResources().getDrawable(R.drawable.icon_book_search2);
         Drawable yueli= getResources().getDrawable(R.drawable.icon_book_yueli);
@@ -92,10 +139,12 @@ public class FragmentSelfInfo extends ViewPageFragment {
         textViewPlan.setCompoundDrawables(plan, null, back, null);
 
 
-        niceImageView.setOnClickListener(new View.OnClickListener() {
+        niceImageView.setOnClickListener(new View.OnClickListener() {//点击头像进行登录
             @Override
             public void onClick(View v) {
-                showPop();
+                //showPop();
+                qqLoginManager.launchQQLogin();
+
             }
         });
 
@@ -144,6 +193,41 @@ public class FragmentSelfInfo extends ViewPageFragment {
         }
     }
 
+    @Override
+    public void onQQLoginSuccess(final JSONObject jsonObject) {
+        new Thread(){
+            @Override
+            public void run() {
+                Message msg=new Message();
+                msg.what=MSG_LOGIN_SUCCESS;
+                Bitmap bitmap= null;
+                try {
+                    bitmap = Util.getbitmap(jsonObject.getString("figureurl_qq_2"));
+                    nickname=jsonObject.getString("nickname");
+                    flag=jsonObject.getString("open_id");
+                    msg.obj=bitmap;
+                    handler.sendMessage(msg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    @Override
+    public void onQQLoginCancel() {
+        System.out.println("取消登录");
+    }
+
+    @Override
+    public void onQQLoginError(UiError uiError) {
+        System.out.println("登录失败");
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 回调
+        qqLoginManager.onActivityResultData(requestCode, resultCode, data);
+    }
 
 
 
@@ -151,6 +235,7 @@ public class FragmentSelfInfo extends ViewPageFragment {
 
 
 
+/*
 
     private void showPop() {
         View bottomView = View.inflate(getContext(), R.layout.part_layout_bottom_dialog, null);
@@ -253,6 +338,7 @@ public class FragmentSelfInfo extends ViewPageFragment {
 
             }
         }
+*/
 
 
 
