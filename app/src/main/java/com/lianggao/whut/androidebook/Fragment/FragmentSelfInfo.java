@@ -143,8 +143,9 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
             @Override
             public void onClick(View v) {
                 //showPop();
+                Log.i("登录","开始登录");
                 qqLoginManager.launchQQLogin();
-
+                Log.i("登录","结束登录");
             }
         });
 
@@ -202,6 +203,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
                 msg.what=MSG_LOGIN_SUCCESS;
                 Bitmap bitmap= null;
                 try {
+                    Log.i("登录",jsonObject.getString("figureurl_qq_2"));
                     bitmap = Util.getbitmap(jsonObject.getString("figureurl_qq_2"));
                     nickname=jsonObject.getString("nickname");
                     flag=jsonObject.getString("open_id");

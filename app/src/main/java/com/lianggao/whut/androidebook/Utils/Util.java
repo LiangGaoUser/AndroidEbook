@@ -30,6 +30,8 @@ public class Util {
 			HttpURLConnection conn = (HttpURLConnection) myFileUrl
 					.openConnection();
 			conn.setDoInput(true);
+			conn.setConnectTimeout(200);
+			conn.setReadTimeout(200);
 			conn.connect();
 			InputStream is = conn.getInputStream();
 			bitmap = BitmapFactory.decodeStream(is);
