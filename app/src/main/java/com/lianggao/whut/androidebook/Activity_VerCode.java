@@ -1,9 +1,9 @@
 package com.lianggao.whut.androidebook;
 
 
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 
 public class Activity_VerCode extends FragmentActivity {
     @Override

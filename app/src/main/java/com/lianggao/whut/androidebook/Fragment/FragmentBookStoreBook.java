@@ -1,16 +1,22 @@
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,10 +34,17 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.google.gson.Gson;
+import com.lianggao.whut.androidebook.Activity_More_Recommend_Books;
 import com.lianggao.whut.androidebook.Activity_SearchView;
 import com.lianggao.whut.androidebook.Adapter.BookGridViewAdapter;
+import com.lianggao.whut.androidebook.Adapter.NetRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
+import com.lianggao.whut.androidebook.Model.Book;
+import com.lianggao.whut.androidebook.Net.HttpCaller;
+import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.R;
+import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
 import com.lianggao.whut.androidebook.View.LabelGridView;
 import com.lianggao.whut.androidebook.View.LocalImageHolderView;
@@ -40,6 +53,8 @@ import com.wangjie.shadowviewhelper.ShadowViewDrawable;
 
 import org.w3c.dom.Text;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -98,6 +113,99 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private View linerlayout_banner;
     private View text;
     private View searchView;
+
+    //推荐书籍
+    private List<String>book_name_recommend_list;//名字列表
+    private List<String>book_author_recommend_list;//作者列表
+    private List<String>book_post_recommend_list;//封面列表
+    private List<Bitmap>bitmapList;
+
+    //热门书籍
+    private List<String>book_name_hot_list;//名字
+    private List<String>book_author_hot_list;//作者
+    private List<String>book_post_hot_list;//封面
+    private List<String>book_shortcontent_hot_list;//简介
+    private List<String>book_kind_hot_list;//种类
+
+    //排行榜
+    private List<String>book_name_rank_list;//名字列表
+    private List<String>book_author_rank_list;//作者列表
+    private List<String>book_post_rank_list;//封面列表
+    private List<String>book_shortcontent_rank_list;//简介
+    private List<String>book_kind_rank_list;//种类
+
+
+
+    //封面名称
+    private List<String>book_post_name_list;
+    private final int MSG_GET_RECOMMEND_SUCCESS=1;
+    private final int MSG_GET_HOT_SUCCESS=2;
+    private final int MSG_GET_RANK_SUCCESS=3;
+    private String [] from ={"book_post","book_name","book_progress"};
+    private int [] to = {R.id.book_post,R.id.book_name,R.id.book_progress};
+    private static  FragmentActivity fragmentActivity = null;
+    private NetRecyclerViewAdapter netRecyclerViewAdapter;
+    private NetRecyclerViewAdapter hotRecyclerViewAdapter;
+    private NetRecyclerViewAdapter rankRecyclerViewAdapter;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+                case MSG_GET_RECOMMEND_SUCCESS:
+                    //netRecyclerViewAdapter=new NetRecyclerViewAdapter(getContext(),book_post_recommend_list,book_name_recommend_list,book_author_recommend_list,book_kind_recommend_list,book_shortcontent_recommend_list);
+
+
+
+                    Log.i("获取图片","批量获取图片成功");
+
+                    sim_adapter = new SimpleAdapter(fragmentActivity, data_list,R.layout.part_activity_book_gridview_new, from, to);
+                    sim_adapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+                        @Override
+                        public boolean setViewValue(View view, Object data, String textRepresentation) {
+                            if(view instanceof  ImageView &&data instanceof Bitmap){
+                                ImageView iv=(ImageView)view;
+                                iv.setImageBitmap((Bitmap)data);
+                                return true;
+                            }else{
+                                return false;
+                            }
+                        }
+                    });
+                    gridView.setAdapter(sim_adapter);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    break;
+
+                case MSG_GET_HOT_SUCCESS:
+                    hotRecyclerViewAdapter = new NetRecyclerViewAdapter(getContext(), book_post_hot_list, book_name_hot_list, book_author_hot_list, book_kind_hot_list, book_shortcontent_hot_list);
+                    hotRecyclerViewAdapter.setOnItemClickListener(new NetRecyclerViewAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了recycleview第"+position+"个位置",Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(hotRecyclerViewAdapter);
+                    break;
+                case MSG_GET_RANK_SUCCESS:
+                    rankRecyclerViewAdapter = new NetRecyclerViewAdapter(getContext(), book_post_rank_list, book_name_rank_list, book_author_rank_list, book_kind_rank_list, book_shortcontent_rank_list);
+                    rankRecyclerViewAdapter.setOnItemClickListener(new NetRecyclerViewAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了recycleview第"+position+"个位置",Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView2.setAdapter(rankRecyclerViewAdapter);
+                    break;
+            }
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -113,69 +221,33 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
             searchView=(TextView)rootView.findViewById(R.id.id_tv_search);
 
 
-            //图书列表
+            //热门图书
             recyclerView = (RecyclerView) rootView.findViewById(R.id.id_book_recyclerview);
-            initdata();
-            recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
-            recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Toast.makeText(getContext(),"点击了recycleview第"+position+"个位置",Toast.LENGTH_LONG).show();
-                }
-            });
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(recyclerViewAdapter);
+            getHotBook();
 
 
+
+
+
+
+            //排行榜
             recyclerView2 = (RecyclerView) rootView.findViewById(R.id.id_book_recyclerview2);
-            initdata3();
-            recyclerViewAdapter2 = new RecyclerViewAdapter(getContext(), book_post_list_1, book_name_list_1, book_author_list_1, book_kind_list_1, book_shortcontent_list_1);
-            recyclerViewAdapter2.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Toast.makeText(getContext(),"点击了recycleview第"+position+"个位置",Toast.LENGTH_LONG).show();
-                }
-            });
-
-            recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView2.setAdapter(recyclerViewAdapter2);
+            getRankBook();
 
 
-
-            /*//gridview展示图书
-            gridView = (GridView) rootView.findViewById(R.id.id_book_gridview);
-            initdata2();
-            bookGridViewAdapter = new BookGridViewAdapter(getContext(), book_name_list2, book_post_list2, book_author_list2);
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
-                }
-            });
-            gridView.setAdapter(bookGridViewAdapter);*/
 
 
             gridView=(LabelGridView)rootView.findViewById(R.id.id_book_gridview);
             data_list = new ArrayList<Map<String, Object>>();
-            //新建适配器,这里的book_progress应该为book_author,但是不用修改
-            String [] from ={"book_post","book_name","book_progress"};
-            int [] to = {R.id.book_post,R.id.book_name,R.id.book_progress};
-            getData();
-            sim_adapter = new SimpleAdapter(getContext(), data_list,R.layout.part_activity_book_gridview_new, from, to);
-            gridView.setAdapter(sim_adapter);
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
-                }
-            });
+            getRecommendBook();
+            fragmentActivity=getActivity();
+
 
 
 
 
             //轮播图
             localConvenientBanner = (ConvenientBanner) rootView.findViewById(R.id.localConvenientBanner);
-
             init();
             //对更多图片进行监听并设置大小
             drawableTextView_hot = (DrawableTextView) rootView.findViewById(R.id.id_tv_book_hot);
@@ -197,6 +269,10 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 @Override
                 public void onDrawableRightClickListener(View view) {
                     Toast.makeText(getContext(),"点击了更多推荐",Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(getActivity(), Activity_More_Recommend_Books.class);
+                    startActivity(intent);
+
+
                 }
             });
             //对更多图片进行监听并设置大小
@@ -213,31 +289,21 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         }
         return rootView;
     }
-    public void initdata(){
-        book_post_list=new LinkedList<>();
-        book_name_list=new LinkedList<>();
-        book_author_list=new LinkedList<>();
-        book_shortcontent_list=new LinkedList<>();
-        book_kind_list=new LinkedList<>();
-        for(int i=0;i<5;i++){
-            book_author_list.add("梁高");
-            book_name_list.add("离开的每一种方式");
-            book_post_list.add(R.drawable.img_bookshelf_everybook);
-            book_shortcontent_list.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
-            book_kind_list.add("世界名著");
-        }
-    }
-    public void initdata2(){
-        book_post_list2=new LinkedList<>();
-        book_name_list2=new LinkedList<>();
-        book_author_list2=new LinkedList<>();
-        for(int i=0;i<3;i++){
-            book_author_list2.add("梁高");
-            book_name_list2.add("离开"+i);
-            book_post_list2.add(R.drawable.img_bookshelf_everybook);
-        }
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void initdata3(){
         book_post_list_1=new LinkedList<>();
         book_name_list_1=new LinkedList<>();
@@ -268,9 +334,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         //广告栏播放本地图片资源
         localRes();
     }
-    /**
-     * 广告栏播放本地图片资源
-     */
+    //广告栏播放本地图片资源
     private void localRes() {
         loadTestDatas();
         localConvenientBanner.setPages(new CBViewHolderCreator() {
@@ -292,16 +356,15 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 .setPointViewVisible(true)
                 //监听单击事件
                 .setOnItemClickListener(this)
-        //监听翻页事件
-//                .setOnPageChangeListener(this)
+                //监听翻页事件
+                //.setOnPageChangeListener(this)
         ;
     }
 
 
 
-    /**
-     * 加载本地图片资源
-     */
+
+    // 加载本地图片资源
     private void loadTestDatas() {
         localImages.addAll(Arrays.asList(imagesInteger));
     }
@@ -326,24 +389,138 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         localConvenientBanner.stopTurning();
         //netConvenientBanner.stopTurning();
     }
-    public List<Map<String, Object>> getData(){
-        //cion和iconName的长度是相同的，这里任选其一都可以
-        book_name_list3=new LinkedList<>();
-        book_post_list3=new LinkedList<>();
-        book_author_list3=new LinkedList<>();
-        for(int i=0;i<6;i++){
-            book_name_list3.add("爆裂无声"+i);
-            book_post_list3.add(R.drawable.img_bookshelf_everybook);
-            book_author_list3.add("雨果");
-        }
-        for(int i=0;i<6;i++){
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("book_post", book_post_list3.get(i));
-            map.put("book_name", book_name_list3.get(i));
-            map.put("book_progress",book_author_list3.get(i));
-            data_list.add(map);
-        }
 
-        return data_list;
+    //初始化热门书籍数据
+    public void getHotBook(){
+        new Thread(){
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("username","lianggao"));
+                postParam.add(new NameValuePair("password","12"));
+                postParam.add(new NameValuePair("action","postAction"));
+                book_post_hot_list=new LinkedList<>();
+                book_name_hot_list=new LinkedList<>();
+                book_kind_hot_list=new LinkedList<>();
+                book_shortcontent_hot_list=new LinkedList<>();
+                book_author_hot_list=new LinkedList<>();
+                List<Book>bookHotList;
+                bookHotList=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Hot_Servlet",postParam);
+                Gson gson=new Gson();
+                for(int i=0;i<bookHotList.size();i++){
+                    String jsonStr=gson.toJson(bookHotList.get(i));
+                    Book book=gson.fromJson(jsonStr,Book.class);
+                    book_post_hot_list.add(book.getBook_cover_path());
+                    book_name_hot_list.add(book.getBook_name());
+                    book_shortcontent_hot_list.add(book.getBook_short_content_path());
+                    book_author_hot_list.add(book.getBook_author());
+                    book_kind_hot_list.add("文学名著");
+
+                }
+                Message message=new Message();
+                message.what=MSG_GET_HOT_SUCCESS;
+                handler.sendMessage(message);
+                Looper.loop();
+
+
+            }
+        }.start();
+
+
     }
+
+    //初始化推荐书籍数据
+    public void getRecommendBook(){
+        new Thread(){
+            @Override
+            public void run() {
+                Looper.prepare();
+                book_name_recommend_list=new LinkedList<>();
+                book_post_recommend_list=new LinkedList<>();
+                book_author_recommend_list=new LinkedList<>();
+                bitmapList=new LinkedList<>();
+
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("username","lianggao"));
+                postParam.add(new NameValuePair("password","12"));
+                postParam.add(new NameValuePair("action","postAction"));
+                List<Book>bookRecommendList;
+                bookRecommendList= HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
+                Gson gson=new Gson();
+                Map<String ,Object>map;
+                for(int i=0;i<bookRecommendList.size();i++){
+
+                    String jsonStr=gson.toJson(bookRecommendList.get(i));
+                    Book book=new Book();
+                    book=gson.fromJson(jsonStr,Book.class);
+                    book_post_recommend_list.add(book.getBook_cover_path());
+                    book_author_recommend_list.add(book.getBook_author());
+                    book_name_recommend_list.add(book.getBook_name());
+                }
+                bitmapList=Util.getMultiBitMap(book_post_recommend_list);
+                for(int i=0;i<bookRecommendList.size();i++){
+                    map=new HashMap<String,Object>();
+                    map.put("book_post", bitmapList.get(i));
+                    map.put("book_name", book_name_recommend_list.get(i));
+                    map.put("book_progress",book_author_recommend_list.get(i));
+                    data_list.add(map);
+
+                }
+                Message msg=new Message();
+                msg.obj=data_list;
+                msg.what=MSG_GET_RECOMMEND_SUCCESS;
+                handler.sendMessage(msg);
+            }
+        }.start();
+    }
+
+
+    //初始化排行榜书籍数据
+    public void getRankBook(){
+        new Thread(){
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("username","lianggao"));
+                postParam.add(new NameValuePair("password","12"));
+                postParam.add(new NameValuePair("action","postAction"));
+                book_post_rank_list=new LinkedList<>();
+                book_name_rank_list=new LinkedList<>();
+                book_kind_rank_list=new LinkedList<>();
+                book_shortcontent_rank_list=new LinkedList<>();
+                book_author_rank_list=new LinkedList<>();
+                List<Book>bookRankList;
+                bookRankList=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet",postParam);
+                Gson gson=new Gson();
+                for(int i=0;i<bookRankList.size();i++){
+                    String jsonStr=gson.toJson(bookRankList.get(i));
+                    //String jsonStr2= URLDecoder.decode(jsonStr);
+                    Book book=gson.fromJson(jsonStr,Book.class);
+                    book_post_rank_list.add(book.getBook_cover_path());
+                    book_name_rank_list.add(book.getBook_name());
+                    book_shortcontent_rank_list.add(book.getBook_short_content_path());
+                    book_author_rank_list.add(book.getBook_author());
+                    book_kind_rank_list.add("文学名著");
+
+                }
+                Message message=new Message();
+                message.what=MSG_GET_RANK_SUCCESS;
+                handler.sendMessage(message);
+                Looper.loop();
+
+
+            }
+        }.start();
+
+
+    }
+
+
+
+
+
+
+
 }

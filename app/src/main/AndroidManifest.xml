@@ -45,6 +45,7 @@
         <activity android:name=".MainActivity_Login"></activity>
         <activity android:name=".Activity_More_BookList"></activity>
         <activity android:name=".Activity_QQ"></activity>
+        <activity android:name=".Activity_More_Recommend_Books"></activity>
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"
