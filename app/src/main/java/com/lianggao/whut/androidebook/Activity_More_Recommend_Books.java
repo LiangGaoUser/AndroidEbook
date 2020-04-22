@@ -20,12 +20,16 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lianggao.whut.androidebook.Adapter.LoadMoreAdapter;
+import com.lianggao.whut.androidebook.Adapter.LoadMoreBookAdapter;
 import com.lianggao.whut.androidebook.Adapter.NetRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Entity.User;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
+import com.lianggao.whut.androidebook.View.LoadMoreBookRecyclerView;
+import com.lianggao.whut.androidebook.View.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,7 +38,9 @@ import java.util.List;
 import static org.litepal.LitePalApplication.getContext;
 
 public class Activity_More_Recommend_Books extends FragmentActivity {
-    private RecyclerView recyclerView;
+   // private RecyclerView recyclerView;
+    private LoadMoreBookRecyclerView loadMoreBookRecyclerView;
+    private LoadMoreBookAdapter loadMoreBookAdapter;
     private NetRecyclerViewAdapter recyclerViewAdapter;
     private Button button;
     private List<String> book_post_path_list;//书的封面集合
@@ -51,9 +57,17 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
             switch(msg.what){
                 case MSG_GET_MUTIBITMAP_SUCCESS:
                     Log.i("获取图片","批量获取图片成功");
-                    recyclerViewAdapter=new NetRecyclerViewAdapter(getApplicationContext(),book_post_path_list,book_name_list,book_author_list,book_kind_list,book_shortcontent_list);
+                    /*recyclerViewAdapter=new NetRecyclerViewAdapter(getApplicationContext(),book_post_path_list,book_name_list,book_author_list,book_kind_list,book_shortcontent_list);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(recyclerViewAdapter);
+                    recyclerView.setAdapter(recyclerViewAdapter);*/
+
+                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list);
+                    loadMoreBookRecyclerView.setManager();
+                    loadMoreBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);
+
+
+
+
                     Log.i("初始化","初始化结束");
                     break;
             }
@@ -67,15 +81,10 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_recommend_books);
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-        button=(Button)findViewById(R.id.button);
+        //recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        loadMoreBookRecyclerView=(LoadMoreBookRecyclerView)findViewById(R.id.loadMoreBookRecyclerView);
         fragmentActivity= this.fragmentActivity;
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postSync();
-            }
-        });
+        postSync();
 
 
 
@@ -89,13 +98,9 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
                 postParam.add(new NameValuePair("username","lianggao"));
                 postParam.add(new NameValuePair("password","12"));
                 postParam.add(new NameValuePair("action","postAction"));
-                //com.lianggao.whut.thirdtest.entity.User user=HttpCaller.getInstance().postSync(com.lianggao.whut.thirdtest.entity.User.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Resopnce_Servlet",postParam);
-                //Log.i("ansen","post sync 用户name:"+user.getUsername());
-                /*List<User> userList=HttpCaller.getInstance().postSyncList(User.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Resopnce_Servlet",postParam);
-                for(int i=0;i<userList.size();i++){
-                    System.out.println(userList.get(i));
-                    Log.i("用户",userList.get(i)+"");
-                }*/
+
+
+
 
                 List<Book> userList2 ;
                 userList2=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
@@ -130,64 +135,5 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
                 Looper.loop();
             }
         }.start();
-    }
-    public void initdata(){
-        book_post_path_list=new LinkedList<>();
-        book_name_list=new LinkedList<>();
-        book_author_list=new LinkedList<>();
-        book_shortcontent_list=new LinkedList<>();
-        book_kind_list=new LinkedList<>();
-
-        new Thread(){
-            @Override
-            public void run() {
-                Looper.prepare();
-
-                List<NameValuePair>postParam=new ArrayList<>();
-                postParam.add(new NameValuePair("username","lianggao"));
-                postParam.add(new NameValuePair("password","12"));
-                postParam.add(new NameValuePair("action","postAction"));
-
-                List<User>userList2;
-                userList2=HttpCaller.getInstance().postSyncList(User.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Responce_Servlet",postParam);
-                for(int i=0;i<userList2.size();i++){
-                    Log.i("用户6",userList2.get(i)+"");
-                }
-
-/*
-                List<Book> userList ;
-                userList=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
-                Log.i("用户4",userList+"");
-                for(int i=0;i<userList.size();i++){
-                    Log.i("用户3",userList.get(i)+"");
-                    book_name_list.add(userList.get(i).getBook_name());
-                    book_author_list.add(userList.get(i).getBook_author());
-                    book_shortcontent_list.add(userList.get(i).getBook_short_content_path());
-                    book_post_path_list.add(userList.get(i).getBook_cover_path());
-                }
-                Message message=new Message();
-                message.what=MSG_GET_MUTIBITMAP_SUCCESS;
-                message.sendToTarget();*/
-                Looper.loop();
-            }
-        }.start();
-
-
-
-
-
-        /*book_post_list=new LinkedList<>();
-        book_name_list=new LinkedList<>();
-        book_author_list=new LinkedList<>();
-        book_shortcontent_list=new LinkedList<>();
-        book_kind_list=new LinkedList<>();
-        String url="http://192.168.1.4:8080/com.lianggao.whut/recommendImages/recommend3.jpg";
-        for(int i=0;i<200;i++){
-            book_author_list.add("梁高");
-            book_name_list.add("离开的每一种方式");
-            book_post_list.add(R.drawable.img_bookstore_book_recommend);
-            book_shortcontent_list.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
-            book_kind_list.add("世界名著");
-        }*/
     }
 }

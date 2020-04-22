@@ -35,6 +35,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.google.gson.Gson;
+import com.lianggao.whut.androidebook.Activity_More_BookList;
 import com.lianggao.whut.androidebook.Activity_More_Recommend_Books;
 import com.lianggao.whut.androidebook.Activity_SearchView;
 import com.lianggao.whut.androidebook.Adapter.BookGridViewAdapter;
@@ -68,85 +69,56 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private View rootView;
     private RecyclerView recyclerView;
     private RecyclerView recyclerView2;
-    private RecyclerViewAdapter recyclerViewAdapter;
-    private RecyclerViewAdapter recyclerViewAdapter2;
-    private List<Integer> book_post_list;//书的封面集合
-    private List<String>book_name_list;//书的名字集合
-    private List<String>book_author_list;//书的作者集合
-    private List<String>book_shortcontent_list;//书的简介集合
-    private List<String>book_kind_list;//书的种类集合
-
-    private List<Integer> book_post_list_1;//书的封面集合
-    private List<String>book_name_list_1;//书的名字集合
-    private List<String>book_author_list_1;//书的作者集合
-    private List<String>book_shortcontent_list_1;//书的简介集合
-    private List<String>book_kind_list_1;//书的种类集合
-
-    private List<String>book_name_list2;//书的名字集合
-    private List<String>book_author_list2;//书的作者集合
-    private List<Integer>book_post_list2;//书的图片集合
     private LabelGridView gridView;
-    private BookGridViewAdapter bookGridViewAdapter;
 
-    private TextView tv_search;//搜索框
+
+
     private static final int DRAWABLE_RIGHT = 2;//图片监听上下左右哪个图片的标志
     private  DrawableTextView drawableTextView_hot;
     private DrawableTextView drawableTextView_recommed;
     private DrawableTextView drawableTextView_maylike;
+
     //顶部广告栏控件，加载本地图片
     private ConvenientBanner localConvenientBanner;
-
     private List<Integer> localImages = new ArrayList<>();
-    //本地图片
     private Integer[] imagesInteger = new Integer[] { R.drawable.img_test_lunbotu, R.drawable.img_test_lunbotu, R.drawable.img_test_lunbotu};
-    //修改为gridview和simpleAdapter
-    private List<Map<String, Object>> data_list;
-    private SimpleAdapter sim_adapter;
-    private List<String>book_name_list3;//书的名字集合
-    private List<String>book_author_list3;//书的作者集合
-    private List<Integer>book_post_list3;//书的图片集合
 
 
-    private View linerlayout_hot;
-    private View linerlayout_recommed;
-    private View linerlayout_maylike;
-    private View linerlayout_banner;
-    private View text;
-    private View searchView;
 
     //推荐书籍
     private List<String>book_name_recommend_list;//名字列表
     private List<String>book_author_recommend_list;//作者列表
     private List<String>book_post_recommend_list;//封面列表
     private List<Bitmap>bitmapList;
-
+    private String [] from ={"book_post","book_name","book_progress"};
+    private int [] to = {R.id.book_post,R.id.book_name,R.id.book_progress};
+    private static  FragmentActivity fragmentActivity = null;
+    private List<Map<String, Object>> data_list;
+    private SimpleAdapter sim_adapter;
     //热门书籍
     private List<String>book_name_hot_list;//名字
     private List<String>book_author_hot_list;//作者
     private List<String>book_post_hot_list;//封面
     private List<String>book_shortcontent_hot_list;//简介
     private List<String>book_kind_hot_list;//种类
-
+    private NetRecyclerViewAdapter hotRecyclerViewAdapter;
     //排行榜
     private List<String>book_name_rank_list;//名字列表
     private List<String>book_author_rank_list;//作者列表
     private List<String>book_post_rank_list;//封面列表
     private List<String>book_shortcontent_rank_list;//简介
     private List<String>book_kind_rank_list;//种类
+    private NetRecyclerViewAdapter rankRecyclerViewAdapter;
 
 
 
-    //封面名称
-    private List<String>book_post_name_list;
     private final int MSG_GET_RECOMMEND_SUCCESS=1;
     private final int MSG_GET_HOT_SUCCESS=2;
     private final int MSG_GET_RANK_SUCCESS=3;
-    private String [] from ={"book_post","book_name","book_progress"};
-    private int [] to = {R.id.book_post,R.id.book_name,R.id.book_progress};
-    private static  FragmentActivity fragmentActivity = null;
-    private NetRecyclerViewAdapter netRecyclerViewAdapter;
-    private NetRecyclerViewAdapter hotRecyclerViewAdapter;
-    private NetRecyclerViewAdapter rankRecyclerViewAdapter;
+
+
+
+
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -214,11 +186,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
             rootView = inflater.inflate(R.layout.fragment_bookstore_book, null);
 
-            linerlayout_hot=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_hot);
-            linerlayout_recommed=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_recommend);
-            linerlayout_maylike=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_maylike);
-            linerlayout_banner=(LinearLayout)rootView.findViewById(R.id.id_linerlayout_banner);
-            searchView=(TextView)rootView.findViewById(R.id.id_tv_search);
+
 
 
             //热门图书
@@ -258,6 +226,8 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 @Override
                 public void onDrawableRightClickListener(View view) {
                     Toast.makeText(getContext(),"点击了更多热门",Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(getActivity(), Activity_More_BookList.class);
+                    startActivity(intent);
                 }
             });
             //对更多图片进行监听并设置大小
@@ -304,26 +274,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
 
 
 
-    public void initdata3(){
-        book_post_list_1=new LinkedList<>();
-        book_name_list_1=new LinkedList<>();
-        book_author_list_1=new LinkedList<>();
-        book_shortcontent_list_1=new LinkedList<>();
-        book_kind_list_1=new LinkedList<>();
-        //将集合清空，进行重复使用
-        /*book_post_list.clear();
-        book_name_list.clear();
-        book_author_list.clear();
-        book_shortcontent_list.clear();
-        book_kind_list.clear();*/
-        for(int i=0;i<3;i++){
-            book_author_list_1.add("梁高");
-            book_name_list_1.add("离开的每一种方式");
-            book_post_list_1.add(R.drawable.img_bookshelf_everybook);
-            book_shortcontent_list_1.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
-            book_kind_list_1.add("世界名著");
-        }
-    }
+
     private void initViews() {
         localConvenientBanner = (ConvenientBanner) rootView.findViewById(R.id.localConvenientBanner);
         //netConvenientBanner = (ConvenientBanner) findViewById(R.id.netConvenientBanner);
