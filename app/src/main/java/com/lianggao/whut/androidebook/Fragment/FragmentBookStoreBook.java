@@ -36,6 +36,8 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.google.gson.Gson;
 import com.lianggao.whut.androidebook.Activity_More_BookList;
+import com.lianggao.whut.androidebook.Activity_More_Hot_Books;
+import com.lianggao.whut.androidebook.Activity_More_Rank_Books;
 import com.lianggao.whut.androidebook.Activity_More_Recommend_Books;
 import com.lianggao.whut.androidebook.Activity_SearchView;
 import com.lianggao.whut.androidebook.Adapter.BookGridViewAdapter;
@@ -226,7 +228,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 @Override
                 public void onDrawableRightClickListener(View view) {
                     Toast.makeText(getContext(),"点击了更多热门",Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(getActivity(), Activity_More_BookList.class);
+                    Intent intent=new Intent(getActivity(), Activity_More_Hot_Books.class);//Activity_More_BookList
                     startActivity(intent);
                 }
             });
@@ -253,7 +255,9 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
             drawableTextView_maylike.setDrawableRightClick(new DrawableTextView.DrawableRightClickListener() {
                 @Override
                 public void onDrawableRightClickListener(View view) {
-                    Toast.makeText(getContext(),"点击了猜您喜欢",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"点击了排行榜",Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(getActivity(), Activity_More_Rank_Books.class);
+                    startActivity(intent);
                 }
             });
         }

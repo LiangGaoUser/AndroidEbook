@@ -10,14 +10,14 @@
         android:id="@+id/returnTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="所有推荐"
+        android:text="所有排行"
         android:gravity="left|center"
         android:padding="15dp"
         android:drawablePadding="10dp"/>
-    <com.lianggao.whut.androidebook.View.LoadMoreRecommendBookRecyclerView
-        android:id="@+id/loadMoreRecommendBookRecyclerView"
+    <com.lianggao.whut.androidebook.View.LoadMoreRankBookRecyclerView
+        android:id="@+id/loadMoreRankBookRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.lianggao.whut.androidebook.View.LoadMoreRecommendBookRecyclerView>
+    </com.lianggao.whut.androidebook.View.LoadMoreRankBookRecyclerView>
 </LinearLayout>
 

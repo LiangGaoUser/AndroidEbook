@@ -43,6 +43,12 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
     private int totalNumber;//总的数目
     private int currentTotalNumber;//现在已有的数目
     private final int MSG_GET_MUTIBITMAP_SUCCESS=1;
+
+
+    private OnItemClickListener onItemClickListener;//接口1
+    private OnItemLongClickListener onItemLongClickListener;//接口2
+
+
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -134,6 +140,137 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
         }.start();
     }
 
+
+    public void LoadMoreRecommendBook() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "Recommend"));
+                postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+                currentTotalNumber+=userList2.size();
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_MUTIBITMAP_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadMoreHotBook() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "Hot"));
+                postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+                currentTotalNumber+=userList2.size();
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_MUTIBITMAP_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+
+
+
+
+
+
+    public void LoadMoreRankBook() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "Rank"));
+                postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+                currentTotalNumber+=userList2.size();
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_MUTIBITMAP_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+
+
+
+
+
+
+
     //判断不同的类型，是否到了页脚
     @Override
     public int getItemViewType(int position) {
@@ -156,17 +293,39 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
     }
     //设置数据
     @Override
-    public void onBindViewHolder(CommonRcViewHolder holder, int position) {
+    public void onBindViewHolder(CommonRcViewHolder holder, final int position) {
         if (getItemViewType(position) != ITEM_TYPE_FOOTER){
 
             //TextView tv = holder.getView(R.id.tv);
             //tv.setText(mData.get(position));
-            ImageView imageView=holder.getView(R.id.id_tv_book_post);
+            final ImageView imageView=holder.getView(R.id.id_tv_book_post);
             TextView tv = holder.getView(R.id.id_tv_book_name);
             TextView tv2 = holder.getView(R.id.id_tv_book_shortcontent);
             TextView tv3 = holder.getView(R.id.id_tv_book_author);
             TextView tv4 = holder.getView(R.id.id_tv_book_kind);
             //imageView.setImageResource(bookPostList.get(position));
+
+
+            if(onItemClickListener!=null){
+                imageView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        onItemClickListener.onItemClick(imageView,position);
+                    }
+                });
+
+            }
+            if(onItemLongClickListener!=null){
+                imageView.setOnLongClickListener(new View.OnLongClickListener(){
+                    @Override
+                    public boolean onLongClick(View v) {
+                        onItemLongClickListener.onItemLongClick(imageView,position);
+                        return true;
+                    }
+                });
+
+            }
+
 
             if(bookPostList.get(position)==null){
                 Picasso
@@ -205,7 +364,18 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
         notifyItemChanged(getItemCount()-1);
     }
 
-
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+    }
+    public interface OnItemLongClickListener{
+        void onItemLongClick(View view,int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
+    }
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener=onItemLongClickListener;
+    }
 
 
 

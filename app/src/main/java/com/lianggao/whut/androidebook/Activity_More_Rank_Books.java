@@ -1,8 +1,6 @@
 package com.lianggao.whut.androidebook;
 
 
-import android.app.Activity;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,39 +8,28 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.lianggao.whut.androidebook.Adapter.LoadMoreAdapter;
 import com.lianggao.whut.androidebook.Adapter.LoadMoreBookAdapter;
 import com.lianggao.whut.androidebook.Adapter.NetRecyclerViewAdapter;
-import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
-import com.lianggao.whut.androidebook.Entity.User;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.View.LoadMoreBookRecyclerView;
-import com.lianggao.whut.androidebook.View.LoadMoreRecommendBookRecyclerView;
-import com.lianggao.whut.androidebook.View.LoadMoreRecyclerView;
+import com.lianggao.whut.androidebook.View.LoadMoreRankBookRecyclerView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.litepal.LitePalApplication.getContext;
-
-public class Activity_More_Recommend_Books extends FragmentActivity {
+public class Activity_More_Rank_Books extends FragmentActivity {
    // private RecyclerView recyclerView;
-    private LoadMoreRecommendBookRecyclerView loadMoreRecommendBookRecyclerView;
+    private LoadMoreRankBookRecyclerView loadMoreRankBookRecyclerView;
     private LoadMoreBookAdapter loadMoreBookAdapter;
     private NetRecyclerViewAdapter recyclerViewAdapter;
     private Button button;
@@ -66,16 +53,17 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
                     recyclerView.setAdapter(recyclerViewAdapter);*/
 
                     loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list);
-                    loadMoreRecommendBookRecyclerView.setManager();
-
+                    loadMoreRankBookRecyclerView.setManager();
                     loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
                             Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
                         }
                     });
+                    loadMoreRankBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);
 
-                    loadMoreRecommendBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);
+
+
 
                     Log.i("初始化","初始化结束");
                     break;
@@ -89,9 +77,9 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_more_recommend_books);
+        setContentView(R.layout.activity_more_rank_books);
         //recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-        loadMoreRecommendBookRecyclerView=(LoadMoreRecommendBookRecyclerView) findViewById(R.id.loadMoreRecommendBookRecyclerView);
+        loadMoreRankBookRecyclerView=(LoadMoreRankBookRecyclerView) findViewById(R.id.loadMoreRankBookRecyclerView);
         fragmentActivity= this.fragmentActivity;
 
         //返回
@@ -125,7 +113,7 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
 
 
                 List<Book> userList2 ;
-                userList2=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
+                userList2=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet",postParam);
                 Log.i("用户4",userList2+"");
 
                 book_post_path_list=new LinkedList<String>();
