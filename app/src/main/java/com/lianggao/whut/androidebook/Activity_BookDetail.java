@@ -17,6 +17,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import static org.litepal.LitePalApplication.getContext;
  */
 public class Activity_BookDetail extends Activity{
     private SearchView searchView;
-    private RatingBar ratingBar;
+    //private RatingBar ratingBar;
     private GridView gridView;
     private SimpleAdapter simpleAdapter;
     private List<Map<String, Object>> data_list;
@@ -52,11 +53,17 @@ public class Activity_BookDetail extends Activity{
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_add_bookshelf:
+                    Toast.makeText(Activity_BookDetail.this,"点击了加入书架",Toast.LENGTH_SHORT).show();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_empty:
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_begin_read:
+                    Toast.makeText(Activity_BookDetail.this,"点击了开始阅读",Toast.LENGTH_SHORT).show();
+                    HwTxtPlayActivity.loadTxtFile(Activity_BookDetail.this, "/storage/emulated/0/d.txt");
+
+
+
                     return true;
             }
             return false;
@@ -66,14 +73,14 @@ public class Activity_BookDetail extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookdetail);
-        ratingBar=(RatingBar)findViewById(R.id.ratingbar) ;
+      /*  ratingBar=(RatingBar)findViewById(R.id.ratingbar) ;
         ratingBar.setRating(3);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 Toast.makeText(Activity_BookDetail.this,"rating "+rating+"",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         gridView=(GridView)findViewById(R.id.id_gv_book_list);
         data_list = new ArrayList<Map<String, Object>>();
@@ -101,7 +108,7 @@ public class Activity_BookDetail extends Activity{
 
 
         //设置图标大小和监听
-        textViewCatalog=(DrawableTextView)findViewById(R.id.id_tv_catalog);
+       /* textViewCatalog=(DrawableTextView)findViewById(R.id.id_tv_catalog);
         Drawable drawable= getResources().getDrawable(R.drawable.icon_book_catalog);
         drawable.setBounds(0, 0, 70, 70);
         textViewCatalog.setCompoundDrawables(null, drawable, null, null);
@@ -110,7 +117,7 @@ public class Activity_BookDetail extends Activity{
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"点击了图片 ",Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
         textViewReturn=(TextView)findViewById(R.id.id_tv_return);
         textViewReturn.setOnTouchListener(new View.OnTouchListener() {
             @Override

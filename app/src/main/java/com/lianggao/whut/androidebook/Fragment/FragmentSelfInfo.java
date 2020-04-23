@@ -30,10 +30,10 @@ import com.lianggao.whut.androidebook.Model.QQLoginManager;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
-import com.luck.picture.lib.PictureSelector;
+/*import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.entity.LocalMedia;*/
 import com.shehuan.niv.NiceImageView;
 import com.tencent.tauth.UiError;
 

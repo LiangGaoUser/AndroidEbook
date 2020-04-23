@@ -32,7 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity_BookShelf"></activity>
         <activity android:name=".MainActivity2"></activity>
         <activity android:name=".Activity_BookPage"></activity>
         <activity android:name=".Activity_VerCode"></activity>
@@ -48,7 +47,7 @@
         <activity android:name=".Activity_More_Recommend_Books"></activity>
         <activity android:name=".Activity_More_Hot_Books"></activity>
         <activity android:name=".Activity_More_Rank_Books"></activity>
-
+        <activity android:name=".Activity_Read"></activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

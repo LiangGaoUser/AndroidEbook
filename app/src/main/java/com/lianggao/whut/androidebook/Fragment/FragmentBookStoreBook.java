@@ -51,8 +51,7 @@ import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
 import com.lianggao.whut.androidebook.View.LabelGridView;
 import com.lianggao.whut.androidebook.View.LocalImageHolderView;
-import com.wangjie.shadowviewhelper.ShadowProperty;
-import com.wangjie.shadowviewhelper.ShadowViewDrawable;
+
 
 import org.w3c.dom.Text;
 

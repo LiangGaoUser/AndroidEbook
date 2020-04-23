@@ -1,6 +1,8 @@
 package com.lianggao.whut.androidebook;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
+import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.google.gson.Gson;
 import com.lianggao.whut.androidebook.Adapter.LoadMoreBookAdapter;
 import com.lianggao.whut.androidebook.Adapter.NetRecyclerViewAdapter;
@@ -58,6 +62,8 @@ public class Activity_More_Rank_Books extends FragmentActivity {
                         @Override
                         public void onItemClick(View view, int position) {
                             Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(Activity_More_Rank_Books.this, Activity_BookDetail.class);
+                            startActivity(intent);
                         }
                     });
                     loadMoreRankBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);

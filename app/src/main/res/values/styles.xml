@@ -13,6 +13,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="cardViewStyle">@style/CardView</item>
     </style>
     <style name="main_menu_photo_anim">
         <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>

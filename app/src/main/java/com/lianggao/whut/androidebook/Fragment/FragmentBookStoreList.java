@@ -25,7 +25,7 @@ import com.lianggao.whut.androidebook.Activity_BookDetail;
 import com.lianggao.whut.androidebook.Activity_More_BookList;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
-import com.yinglan.shadowimageview.ShadowImageView;
+//import com.yinglan.shadowimageview.ShadowImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +37,8 @@ import static com.bigkoo.convenientbanner.utils.ScreenUtil.dip2px;
 
 public class FragmentBookStoreList extends Fragment {
     private View rootView;
-private ShadowImageView shadowImageView;
-    private ShadowImageView shadowImageView2;
+    //private ShadowImageView shadowImageView;
+    //private ShadowImageView shadowImageView2;
 
     private LinearLayout linearLayout_book_list;
     private GridView gridView;

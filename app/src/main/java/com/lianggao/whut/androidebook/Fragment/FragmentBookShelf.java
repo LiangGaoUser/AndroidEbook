@@ -22,12 +22,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lianggao.whut.androidebook.Activity_BookShelf;
-import com.lianggao.whut.androidebook.Adapter.BookShelfGridViewAdapter;
-import com.lianggao.whut.androidebook.R;
-import com.lianggao.whut.androidebook.View.BookShelfGridView;
 
-import org.w3c.dom.Text;
+import com.lianggao.whut.androidebook.R;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;

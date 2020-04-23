@@ -12,28 +12,17 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.lianggao.whut.androidebook.Adapter.BookShelfGridViewAdapter;
-import com.lianggao.whut.androidebook.View.BookShelfGridView;
-
-import java.util.LinkedList;
-import java.util.List;
 
 //BookShelfGridView.java  activity_bookshelf_addbar.xml   menu_bookshelf_toolbar.xml 只是设置了toolbar没有其他的内容填充
 public class Activity_BookShelfAddBar extends AppCompatActivity {
-    private BookShelfGridView bookShelfGridView;//书架布局类
+    /*private BookShelfGridView bookShelfGridView;//书架布局类
     private Button back_Btn;//书架中的返回按钮
     private BookShelfGridViewAdapter bookShelfGridViewAdapter;
     private List<String> book_name_list;//书名集合
     private List<Integer>book_post_list;//书的封面集合
     private List<Integer>book_percent_list;//书的已读百分比集合
-    private List<Boolean>book_download_list;//书是否已经下载的集合
+    private List<Boolean>book_download_list;//书是否已经下载的集合*/
 
     private Toolbar toolbar;
     @Override

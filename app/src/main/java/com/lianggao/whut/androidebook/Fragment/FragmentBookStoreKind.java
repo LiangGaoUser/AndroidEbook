@@ -1,11 +1,15 @@
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,14 +20,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.lianggao.whut.androidebook.Activity_BookDetail;
+import com.lianggao.whut.androidebook.Activity_More_Rank_Books;
 import com.lianggao.whut.androidebook.Adapter.KindRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.LoadMoreAdapter;
+import com.lianggao.whut.androidebook.Adapter.LoadMoreBookAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.TextRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.LoadMoreRecyclerView;
-import com.wangjie.shadowviewhelper.ShadowProperty;
-import com.wangjie.shadowviewhelper.ShadowViewDrawable;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +60,51 @@ public class FragmentBookStoreKind extends Fragment {
     private View linerlayout_book;
     private View linerlayout_kind;
 
+
+
+
+
+   /* private final int MSG_GET_MUTIBITMAP_SUCCESS=1;
+    private FragmentActivity fragmentActivity;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+                case MSG_GET_MUTIBITMAP_SUCCESS:
+                    Log.i("获取图片","批量获取图片成功");
+
+
+                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list);
+                    loadMoreRankBookRecyclerView.setManager();
+                    loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(Activity_More_Rank_Books.this, Activity_BookDetail.class);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRankBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);
+
+
+
+
+                    Log.i("初始化","初始化结束");
+                    break;
+            }
+        }
+    };
+*/
+
+
+
+
+
+
+
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,7 +130,7 @@ public class FragmentBookStoreKind extends Fragment {
                     //recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
                    // recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
                     //recyclerView1.setAdapter(recyclerViewAdapter);
-                    loadMoreAdapter=new LoadMoreAdapter();
+                    loadMoreAdapter=new LoadMoreAdapter(getContext());
                     loadMoreRecyclerView.setManager2();
                     loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
                 }
@@ -90,24 +141,13 @@ public class FragmentBookStoreKind extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(textrecyclerViewAdapter);
 
-        /*initdata2();
-        recyclerView1=(RecyclerView)rootView.findViewById(R.id.id_recycleview_book);
-        recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
-        recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
 
-                Toast.makeText(getContext(),"点击了recycleview第"+position+"个位置",Toast.LENGTH_LONG).show();
-            }
-        });
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView1.setAdapter(recyclerViewAdapter);*/
 
 
 
         loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
         loadMoreRecyclerView.setManager();
-        loadMoreAdapter=new LoadMoreAdapter();
+        loadMoreAdapter=new LoadMoreAdapter(getContext());
         loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
 
 

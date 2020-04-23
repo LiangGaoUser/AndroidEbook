@@ -307,7 +307,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
 
 
             if(onItemClickListener!=null){
-                imageView.setOnClickListener(new View.OnClickListener(){
+                holder.itemView.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
                         onItemClickListener.onItemClick(imageView,position);
@@ -316,7 +316,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
 
             }
             if(onItemLongClickListener!=null){
-                imageView.setOnLongClickListener(new View.OnLongClickListener(){
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
                     @Override
                     public boolean onLongClick(View v) {
                         onItemLongClickListener.onItemLongClick(imageView,position);
