@@ -94,7 +94,7 @@
                         android:textSize="10dp"
                         android:textStyle="normal"/>
                     <TextView
-                        android:id="@+id/id_tv_book_author"
+                        android:id="@+id/id_tv_book_kind"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
 
@@ -104,7 +104,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/id_tv_book_kind"
+                        android:id="@+id/id_tv_book_author"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
                         android:text="作者"

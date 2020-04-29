@@ -27,6 +27,7 @@ import com.lianggao.whut.androidebook.Adapter.LoadMoreAdapter;
 import com.lianggao.whut.androidebook.Adapter.LoadMoreBookAdapter;
 import com.lianggao.whut.androidebook.Adapter.RecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Adapter.TextRecyclerViewAdapter;
+import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.LoadMoreRecyclerView;
 
@@ -59,7 +60,7 @@ public class FragmentBookStoreKind extends Fragment {
     private View recyclebookView;
     private View linerlayout_book;
     private View linerlayout_kind;
-
+    private String[] kindList={"小说","文学","社科","计算机","励志","经济"};
 
 
 
@@ -125,16 +126,143 @@ public class FragmentBookStoreKind extends Fragment {
                 Log.i("!!!+",position+"");
                 textrecyclerViewAdapter.setKindNumber(position);
                 textrecyclerViewAdapter.notifyDataSetChanged();
-                if(position==1){
-                    initdata3();
+                if(position==0){loadMoreAdapter.setBookKind(position+1);
+                    Toast.makeText(getContext(),"点击了小说",Toast.LENGTH_LONG).show();
+                    //initdata3();
                     //recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
                    // recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
                     //recyclerView1.setAdapter(recyclerViewAdapter);
+                    loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
                     loadMoreAdapter=new LoadMoreAdapter(getContext());
-                    loadMoreRecyclerView.setManager2();
+                    loadMoreAdapter.setBookKind(position+1);
+                    loadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRecyclerView.setManager();
+                    loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
+                }else if(position==1){
+                    Toast.makeText(getContext(),"点击了文学",Toast.LENGTH_LONG).show();
+                    loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+                    loadMoreAdapter=new LoadMoreAdapter(getContext());
+                    loadMoreAdapter.setBookKind(position+1);
+                    loadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRecyclerView.setManager();
+                    loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
+                }else if(position==2){
+                    Toast.makeText(getContext(),"点击了社科",Toast.LENGTH_LONG).show();
+                    loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+                    loadMoreAdapter=new LoadMoreAdapter(getContext());
+                    loadMoreAdapter.setBookKind(position+1);
+                    loadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRecyclerView.setManager();
+                    loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
+                }else if(position==3){
+                    Toast.makeText(getContext(),"点击了计算机",Toast.LENGTH_LONG).show();
+                    loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+                    loadMoreAdapter=new LoadMoreAdapter(getContext());
+                    loadMoreAdapter.setBookKind(position+1);
+                    loadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRecyclerView.setManager();
+                    loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
+                }else if(position==4){
+                    Toast.makeText(getContext(),"点击了励志",Toast.LENGTH_LONG).show();
+                    loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+                    loadMoreAdapter=new LoadMoreAdapter(getContext());
+                    loadMoreAdapter.setBookKind(position+1);
+                    loadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRecyclerView.setManager();
+                    loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
+                }else if(position==5){
+                    Toast.makeText(getContext(),"点击了经济",Toast.LENGTH_LONG).show();
+                    loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
+                    loadMoreAdapter=new LoadMoreAdapter(getContext());
+                    loadMoreAdapter.setBookKind(position+1);
+                    loadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Toast.makeText(getContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+                        }
+                    });
+                    loadMoreRecyclerView.setManager();
                     loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
                 }
-                Toast.makeText(getContext(),"第"+position+"个",Toast.LENGTH_LONG).show();
+
+
+
+
+
+
             }
         });
         recyclerView=(RecyclerView)rootView.findViewById(R.id.id_recycleview_kind);
@@ -148,6 +276,7 @@ public class FragmentBookStoreKind extends Fragment {
         loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
         loadMoreRecyclerView.setManager();
         loadMoreAdapter=new LoadMoreAdapter(getContext());
+        loadMoreAdapter.setBookKind(1);//默认选择第一项
         loadMoreRecyclerView.setLoadMoreAdapter(loadMoreAdapter);
 
 
@@ -160,8 +289,8 @@ public class FragmentBookStoreKind extends Fragment {
     }
     void initData(){
         bookKindList=new LinkedList<>();
-        for(int i=0;i<12;i++){
-            bookKindList.add("玄幻"+i);
+        for(int i=0;i<6;i++){
+            bookKindList.add(kindList[i]);
         }
     }
 

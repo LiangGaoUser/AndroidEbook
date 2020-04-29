@@ -12,13 +12,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
+import com.lianggao.whut.androidebook.Model.Book;
+import com.lianggao.whut.androidebook.View.BookNameTextView;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +52,12 @@ public class Activity_BookDetail extends Activity{
     private List<Integer>booklist_author_list;//书的作者
     private DrawableTextView textViewCatalog;//目录图标
     private TextView textViewReturn;//返回图标
+    Book book=new Book();
+
+    private ImageView imageView;
+    private BookNameTextView id_tv_book_name;
+    private TextView  id_tv_book_shortcontent;
+    private TextView id_tv_book_author;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -73,6 +83,31 @@ public class Activity_BookDetail extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookdetail);
+
+
+        book=getIntent().getParcelableExtra("book");
+        id_tv_book_name=(BookNameTextView)findViewById(R.id.id_tv_book_name);
+        id_tv_book_name.setText(book.getBook_name());
+        id_tv_book_shortcontent=(TextView)findViewById(R.id.id_tv_book_shortcontent) ;
+        id_tv_book_shortcontent.setText(book.getBook_short_content_path());
+        id_tv_book_author=(TextView)findViewById(R.id.id_tv_book_author) ;
+        id_tv_book_author.setText(book.getBook_author());
+
+        imageView=(ImageView)findViewById(R.id.id_tv_book_post) ;
+        if(book.getBook_cover_path()==null){
+            Picasso
+                    .with(getApplicationContext())
+                    .load(R.drawable.img_booklist_recommend1)
+                    .into(imageView);
+
+        }else{
+            Picasso
+                    .with(getApplicationContext())
+                    .load(book.getBook_cover_path())
+                    .placeholder(R.drawable.icon_arrow_return)//占位符
+                    .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
+                    .into(imageView);
+        }
       /*  ratingBar=(RatingBar)findViewById(R.id.ratingbar) ;
         ratingBar.setRating(3);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

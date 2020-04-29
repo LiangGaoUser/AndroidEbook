@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -63,6 +64,12 @@ public class Activity_More_Rank_Books extends FragmentActivity {
                         public void onItemClick(View view, int position) {
                             Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(Activity_More_Rank_Books.this, Activity_BookDetail.class);
+                            Book book=new Book();
+                            book.setBook_cover_path(loadMoreBookAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreBookAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreBookAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreBookAdapter.getBookAuthorList().get(position));
+                            intent.putExtra("book",book);
                             startActivity(intent);
                         }
                     });

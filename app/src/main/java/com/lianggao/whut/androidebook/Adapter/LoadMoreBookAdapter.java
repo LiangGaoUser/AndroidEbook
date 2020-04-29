@@ -377,8 +377,21 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
         this.onItemLongClickListener=onItemLongClickListener;
     }
 
-
-
+    public List<String> getBookPostList(){
+        return bookPostList;
+    }
+    public List<String>getBookNameList(){
+        return bookNameList;
+    }
+    public List<String>getBookAuthorList(){
+        return bookAuthorList;
+    }
+    public List<String>getBookShortContentList(){
+        return bookShortContentList;
+    }
+    public List<String>getBookKindList(){
+        return bookKindList;
+    }
 
 }
 

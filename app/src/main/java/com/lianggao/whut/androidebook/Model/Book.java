@@ -1,11 +1,14 @@
 package com.lianggao.whut.androidebook.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author LiangGao
  * @description:
  * @data:${DATA} 15:11
  */
-public class Book {
+public class Book implements Parcelable {
     private int book_id;//书本编号
     private String book_name;//书本名称
     private String book_author;//书本作者
@@ -133,5 +136,60 @@ public class Book {
                 ", book_detail_kind_id=" + book_detail_kind_id +
                 ", book_catalog_total_number=" + book_catalog_total_number +
                 '}';
+    }
+
+
+
+    public static final Parcelable.Creator<Book>    CREATOR=new Parcelable.Creator<Book>(){
+
+        @Override
+        public Book createFromParcel(Parcel source) {
+            Book book=new Book();
+            book.setBook_id(source.readInt());
+            book.setBook_name(source.readString());
+            book.setBook_author(source.readString());
+            book.setBook_short_content_path(source.readString());
+            book.setBook_evalute(source.readDouble());
+            book.setBook_word_number(source.readInt());
+            book.setBook_cover_path(source.readString());
+            book.setBook_publish(source.readString());
+            book.setBook_download_number(source.readInt());
+            book.setBook_use(source.readString());
+            book.setBook_detail_kind_id(source.readInt());
+            book.setBook_catalog_total_number(source.readInt());
+            return book;
+
+
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(book_id);
+        dest.writeString(book_name);
+        dest.writeString(book_author);
+        dest.writeString(book_short_content_path);
+        dest.writeDouble(book_evalute);
+        dest.writeInt(book_word_number);
+        dest.writeString(book_cover_path);
+        dest.writeString(book_publish);
+        dest.writeInt(book_download_number);
+        dest.writeString(book_use);
+        dest.writeInt(book_detail_kind_id);
+        dest.writeInt(book_catalog_total_number);
+
+
+
+
+
     }
 }

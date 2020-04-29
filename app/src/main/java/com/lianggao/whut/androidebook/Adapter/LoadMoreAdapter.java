@@ -45,6 +45,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
     private final int MSG_GET_KIND_1_SUCCESS=1;
     private final int MSG_GET_KIND_2_SUCCES=2;
     private Context context;
+    private OnItemClickListener onItemClickListener;//接口1
+    private OnItemLongClickListener onItemLongClickListener;//接口2
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -72,7 +74,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         bookShortContentList = new LinkedList<>();
         bookAuthorList = new LinkedList<>();
         bookKindList = new LinkedList<>();
-        setBookKind(1);
+        //setBookKind(1);
        /* for (int i = 0; i < 10; i++) {
             bookPostList.add("http://192.168.1.4:8080/com.lianggao.whut/Images_recommend/recommend1.jpg");
             bookNameList.add("放风筝的人 "+i+"");
@@ -100,24 +102,102 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
     public void setBookKind(int bookKind){
         this.bookKind=bookKind;
-        if(bookKind==1){
-            LoadKind1();
-        }else if(bookKind==2){
-            LoadKind2();
+
+        bookNameList.clear();
+        bookKindList.clear();
+        bookAuthorList.clear();
+        bookPostList.clear();
+        bookShortContentList.clear();
+
+        notifyItemRangeInserted(0,0);
+
+
+
+        switch (bookKind){
+            case 1:
+                LoadKind1();
+                break;
+            case 2:
+                LoadKind2();
+                break;
+            case 3:
+                LoadKind3();
+                break;
+            case 4:
+                LoadKind4();
+                break;
+            case 5:
+                LoadKind5();
+                break;
+            case 6:
+                LoadKind6();
+                break;
+
         }
+
+
+
+
+
     }
 
     public void loadMore(){
-        if(bookKind==1){
-            if(bookNameList.size()<36){
-                LoadMore1();
-            }else{
-                setLoadMoreText("没有更多了");
-            }
 
-        }else if(bookKind==2){
-            LoadMore2();
+
+
+        switch (bookKind){
+            case 1:
+                if(bookNameList.size()<136){
+                    LoadMore1();
+                }else{
+                    setLoadMoreText("没有更多了");
+                }
+                break;
+            case 2:
+                if(bookNameList.size()<136){
+                    LoadMore2();
+                }else{
+                    setLoadMoreText("没有更多了");
+                }
+                break;
+            case 3:
+                if(bookNameList.size()<136){
+                    LoadMore3();
+                }else{
+                    setLoadMoreText("没有更多了");
+                }
+                break;
+            case 4:
+                if(bookNameList.size()<136){
+                    LoadMore4();
+                }else{
+                    setLoadMoreText("没有更多了");
+                }
+                break;
+            case 5:
+                if(bookNameList.size()<136){
+                    LoadMore5();
+                }else{
+                    setLoadMoreText("没有更多了");
+                }
+                break;
+            case 6:
+                if(bookNameList.size()<136){
+                    LoadMore6();
+                }else{
+                    setLoadMoreText("没有更多了");
+                }
+                break;
+
         }
+
+
+
+
+
+
+
+
     }
     public void LoadKind1() {
         new Thread() {
@@ -201,6 +281,171 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
 
+
+
+
+
+
+
+
+
+
+    public void LoadKind3() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("action", "loadMore"));
+
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_1_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadKind4() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("action", "loadMore"));
+
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_1_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadKind5() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("action", "loadMore"));
+
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_1_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadKind6() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("action", "loadMore"));
+
+
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_1_SUCCESS;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
     //判断不同的类型，是否到了页脚
     @Override
     public int getItemViewType(int position) {
@@ -223,19 +468,39 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
     }
     //设置数据
     @Override
-    public void onBindViewHolder(CommonRcViewHolder holder, int position) {
+    public void onBindViewHolder(CommonRcViewHolder holder, final int position) {
         if (getItemViewType(position) != ITEM_TYPE_FOOTER){
 
             //TextView tv = holder.getView(R.id.tv);
             //tv.setText(mData.get(position));
-            ImageView imageView=holder.getView(R.id.id_tv_book_post);
+            final ImageView imageView=holder.getView(R.id.id_tv_book_post);
             TextView tv = holder.getView(R.id.id_tv_book_name);
             TextView tv2 = holder.getView(R.id.id_tv_book_shortcontent);
             TextView tv3 = holder.getView(R.id.id_tv_book_author);
             TextView tv4 = holder.getView(R.id.id_tv_book_kind);
             //imageView.setImageResource(bookPostList.get(position));
 
-            if(bookPostList.get(position)==null){
+            if(onItemClickListener!=null){
+                holder.itemView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        onItemClickListener.onItemClick(imageView,position);
+                    }
+                });
+
+            }
+            if(onItemLongClickListener!=null){
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+                    @Override
+                    public boolean onLongClick(View v) {
+                        onItemLongClickListener.onItemLongClick(imageView,position);
+                        return true;
+                    }
+                });
+
+            }
+
+            if(position>bookPostList.size()-1){//bookPostList.get(position)==null||
                 Picasso
                         .with(context)
                         .load(R.drawable.img_booklist_recommend1)
@@ -261,16 +526,6 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return  bookNameList.size()+1;
-    }
-
-    public void setLoadMoreText(String loadMoreText) {
-        this.loadMoreText = loadMoreText;
-        notifyItemChanged(getItemCount()-1);
-    }
-
     public void LoadMore1() {
         new Thread() {
             @Override
@@ -278,7 +533,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 Looper.prepare();
                 List<NameValuePair> postParam = new ArrayList<>();
                 postParam.add(new NameValuePair("kind", "1"));
-
+                postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
@@ -308,6 +563,16 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         }.start();
     }
 
+    @Override
+    public int getItemCount() {
+        return  bookNameList.size()+1;
+    }
+
+    public void setLoadMoreText(String loadMoreText) {
+        this.loadMoreText = loadMoreText;
+        notifyItemChanged(getItemCount()-1);
+    }
+
     public void LoadMore2() {
         new Thread() {
             @Override
@@ -315,7 +580,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 Looper.prepare();
                 List<NameValuePair> postParam = new ArrayList<>();
                 postParam.add(new NameValuePair("kind", "2"));
-
+                postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
@@ -370,7 +635,180 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         }
     }*/
 
+    public void LoadMore3() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "3"));
+                postParam.add(new NameValuePair("currentTotalNumber", "10"));
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
 
 
+                Message message = new Message();
+                message.what = MSG_GET_KIND_2_SUCCES;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadMore4() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "4"));
+                postParam.add(new NameValuePair("currentTotalNumber", "10"));
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_2_SUCCES;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadMore5() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "5"));
+                postParam.add(new NameValuePair("currentTotalNumber", "10"));
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_2_SUCCES;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public void LoadMore6() {
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("kind", "6"));
+                postParam.add(new NameValuePair("currentTotalNumber", "10"));
+                List<Book> userList2;
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                Log.i("用户4", userList2 + "");
+
+                Gson gson = new Gson();
+
+                for (int i = 0; i < userList2.size(); i++) {
+                    String jsonStr = gson.toJson(userList2.get(i));
+                    Book book = new Book();
+                    book = gson.fromJson(jsonStr, Book.class);
+                    bookPostList.add(book.getBook_cover_path());
+                    bookAuthorList.add(book.getBook_author());
+                    bookNameList.add(book.getBook_name());
+                    bookShortContentList.add(book.getBook_short_content_path());
+                    bookKindList.add("文学名著");
+                    Log.i("用户输出", book.getBook_name() + book.getBook_author());
+
+                }
+
+
+                Message message = new Message();
+                message.what = MSG_GET_KIND_2_SUCCES;
+                handler.sendMessage(message);
+                //message.sendToTarget();
+                Looper.loop();
+            }
+        }.start();
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+    }
+    public interface OnItemLongClickListener{
+        void onItemLongClick(View view,int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
+    }
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener=onItemLongClickListener;
+    }
+    public List<String> getBookPostList(){
+        return bookPostList;
+    }
+    public List<String>getBookNameList(){
+        return bookNameList;
+    }
+    public List<String>getBookAuthorList(){
+        return bookAuthorList;
+    }
+    public List<String>getBookShortContentList(){
+        return bookShortContentList;
+    }
+    public List<String>getBookKindList(){
+        return bookKindList;
+    }
 }
 
