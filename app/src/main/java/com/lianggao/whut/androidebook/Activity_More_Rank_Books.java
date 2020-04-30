@@ -44,6 +44,9 @@ public class Activity_More_Rank_Books extends FragmentActivity {
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_kind_list;//书的种类集合
+    private List<Integer>book_id_list;/////////////////////////////
+
+
 
     private final int MSG_GET_MUTIBITMAP_SUCCESS=1;
     private FragmentActivity fragmentActivity;
@@ -57,7 +60,7 @@ public class Activity_More_Rank_Books extends FragmentActivity {
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(recyclerViewAdapter);*/
 
-                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list);
+                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list,book_id_list);
                     loadMoreRankBookRecyclerView.setManager();
                     loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
                         @Override
@@ -65,6 +68,8 @@ public class Activity_More_Rank_Books extends FragmentActivity {
                             Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(Activity_More_Rank_Books.this, Activity_BookDetail.class);
                             Book book=new Book();
+
+                            book.setBook_id(loadMoreBookAdapter.getBookIdList().get(position));///////////////////////////////
                             book.setBook_cover_path(loadMoreBookAdapter.getBookPostList().get(position));
                             book.setBook_name(loadMoreBookAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreBookAdapter.getBookShortContentList().get(position));
@@ -134,12 +139,14 @@ public class Activity_More_Rank_Books extends FragmentActivity {
                 book_author_list=new LinkedList<String>();
                 book_shortcontent_list=new LinkedList<String>();
                 book_kind_list=new LinkedList<>();
+                book_id_list=new LinkedList<>();///////////////////////////////////////////
                 Gson gson=new Gson();
 
                 for(int i=0;i<userList2.size();i++){
                     String jsonStr=gson.toJson(userList2.get(i));
                     Book book=new Book();
                     book=gson.fromJson(jsonStr,Book.class);
+                    book_id_list.add(book.getBook_id());/////////////////////////////////////////
                     book_post_path_list.add(book.getBook_cover_path());
                     book_author_list.add(book.getBook_author());
                     book_name_list.add(book.getBook_name());

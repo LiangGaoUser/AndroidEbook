@@ -2,6 +2,7 @@ package com.lianggao.whut.androidebook.Fragment;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,9 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
+import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -52,6 +56,8 @@ public class FragmentBookShelf extends ViewPageFragment {
     private SimpleAdapter sim_adapter;
 
     private Toolbar toolbar;
+
+    public bookShelfTableManger bookshelfTableManger;
     //    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,6 +110,28 @@ public class FragmentBookShelf extends ViewPageFragment {
             });
 
         }
+
+        //判断bookshelf表是否为空，为空则建立bookshelf表
+        bookshelfTableManger=new bookShelfTableManger(getContext());
+        bookshelfTableManger.createDb();
+        //判断系统文件夹是否存在不存在就创建文件夹
+        File file= new File(Environment.getExternalStorageDirectory()+"/android_ebook/CacheCover");
+        if(!file.exists()){
+            file.mkdir();
+        }
+        File file2= new File(Environment.getExternalStorageDirectory()+"/android_ebook/CacheContent");
+        if(!file2.exists()){
+            file2.mkdir();
+        }
+        File file3= new File(Environment.getExternalStorageDirectory()+"/android_ebook/Cover");
+        if(!file3.exists()){
+            file3.mkdir();
+        }
+        File file4= new File(Environment.getExternalStorageDirectory()+"/android_ebook/Content");
+        if(!file4.exists()){
+            file4.mkdir();
+        }
+
         return rootView;
     }
     /*@Override

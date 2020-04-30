@@ -39,6 +39,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
     private List<String> bookShortContentList;
     private List<String> bookAuthorList;
     private List<String> bookKindList;
+    private List<Integer>bookIdList;///////////////////////////////////
     private Context context;
     private int totalNumber;//总的数目
     private int currentTotalNumber;//现在已有的数目
@@ -67,18 +68,21 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
             }
         }
     };
-    public LoadMoreBookAdapter(Context context, int totalNumber,List<String>bookPostList, List<String> bookNameList, List<String>bookAuthorList, List<String>bookShortContentList, List<String>bookKindList){
+    ////////////////////////////////////////
+    public LoadMoreBookAdapter(Context context, int totalNumber,List<String>bookPostList, List<String> bookNameList, List<String>bookAuthorList, List<String>bookShortContentList, List<String>bookKindList,List<Integer>bookIdList){
         bookPostList=new LinkedList<>();
         bookNameList = new LinkedList<>();
         bookShortContentList = new LinkedList<>();
         bookAuthorList = new LinkedList<>();
         bookKindList = new LinkedList<>();
+        bookIdList=new LinkedList<>();//////////////////////////
         this.context=context;
         this.bookNameList=bookNameList;
         this.bookAuthorList=bookAuthorList;
         this.bookPostList=bookPostList;
         this.bookShortContentList=bookShortContentList;
         this.bookKindList=bookKindList;
+        this.bookIdList=bookIdList;////////////////////////
         this.totalNumber=totalNumber;
         this.currentTotalNumber=bookNameList.size();
 
@@ -121,6 +125,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     String jsonStr = gson.toJson(userList2.get(i));
                     Book book = new Book();
                     book = gson.fromJson(jsonStr, Book.class);
+                    bookIdList.add(book.getBook_id());/////////////////////////////////////
                     bookPostList.add(book.getBook_cover_path());
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
@@ -161,6 +166,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     String jsonStr = gson.toJson(userList2.get(i));
                     Book book = new Book();
                     book = gson.fromJson(jsonStr, Book.class);
+                    bookIdList.add(book.getBook_id());/////////////////////////////////////
                     bookPostList.add(book.getBook_cover_path());
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
@@ -200,6 +206,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     String jsonStr = gson.toJson(userList2.get(i));
                     Book book = new Book();
                     book = gson.fromJson(jsonStr, Book.class);
+                    bookIdList.add(book.getBook_id());/////////////////////////////////////
                     bookPostList.add(book.getBook_cover_path());
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
@@ -245,6 +252,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     String jsonStr = gson.toJson(userList2.get(i));
                     Book book = new Book();
                     book = gson.fromJson(jsonStr, Book.class);
+                    bookIdList.add(book.getBook_id());/////////////////////////////////////
                     bookPostList.add(book.getBook_cover_path());
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
@@ -391,6 +399,9 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
     }
     public List<String>getBookKindList(){
         return bookKindList;
+    }
+    public List<Integer>getBookIdList(){/////////////////////////////////////
+        return bookIdList;
     }
 
 }

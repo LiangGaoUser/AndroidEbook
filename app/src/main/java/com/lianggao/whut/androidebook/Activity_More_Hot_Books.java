@@ -39,7 +39,7 @@ public class Activity_More_Hot_Books extends FragmentActivity {
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_kind_list;//书的种类集合
-
+    private List<Integer>book_id_list;/////////////////////////////
     private final int MSG_GET_MUTIBITMAP_SUCCESS=1;
     private FragmentActivity fragmentActivity;
     Handler handler=new Handler(){
@@ -51,8 +51,9 @@ public class Activity_More_Hot_Books extends FragmentActivity {
                     /*recyclerViewAdapter=new NetRecyclerViewAdapter(getApplicationContext(),book_post_path_list,book_name_list,book_author_list,book_kind_list,book_shortcontent_list);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(recyclerViewAdapter);*/
+                    ///////////////////////////
 
-                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list);
+                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list,book_id_list);
                     loadMoreHotBookRecyclerView.setManager();
                     loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
                         @Override
@@ -121,6 +122,7 @@ public class Activity_More_Hot_Books extends FragmentActivity {
                 book_author_list=new LinkedList<String>();
                 book_shortcontent_list=new LinkedList<String>();
                 book_kind_list=new LinkedList<>();
+                book_id_list=new LinkedList<>();////////////////////////////
                 Gson gson=new Gson();
 
                 for(int i=0;i<userList2.size();i++){
@@ -132,6 +134,7 @@ public class Activity_More_Hot_Books extends FragmentActivity {
                     book_name_list.add(book.getBook_name());
                     book_shortcontent_list.add(book.getBook_short_content_path());
                     book_kind_list.add("文学名著");
+                    book_id_list.add(book.getBook_id());////////////////////////////////
                     Log.i("用户输出",book.getBook_name()+book.getBook_author());
 
                 }

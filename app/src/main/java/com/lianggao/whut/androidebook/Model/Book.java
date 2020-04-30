@@ -22,7 +22,7 @@ public class Book implements Parcelable {
 
     private int book_detail_kind_id;//书的详细类型编号比如13心理学
     private int book_catalog_total_number;//书的总共章节数目
-
+    private String book_path;//书的文件路径
 
     public int getBook_id() {
         return book_id;
@@ -120,7 +120,15 @@ public class Book implements Parcelable {
         this.book_catalog_total_number = book_catalog_total_number;
     }
 
-    @Override
+    public String getBook_path() {
+        return book_path;
+    }
+
+    public void setBook_path(String book_path) {
+        this.book_path = book_path;
+    }
+
+   /* @Override
     public String toString() {
         return "Book{" +
                 "book_id=" + book_id +
@@ -137,8 +145,26 @@ public class Book implements Parcelable {
                 ", book_catalog_total_number=" + book_catalog_total_number +
                 '}';
     }
+*/
 
-
+    @Override
+    public String toString() {
+        return "Book{" +
+                "book_id=" + book_id +
+                ", book_name='" + book_name + '\'' +
+                ", book_author='" + book_author + '\'' +
+                ", book_short_content_path='" + book_short_content_path + '\'' +
+                ", book_evalute=" + book_evalute +
+                ", book_word_number=" + book_word_number +
+                ", book_cover_path='" + book_cover_path + '\'' +
+                ", book_publish='" + book_publish + '\'' +
+                ", book_download_number=" + book_download_number +
+                ", book_use='" + book_use + '\'' +
+                ", book_detail_kind_id=" + book_detail_kind_id +
+                ", book_catalog_total_number=" + book_catalog_total_number +
+                ", book_path='" + book_path + '\'' +
+                '}';
+    }
 
     public static final Parcelable.Creator<Book>    CREATOR=new Parcelable.Creator<Book>(){
 
@@ -157,6 +183,7 @@ public class Book implements Parcelable {
             book.setBook_use(source.readString());
             book.setBook_detail_kind_id(source.readInt());
             book.setBook_catalog_total_number(source.readInt());
+            book.setBook_path(source.readString());
             return book;
 
 
@@ -186,7 +213,7 @@ public class Book implements Parcelable {
         dest.writeString(book_use);
         dest.writeInt(book_detail_kind_id);
         dest.writeInt(book_catalog_total_number);
-
+        dest.writeString(book_path);
 
 
 

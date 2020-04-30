@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,16 +25,21 @@ import android.widget.Toast;
 
 import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Model.Book;
+import com.lianggao.whut.androidebook.Net.HttpCaller;
+import com.lianggao.whut.androidebook.Net.NameValuePair;
+import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 import com.lianggao.whut.androidebook.View.BookNameTextView;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import io.github.lizhangqu.coreprogress.ProgressUIListener;
 import scut.carson_ho.searchview.ICallBack;
 import scut.carson_ho.searchview.SearchView;
 import scut.carson_ho.searchview.bCallBack;
@@ -58,20 +68,93 @@ public class Activity_BookDetail extends Activity{
     private BookNameTextView id_tv_book_name;
     private TextView  id_tv_book_shortcontent;
     private TextView id_tv_book_author;
+    private int bookid;///////////////////////
+    public bookShelfTableManger bookshelfTableManger;
+    private final int MSG_DOWNLOAD_SUCCESS=1;
+    private final int MSG_DOWNLOADCHCHE_SUCCESS=2;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_DOWNLOAD_SUCCESS:
+                    Toast.makeText(getContext(),"加入书架成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_DOWNLOADCHCHE_SUCCESS:
+                    Toast.makeText(getContext(),"打开成功",Toast.LENGTH_SHORT).show();
+                    String path=(String)msg.obj;
+                    HwTxtPlayActivity.loadTxtFile(Activity_BookDetail.this, path);///storage/emulated/0/d.txt
+                    break;
+            }
+        }
+    };
+
+
+
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_add_bookshelf:
-                    Toast.makeText(Activity_BookDetail.this,"点击了加入书架",Toast.LENGTH_SHORT).show();
+                    ///////////////////////////////开启一个新线程，下载封面文件和文本文件到本地文件夹
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            Looper.prepare();
+                            List<NameValuePair> postParam = new ArrayList<>();
+                            postParam.add(new NameValuePair("username","lianggao"));
+                            postParam.add(new NameValuePair("password","12"));
+                            postParam.add(new NameValuePair("action","postAction"));
+
+
+                            bookshelfTableManger=new bookShelfTableManger(getContext());
+                            bookshelfTableManger.createDb();
+                            //bookshelfTableManger.deleteBookById(2);
+                            Book book=new Book();
+                            book.setBook_id(bookid);
+                            book.setBook_name(id_tv_book_name.getText().toString());
+                            book.setBook_author(id_tv_book_author.getText().toString());
+                            book.setBook_cover_path("/storage/emulated/0/android_book/Cover/"+(bookid+1)+".jpg");
+                            book.setBook_path("/storage/emulated/0/android_book/Content/"+(bookid+1)+".txt");
+                            System.out.println("######################"+book.getBook_id()+book.getBook_name()+book.getBook_author()+book.getBook_cover_path()+book.getBook_path());
+                            bookshelfTableManger.addBook(book);
+
+
+                            String saveFilePath= Environment.getExternalStorageDirectory() + "/android_ebook/Content/"+(bookid+1)+".txt";
+                            String url="http://192.168.1.4:8080/com.lianggao.whut/txtbooks/"+(bookid+1)+".txt";
+                            System.out.println("######################开始下载书籍文件"+saveFilePath+"  "+url);
+                            HttpCaller.getInstance().downloadFile(url,saveFilePath,null,new ProgressUIListener(){
+                                @Override
+                                public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                                    Log.i("正在下载","dowload file content numBytes:"+numBytes+" totalBytes:"+totalBytes+" percent:"+percent+" speed:"+speed);
+                                }
+                            });
+                            System.out.println("######################下载书籍文件完成");
+
+                            System.out.println("**********************开始书籍封面下载");
+                            String saveFilePath2= Environment.getExternalStorageDirectory() + "/android_ebook/Cover/"+(bookid+1)+".jpg";
+                            String url2="http://192.168.1.4:8080/com.lianggao.whut/images_cover/"+(bookid+1)+".jpg";
+                            HttpCaller.getInstance().downloadFile(url2,saveFilePath2,null,new ProgressUIListener(){
+                                @Override
+                                public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                                    Log.i("正在下载","dowload file content numBytes:"+numBytes+" totalBytes:"+totalBytes+" percent:"+percent+" speed:"+speed);
+                                }
+                            });
+                            System.out.println("**********************下载书籍封面完成");
+                            Message msg=new Message();
+                            msg.what=MSG_DOWNLOAD_SUCCESS;
+                            handler.sendMessage(msg);
+
+                        }
+                    }.start();
                     return true;
                 case R.id.navigation_empty:
                     return true;
                 case R.id.navigation_begin_read:
                     Toast.makeText(Activity_BookDetail.this,"点击了开始阅读",Toast.LENGTH_SHORT).show();
-                    HwTxtPlayActivity.loadTxtFile(Activity_BookDetail.this, "/storage/emulated/0/d.txt");
-
+                    startRead();
 
 
                     return true;
@@ -92,7 +175,7 @@ public class Activity_BookDetail extends Activity{
         id_tv_book_shortcontent.setText(book.getBook_short_content_path());
         id_tv_book_author=(TextView)findViewById(R.id.id_tv_book_author) ;
         id_tv_book_author.setText(book.getBook_author());
-
+        bookid=book.getBook_id();////////////////////////////////
         imageView=(ImageView)findViewById(R.id.id_tv_book_post) ;
         if(book.getBook_cover_path()==null){
             Picasso
@@ -197,4 +280,54 @@ public class Activity_BookDetail extends Activity{
 
         return data_list;
     }
+
+    private void startRead(){
+        //开始阅读需要先下载到本地,先判断本地是否已经下载
+
+
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("username", "lianggao"));
+                postParam.add(new NameValuePair("password", "12"));
+                postParam.add(new NameValuePair("action", "postAction"));
+                Message message=new Message();
+                String saveFilePath = Environment.getExternalStorageDirectory() + "/android_ebook/CacheCover/" + (bookid + 1) + ".txt";
+                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + (bookid + 1) + ".txt";
+
+                if(fileIsExists(saveFilePath)){
+                    System.out.println("######################本地已经存在文本文件");
+                }else{
+                    System.out.println("######################开始缓存书籍文件" + saveFilePath + "  " + url);
+                    HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
+                        @Override
+                        public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                            Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                        }
+                    });
+                    System.out.println("######################缓存书籍文件完成");
+
+                }
+                message.what=MSG_DOWNLOADCHCHE_SUCCESS;
+                message.obj=saveFilePath;
+                handler.sendMessage(message);
+
+            }
+        }.start();
+    }
+    private boolean fileIsExists(String path){
+        File file=new  File(path);
+        try{
+            if(!file.exists()){
+                return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+
 }
