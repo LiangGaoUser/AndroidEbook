@@ -29,5 +29,9 @@
         android:id="@+id/toolbar_action4"
         android:title="书籍分类"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/toolbar_action5"
+        android:title="全部删除"
+        app:showAsAction="never"/>
 
 </menu>

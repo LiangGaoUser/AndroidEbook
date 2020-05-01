@@ -1,12 +1,16 @@
 package com.lianggao.whut.androidebook.Utils;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -90,6 +94,7 @@ public class Util {
 		return bitmapLinkedList;
 	}
 
+	//根据本地的封面图片名列表获取bitmap集合返回
 	public static List<Bitmap> getMultiLocalBitMap(List<String> mulitiBitMapList) {
 
 		List<Bitmap> bitmapList;
@@ -105,6 +110,75 @@ public class Util {
 			return null;
 		}
 	}
+    //根据路径，复制到另一个路径
+    public static boolean copyFile(String oldPath,String newPath){
+	    try{
+            System.out.println("开始复制文件到本地文件夹");
+	        InputStream in=new FileInputStream(new File(oldPath));
+	        OutputStream out=new FileOutputStream(new File(newPath));
+	        byte[]buff=new byte[1024];
+	        int read;
+	        while((read=in.read(buff))!=-1){
+	            out.write(buff,0,read);
+            }
+	        in.close();
+	        out.flush();
+	        out.close();
+            System.out.println("完成复制文件到本地文件夹");
+	        return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("失败复制文件到本地文件夹");
+            return false;
+        }
+    };
+
+	public static boolean copyFilePost(AssetManager assetManager,String newPath){
+		try{
+			System.out.println("开始复制封面到本地文件夹");
+
+			InputStream in=assetManager.open("defaultCover.jpg");
+			OutputStream out=new FileOutputStream(new File(newPath));
+			byte[]buff=new byte[1024];
+			int read;
+			while((read=in.read(buff))!=-1){
+				out.write(buff,0,read);
+			}
+			in.close();
+			out.flush();
+			out.close();
+			System.out.println("完成复制封面到本地文件夹");
+			return true;
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			System.out.println("失败复制封面到本地文件夹");
+			return false;
+		}
+	};
+
+
+	public static boolean deleteAllBook(List<String>pathList,List<String>coverList){
+		try {
+			System.out.println("开始删除书架文件");
+			for(int i=0;i<pathList.size();i++){
+				File file=new File(pathList.get(i));
+				System.out.println("##"+pathList.get(i));
+				file.delete();
+			}
+			for(int i=0;i<coverList.size();i++){
+				File file=new File(coverList.get(i));
+				System.out.println("##"+coverList.get(i));
+				file.delete();
+			}
+			System.out.println("完成删除书架文件");
+			return  true;
+
+		}catch(Exception e){
+			System.out.println("删除书架文件失败");
+			return false;
+		}
+	}
+
 
 
 

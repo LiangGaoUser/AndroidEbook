@@ -68,7 +68,8 @@ public class Activity_BookDetail extends Activity{
     private BookNameTextView id_tv_book_name;
     private TextView  id_tv_book_shortcontent;
     private TextView id_tv_book_author;
-    private int bookid;///////////////////////
+    private int bookid;
+    private String book_name;
     public bookShelfTableManger bookshelfTableManger;
     private final int MSG_DOWNLOAD_SUCCESS=1;
     private final int MSG_DOWNLOADCHCHE_SUCCESS=2;
@@ -102,7 +103,7 @@ public class Activity_BookDetail extends Activity{
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_add_bookshelf:
-                    ///////////////////////////////开启一个新线程，下载封面文件和文本文件到本地文件夹
+                    //开启一个新线程，下载封面文件和文本文件到本地文件夹
                     bookshelfTableManger=new bookShelfTableManger(getContext());
                     bookshelfTableManger.createDb();
 
@@ -112,7 +113,7 @@ public class Activity_BookDetail extends Activity{
                         public void run() {
                             Looper.prepare();
                             Message msg=new Message();
-                            if(bookshelfTableManger.findBookById(bookid)){
+                            if(bookshelfTableManger.findBookByName(book_name)){
                                 msg.what=MSG_ALREADY_HAVED;
                                 handler.sendMessage(msg);
 
@@ -132,34 +133,33 @@ public class Activity_BookDetail extends Activity{
                                 book.setBook_id(bookid);
                                 book.setBook_name(id_tv_book_name.getText().toString());
                                 book.setBook_author(id_tv_book_author.getText().toString());
-                                book.setBook_cover_path("/storage/emulated/0/android_ebook/Cover/" + (bookid + 1) + ".jpg");
-                                book.setBook_path("/storage/emulated/0/android_book/Content/" + (bookid + 1) + ".txt");
-                                System.out.println("######################" + book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
+                                book.setBook_cover_path( getExternalFilesDir("Cover")+"/"+ book_name + ".jpg");//"/storage/emulated/0/android_ebook/Cover/"
+                                book.setBook_path(getExternalFilesDir("Content") +"/"+ book_name + ".txt");
+                                System.out.println( book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
                                 bookshelfTableManger.addBook(book);
 
 
-                                String saveFilePath = Environment.getExternalStorageDirectory() + "/android_ebook/Content/" + (bookid + 1) + ".txt";
-                                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + (bookid + 1) + ".txt";
-                                System.out.println("######################开始下载书籍文件" + saveFilePath + "  " + url);
+                                String saveFilePath = getExternalFilesDir("Content")  + "/"+book_name + ".txt";
+                                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";//这里是以name请求的
+                                System.out.println("开始下载书籍文件" + saveFilePath + "  " + url);
                                 HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
                                     @Override
                                     public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
                                         Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
                                     }
                                 });
-                                System.out.println("######################下载书籍文件完成");
+                                System.out.println("下载书籍文件完成");
 
-                                System.out.println("**********************开始书籍封面下载");
-                                String saveFilePath2 = Environment.getExternalStorageDirectory() + "/android_ebook/Cover/" + (bookid + 1) + ".jpg";
-                                String url2 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + (bookid + 1) + ".jpg";
+                                System.out.println("开始书籍封面下载");
+                                String saveFilePath2 = getExternalFilesDir("Cover") + "/" + book_name+ ".jpg";
+                                String url2 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + book_name + ".jpg";
                                 HttpCaller.getInstance().downloadFile(url2, saveFilePath2, null, new ProgressUIListener() {
                                     @Override
                                     public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
                                         Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
                                     }
                                 });
-                                System.out.println("**********************下载书籍封面完成");
-
+                                System.out.println("下载书籍封面完成");
                                 msg.what = MSG_DOWNLOAD_SUCCESS;
                                 handler.sendMessage(msg);
                             }
@@ -193,6 +193,7 @@ public class Activity_BookDetail extends Activity{
         id_tv_book_author=(TextView)findViewById(R.id.id_tv_book_author) ;
         id_tv_book_author.setText(book.getBook_author());
         bookid=book.getBook_id();////////////////////////////////
+        book_name=book.getBook_name();
         imageView=(ImageView)findViewById(R.id.id_tv_book_post) ;
         if(book.getBook_cover_path()==null){
             Picasso
@@ -311,21 +312,20 @@ public class Activity_BookDetail extends Activity{
                 postParam.add(new NameValuePair("password", "12"));
                 postParam.add(new NameValuePair("action", "postAction"));
                 Message message=new Message();
-                String saveFilePath = Environment.getExternalStorageDirectory() + "/android_ebook/CacheCover/" + (bookid + 1) + ".txt";
-                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + (bookid + 1) + ".txt";
+                String saveFilePath = getExternalFilesDir("Content") + "/" + book_name + ".txt";
+                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";
 
                 if(fileIsExists(saveFilePath)){
-                    System.out.println("######################本地已经存在文本文件");
+                    System.out.println("本地已经存在文本文件");
                 }else{
-                    System.out.println("######################开始缓存书籍文件" + saveFilePath + "  " + url);
+                    System.out.println("开始缓存书籍文件" + saveFilePath + "  " + url);
                     HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
                         @Override
                         public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
                             Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
                         }
                     });
-                    System.out.println("######################缓存书籍文件完成");
-
+                    System.out.println("缓存书籍文件完成");
                 }
                 message.what=MSG_DOWNLOADCHCHE_SUCCESS;
                 message.obj=saveFilePath;

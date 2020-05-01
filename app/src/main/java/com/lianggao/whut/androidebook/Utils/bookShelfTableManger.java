@@ -37,21 +37,15 @@ public class bookShelfTableManger {
 
     //添加一本书
     public void addBook(Book book){
-        System.out.println("+++++++++");
-
-
         ContentValues contentValues = new ContentValues();
         contentValues.put("book_id", book.getBook_id());
         contentValues.put("book_name", book.getBook_name());
         contentValues.put("book_author", book.getBook_author());
         contentValues.put("book_cover_path", book.getBook_cover_path());
         contentValues.put("book_path", book.getBook_path());
-        System.out.println("+++++++++++++++++++++++++++++" + book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
+        System.out.println("####" + book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
         sqLiteDatabase.insert("bookshelf", null, contentValues);
-
         Log.i("bookShelfTableManger", "往bookshelf表中添加一本图书");
-
-
     }
     //根据书的id删除书架中的书籍
     public void deleteBookById(int book_id){
@@ -59,21 +53,38 @@ public class bookShelfTableManger {
         sqLiteDatabase.delete("bookshelf","book_id=?",new String[]{bookid});
         Log.i("databaseManger","根据书本id删除一条数据");
     }
+
+
+
     //根据书的书的名称删除书架中的书籍
     public void deleteBookByName(String book_name){
         sqLiteDatabase.delete("bookshelf","book_name=?",new String[]{book_name});
         Log.i("databaseManger","根据书本名称删除一条数据");
     }
+
+
+
     public boolean findBookById(int book_id){
         String bookid=String.valueOf(book_id);
         Cursor cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_id"},"book_id=?",new String[]{bookid},null,null,null);
         if(cursor.moveToFirst()==false){
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%有该图书");
+            System.out.println("##有该图书");
             return false;
         }
-
         else{
+            return true;
+        }
+    }
 
+
+
+    public boolean findBookByName(String book_name){
+        Cursor cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_name"},"book_name=?",new String[]{book_name},null,null,null);
+        if(cursor.moveToFirst()==false){
+            System.out.println("##有该图书");
+            return false;
+        }
+        else{
             return true;
         }
 
@@ -103,6 +114,34 @@ public class bookShelfTableManger {
         return bookList;
     }
 
+
+    public List<String> findAllPathList(){
+        Cursor cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_path"},null,null,null,null,null);
+        List<String>pathList=new LinkedList<>();
+        while(cursor.moveToNext()){
+            String path=cursor.getString(0);
+            System.out.println("##@@"+path);
+            pathList.add(path);
+        }
+        cursor.close();
+        return pathList;
+    }
+
+    public List<String> findAllCoverList(){
+        Cursor cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_cover_path"},null,null,null,null,null);
+        List<String>coverList=new LinkedList<>();
+        while(cursor.moveToNext()){
+            String cover=cursor.getString(0);
+            System.out.println("##@@"+cover);
+            coverList.add(cover);
+        }
+        cursor.close();
+        return coverList;
+    }
+
+    public void deleteTableContent(){
+        sqLiteDatabase.execSQL("delete  from  bookshelf");
+    }
 
 
 }
