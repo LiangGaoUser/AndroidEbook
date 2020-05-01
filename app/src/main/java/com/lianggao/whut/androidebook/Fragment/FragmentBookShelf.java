@@ -70,17 +70,11 @@ import static org.litepal.LitePalApplication.getContext;
 //BookShelfGridViewAdapter.java和BookShelfGridView.java不再使用，因为在BooksShelfView.java中绘制非常耗费时间，换成使用
 //的gridview和simadapter来替代之前的写法，这样不会出现卡顿的现象，而图片阴影框架没有使用到，之后也许还需要上面的来实现书单阴影
 public class FragmentBookShelf extends ViewPageFragment {
-    /*private BookShelfGridView bookShelfGridView;//书架布局类
-    private BookShelfGridViewAdapter bookShelfGridViewAdapter;
-    private List<String> book_name_list;//书名集合
-    private List<Integer>book_post_list;//书的封面集合
-    private List<Integer>book_percent_list;//书的已读百分比集合
-    private List<Boolean>book_download_list;//书是否已经下载的集合*/
 
-    //private List<Integer>book_post_list;
     private List<String>book_name_list;
     private List<String>book_author_list;
     private List<String>book_post_list;
+    private List<String>book_path_list;
 
     private GridView gridView;
     private List<Map<String, Object>> data_list;
@@ -124,6 +118,7 @@ public class FragmentBookShelf extends ViewPageFragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
+                            HwTxtPlayActivity.loadTxtFile(getContext(), book_path_list.get(position));
                         }
                     });
                     System.out.println("本地书架图书加载完成");
@@ -280,7 +275,7 @@ public class FragmentBookShelf extends ViewPageFragment {
     }
 
 
-
+    //得到数据库中存储的书架文件，得到相应的文件进行显示
     private void getLocalBookShelf(){
         //cion和iconName的长度是相同的，这里任选其一都可以
         new Thread(){
@@ -295,10 +290,12 @@ public class FragmentBookShelf extends ViewPageFragment {
                 book_name_list=new LinkedList<>();
                 book_post_list=new LinkedList<>();
                 book_author_list=new LinkedList<>();
+                book_path_list=new LinkedList<>();
                 data_list = new ArrayList<Map<String, Object>>();
                 List<Bitmap>bitmapList;
                 bitmapList=new LinkedList<>();
                 for(int i=0;i<bookList.size();i++){
+                    book_path_list.add(bookList.get(i).getBook_path());
                     book_name_list.add(bookList.get(i).getBook_name());
                     book_post_list.add(bookList.get(i).getBook_cover_path());
                     book_author_list.add(bookList.get(i).getBook_author());
@@ -498,7 +495,7 @@ public class FragmentBookShelf extends ViewPageFragment {
         t = Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT);
         t.show();
     }
-
+    //本地选择文件导入到书架中
     private void addLocalBook(final Book book){
         new Thread(){
             @Override
@@ -506,12 +503,12 @@ public class FragmentBookShelf extends ViewPageFragment {
                 bookshelfTableManger=new bookShelfTableManger(getContext());
                 bookshelfTableManger.createDb();
                 //bookshelfTableManger.addBook(book);
-                String newPath=Environment.getExternalStorageDirectory() + "/android_ebook/Content/"+book.getBook_name();
+                String newPath=getActivity().getExternalFilesDir("Content")+"/"+book.getBook_name();
                 //复制文件到path文件夹
                 Util.copyFile(book.getBook_path(),newPath);
                 //复制系统默认封面到post文件夹
                 String name=book.getBook_name().substring(0,book.getBook_name().length()-4);
-                String newPostPath=Environment.getExternalStorageDirectory() + "/android_ebook/Cover/"+name+".jpg";
+                String newPostPath=getActivity().getExternalFilesDir("Cover")+"/"+name+".jpg";
                 AssetManager assetManager=getActivity().getAssets();
                 Util.copyFilePost(assetManager,newPostPath);
                 bookshelfTableManger=new bookShelfTableManger(getContext());
