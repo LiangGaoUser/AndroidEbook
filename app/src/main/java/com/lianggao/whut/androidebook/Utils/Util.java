@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -89,7 +90,21 @@ public class Util {
 		return bitmapLinkedList;
 	}
 
+	public static List<Bitmap> getMultiLocalBitMap(List<String> mulitiBitMapList) {
 
+		List<Bitmap> bitmapList;
+		bitmapList=new LinkedList<>();
+		try{
+			for(int i=0;i<mulitiBitMapList.size();i++){
+				FileInputStream fileInputStream=new FileInputStream(mulitiBitMapList.get(i));
+
+				bitmapList.add(BitmapFactory.decodeStream(fileInputStream));
+			}
+			return bitmapList;
+		}catch(Exception e){
+			return null;
+		}
+	}
 
 
 

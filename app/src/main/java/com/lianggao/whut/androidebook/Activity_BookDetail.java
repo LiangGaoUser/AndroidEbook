@@ -72,12 +72,16 @@ public class Activity_BookDetail extends Activity{
     public bookShelfTableManger bookshelfTableManger;
     private final int MSG_DOWNLOAD_SUCCESS=1;
     private final int MSG_DOWNLOADCHCHE_SUCCESS=2;
+    private final int MSG_ALREADY_HAVED=3;
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MSG_DOWNLOAD_SUCCESS:
                     Toast.makeText(getContext(),"加入书架成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_ALREADY_HAVED:
+                    Toast.makeText(getContext(),"已经在书架中存在",Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_DOWNLOADCHCHE_SUCCESS:
                     Toast.makeText(getContext(),"打开成功",Toast.LENGTH_SHORT).show();
@@ -99,53 +103,66 @@ public class Activity_BookDetail extends Activity{
             switch (item.getItemId()) {
                 case R.id.navigation_add_bookshelf:
                     ///////////////////////////////开启一个新线程，下载封面文件和文本文件到本地文件夹
+                    bookshelfTableManger=new bookShelfTableManger(getContext());
+                    bookshelfTableManger.createDb();
+
+
                     new Thread(){
                         @Override
                         public void run() {
                             Looper.prepare();
-                            List<NameValuePair> postParam = new ArrayList<>();
-                            postParam.add(new NameValuePair("username","lianggao"));
-                            postParam.add(new NameValuePair("password","12"));
-                            postParam.add(new NameValuePair("action","postAction"));
-
-
-                            bookshelfTableManger=new bookShelfTableManger(getContext());
-                            bookshelfTableManger.createDb();
-                            //bookshelfTableManger.deleteBookById(2);
-                            Book book=new Book();
-                            book.setBook_id(bookid);
-                            book.setBook_name(id_tv_book_name.getText().toString());
-                            book.setBook_author(id_tv_book_author.getText().toString());
-                            book.setBook_cover_path("/storage/emulated/0/android_book/Cover/"+(bookid+1)+".jpg");
-                            book.setBook_path("/storage/emulated/0/android_book/Content/"+(bookid+1)+".txt");
-                            System.out.println("######################"+book.getBook_id()+book.getBook_name()+book.getBook_author()+book.getBook_cover_path()+book.getBook_path());
-                            bookshelfTableManger.addBook(book);
-
-
-                            String saveFilePath= Environment.getExternalStorageDirectory() + "/android_ebook/Content/"+(bookid+1)+".txt";
-                            String url="http://192.168.1.4:8080/com.lianggao.whut/txtbooks/"+(bookid+1)+".txt";
-                            System.out.println("######################开始下载书籍文件"+saveFilePath+"  "+url);
-                            HttpCaller.getInstance().downloadFile(url,saveFilePath,null,new ProgressUIListener(){
-                                @Override
-                                public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
-                                    Log.i("正在下载","dowload file content numBytes:"+numBytes+" totalBytes:"+totalBytes+" percent:"+percent+" speed:"+speed);
-                                }
-                            });
-                            System.out.println("######################下载书籍文件完成");
-
-                            System.out.println("**********************开始书籍封面下载");
-                            String saveFilePath2= Environment.getExternalStorageDirectory() + "/android_ebook/Cover/"+(bookid+1)+".jpg";
-                            String url2="http://192.168.1.4:8080/com.lianggao.whut/images_cover/"+(bookid+1)+".jpg";
-                            HttpCaller.getInstance().downloadFile(url2,saveFilePath2,null,new ProgressUIListener(){
-                                @Override
-                                public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
-                                    Log.i("正在下载","dowload file content numBytes:"+numBytes+" totalBytes:"+totalBytes+" percent:"+percent+" speed:"+speed);
-                                }
-                            });
-                            System.out.println("**********************下载书籍封面完成");
                             Message msg=new Message();
-                            msg.what=MSG_DOWNLOAD_SUCCESS;
-                            handler.sendMessage(msg);
+                            if(bookshelfTableManger.findBookById(bookid)){
+                                msg.what=MSG_ALREADY_HAVED;
+                                handler.sendMessage(msg);
+
+                            }else {
+
+
+                                List<NameValuePair> postParam = new ArrayList<>();
+                                postParam.add(new NameValuePair("username", "lianggao"));
+                                postParam.add(new NameValuePair("password", "12"));
+                                postParam.add(new NameValuePair("action", "postAction"));
+
+
+                                bookshelfTableManger = new bookShelfTableManger(getContext());
+                                bookshelfTableManger.createDb();
+                                //bookshelfTableManger.deleteBookById(2);
+                                Book book = new Book();
+                                book.setBook_id(bookid);
+                                book.setBook_name(id_tv_book_name.getText().toString());
+                                book.setBook_author(id_tv_book_author.getText().toString());
+                                book.setBook_cover_path("/storage/emulated/0/android_ebook/Cover/" + (bookid + 1) + ".jpg");
+                                book.setBook_path("/storage/emulated/0/android_book/Content/" + (bookid + 1) + ".txt");
+                                System.out.println("######################" + book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
+                                bookshelfTableManger.addBook(book);
+
+
+                                String saveFilePath = Environment.getExternalStorageDirectory() + "/android_ebook/Content/" + (bookid + 1) + ".txt";
+                                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + (bookid + 1) + ".txt";
+                                System.out.println("######################开始下载书籍文件" + saveFilePath + "  " + url);
+                                HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
+                                    @Override
+                                    public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                                        Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                                    }
+                                });
+                                System.out.println("######################下载书籍文件完成");
+
+                                System.out.println("**********************开始书籍封面下载");
+                                String saveFilePath2 = Environment.getExternalStorageDirectory() + "/android_ebook/Cover/" + (bookid + 1) + ".jpg";
+                                String url2 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + (bookid + 1) + ".jpg";
+                                HttpCaller.getInstance().downloadFile(url2, saveFilePath2, null, new ProgressUIListener() {
+                                    @Override
+                                    public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                                        Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                                    }
+                                });
+                                System.out.println("**********************下载书籍封面完成");
+
+                                msg.what = MSG_DOWNLOAD_SUCCESS;
+                                handler.sendMessage(msg);
+                            }
 
                         }
                     }.start();
