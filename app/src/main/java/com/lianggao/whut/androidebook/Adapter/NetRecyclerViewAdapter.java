@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @author LiangGao
- * @description:recyclerView的适配器，可以用来展示书
+ * @description:recyclerView的适配器，可以用来展示书，对应地是part_activity_book_recycler.xml
  * @data:${DATA} 16:17
  */
 public class NetRecyclerViewAdapter extends RecyclerView.Adapter<NetRecyclerViewAdapter.MyViewHolder> {

@@ -143,5 +143,42 @@ public class bookShelfTableManger {
         sqLiteDatabase.execSQL("delete  from  bookshelf");
     }
 
+    public List<String> findPathListByNameList(List<String>nameList){
+        Cursor cursor;
+        List<String>pathList;
+        pathList=new LinkedList<>();
+        for(int i=0;i<nameList.size();i++){
+            cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_path"},"book_name=?",new String[]{nameList.get(i)},null,null,null);
+            while(cursor.moveToNext()){
+                String path=cursor.getString(0);
+                System.out.println("***"+path);
+                pathList.add(path);
+            }
+
+        }
+        return pathList;
+    }
+
+    public List<String> findCoverListByNameList(List<String>nameList){
+        Cursor cursor;
+        List<String>coverPathList;
+        coverPathList=new LinkedList<>();
+        for(int i=0;i<nameList.size();i++){
+            cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_cover_path"},"book_name=?",new String[]{nameList.get(i)},null,null,null);
+            while(cursor.moveToNext()){
+                String path=cursor.getString(0);
+                System.out.println("***"+path);
+                coverPathList.add(path);
+            }
+
+        }
+        return coverPathList;
+    }
+    public void deleteByNameList(List<String>nameList){
+        for(int i=0;i<nameList.size();i++){
+            sqLiteDatabase.delete("bookshelf","book_name=?",new String[]{nameList.get(i)});
+        }
+
+    }
 
 }

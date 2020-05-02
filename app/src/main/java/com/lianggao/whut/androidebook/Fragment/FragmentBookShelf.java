@@ -49,6 +49,7 @@ import android.widget.Toast;
 import com.bifan.txtreaderlib.main.TxtConfig;
 import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Activity_BookDetail;
+import com.lianggao.whut.androidebook.Activity_BookShelf_Delete;
 import com.lianggao.whut.androidebook.Activity_Read;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
@@ -179,6 +180,10 @@ public class FragmentBookShelf extends ViewPageFragment {
                             return true;
                         case R.id.toolbar_action2:
                             Log.i("haha", "toolbar_action2");
+                            Intent intent=new Intent(getActivity(), Activity_BookShelf_Delete.class);
+                            startActivity(intent);
+
+
                             return true;
                         case R.id.toolbar_action3:
                             Log.i("haha", "toolbar_action3");
@@ -231,6 +236,7 @@ public class FragmentBookShelf extends ViewPageFragment {
     @Override
     public void onStart() {
         super.onStart();
+        getLocalBookShelf();
         Log.i("FragmentBookShelf","onStart");
     }
     @Override

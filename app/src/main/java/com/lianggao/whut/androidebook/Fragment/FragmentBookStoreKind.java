@@ -130,7 +130,7 @@ public class FragmentBookStoreKind extends Fragment {
                     Toast.makeText(getContext(),"点击了小说",Toast.LENGTH_LONG).show();
                     //initdata3();
                     //recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
-                   // recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+                    // recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
                     //recyclerView1.setAdapter(recyclerViewAdapter);
                     loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
                     loadMoreAdapter=new LoadMoreAdapter(getContext());

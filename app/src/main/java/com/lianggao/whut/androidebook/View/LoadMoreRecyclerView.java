@@ -2,7 +2,7 @@ package com.lianggao.whut.androidebook.View;
 
 /**
  * @author LiangGao
- * @description:
+ * @description:用来在种类页面使用同一个LoadMoreRecyclerView显示多个种类的书，part_activity_book_recycler_more.xml是单个recyclerview显示的内容
  * @data:${DATA} 21:48
  */
 
