@@ -31,7 +31,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Log.i("SQLiteHelper","update database...");
     }
 
-
+    public void createBookShelfHistoryTable(SQLiteDatabase db){
+        String sql="create table if not exists bookshelf_history(book_id int ,book_name varchar(100),book_author varchar(100), book_cover_path varchar(100))";
+        db.execSQL(sql);
+        Log.i("SQLiteHelper","建立了bookshelf_history表");
+    }
 
 
 

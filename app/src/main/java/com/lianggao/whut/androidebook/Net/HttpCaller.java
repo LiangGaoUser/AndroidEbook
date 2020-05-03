@@ -628,9 +628,9 @@ public class HttpCaller {
             if (url.contains("?")) {//get请求需要去掉后面的参数
                 url=url.substring(0,url.indexOf("?"));
             }
-            if(autoCancel){
+           /* if(autoCancel){
                 autoCancel(url);//如果同一时间对api进行多次请求，自动取消之前的
-            }
+            }*/
             requestHandleMap.put(url,call);
         }
     }

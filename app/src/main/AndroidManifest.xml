@@ -49,6 +49,7 @@
         <activity android:name=".Activity_More_Rank_Books"></activity>
         <activity android:name=".Activity_Read"></activity>
         <activity android:name=".Activity_BookShelf_Delete"></activity>
+        <activity android:name=".Activity_BookShelf_History"></activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

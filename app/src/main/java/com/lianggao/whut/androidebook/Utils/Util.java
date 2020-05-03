@@ -180,7 +180,24 @@ public class Util {
 	}
 
 
+	//书架历史中全部删除封面文件
+	public static boolean deleteAllCover(List<String>coverList){
+		try {
+			System.out.println("开始删除封面文件");
 
+			for(int i=0;i<coverList.size();i++){
+				File file=new File(coverList.get(i));
+				System.out.println("##"+coverList.get(i));
+				file.delete();
+			}
+			System.out.println("完成删除封面文件");
+			return  true;
+
+		}catch(Exception e){
+			System.out.println("删除封面文件失败");
+			return false;
+		}
+	}
 
 
 

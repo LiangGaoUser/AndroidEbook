@@ -3,6 +3,9 @@ package com.lianggao.whut.androidebook.Adapter;
 /**
  * @author LiangGao
  * @description:由LoadMoreAdapter修改而来，用来显示详细的书籍列表，这里改成参数传递的形式
+ * @description 1: Activity_More_Rank_Books.java ,Activity_More_Hot_Books.java ,Activity_More_Recommend_Books.java (分别显示排行，热门，推荐的页面)
+ * @description 2:loadMoreRankBookRecyclerView  ,loadMoreHotBookRecyclerView,loadMoreRecommendBookRecyclerView(分别对应排行，热门，推荐的recyclerview，每个recycleView中滑动到底部，
+ * 都有自己的loadmore,对应loadMoreBookAdapter里面的LoadMoreHotBook,LoadMoreRankBook,LoadMoreRecommendBook，这样滑动到底部时，才会加载各自的loadmore)
  * @data:${DATA} 21:50
  */
 

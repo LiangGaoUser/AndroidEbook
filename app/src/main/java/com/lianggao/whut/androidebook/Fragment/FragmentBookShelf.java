@@ -50,6 +50,7 @@ import com.bifan.txtreaderlib.main.TxtConfig;
 import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Activity_BookDetail;
 import com.lianggao.whut.androidebook.Activity_BookShelf_Delete;
+import com.lianggao.whut.androidebook.Activity_BookShelf_History;
 import com.lianggao.whut.androidebook.Activity_Read;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
@@ -187,6 +188,8 @@ public class FragmentBookShelf extends ViewPageFragment {
                             return true;
                         case R.id.toolbar_action3:
                             Log.i("haha", "toolbar_action3");
+                            Intent intent2=new Intent(getActivity(), Activity_BookShelf_History.class);
+                            startActivity(intent2);
                             return true;
                         case R.id.toolbar_action4:
                             Log.i("haha", "toolbar_action4");
@@ -207,6 +210,7 @@ public class FragmentBookShelf extends ViewPageFragment {
 
         bookshelfTableManger.createDb();
         //bookshelfTableManger.deleteTable();
+
         //判断系统文件夹是否存在不存在就创建文件夹
         File file= new File(getActivity().getExternalFilesDir("Cover").getPath() );
         if(!file.exists()){
@@ -224,8 +228,10 @@ public class FragmentBookShelf extends ViewPageFragment {
         if(!file4.exists()){
             file4.mkdir();
         }
-
-
+        File file5=new File(getActivity().getExternalFilesDir("CoverBookShelfHistory").getPath());
+        if(!file5.exists()){
+            file5.mkdir();
+        }
 
 
         return rootView;

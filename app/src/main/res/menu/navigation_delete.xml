@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_delete"
+        android:icon="@drawable/icon_delete"
+        android:title="删除" />
+
+    <item
+        android:id="@+id/navigation_all_selected"
+        android:icon="@drawable/icon_choose_all"
+        android:title="全选" />
+
+    <item
+        android:id="@+id/navigation_cancle"
+        android:icon="@drawable/icon_cancle"
+        android:title="取消" />
+
+   <!-- <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="notifications" />-->
+
+</menu>

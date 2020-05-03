@@ -7,9 +7,9 @@
         android:title="加入书架" />
 
     <item
-        android:id="@+id/navigation_empty"
-        android:icon="@drawable/icon_empty"
-        android:title="" />
+        android:id="@+id/navigation_return"
+        android:icon="@drawable/icon_return"
+        android:title="返回主界面" />
 
     <item
         android:id="@+id/navigation_begin_read"

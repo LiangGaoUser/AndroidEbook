@@ -27,6 +27,7 @@ import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
+import com.lianggao.whut.androidebook.Utils.bookShelfHistoryTableManger;
 import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 import com.lianggao.whut.androidebook.View.BookNameTextView;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
@@ -128,7 +129,7 @@ public class Activity_BookDetail extends Activity{
 
                                 bookshelfTableManger = new bookShelfTableManger(getContext());
                                 bookshelfTableManger.createDb();
-                                //bookshelfTableManger.deleteBookById(2);
+                                //bookshelfTableManger.deleteTable();
                                 Book book = new Book();
                                 book.setBook_id(bookid);
                                 book.setBook_name(id_tv_book_name.getText().toString());
@@ -137,6 +138,47 @@ public class Activity_BookDetail extends Activity{
                                 book.setBook_path(getExternalFilesDir("Content") +"/"+ book_name + ".txt");
                                 System.out.println( book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
                                 bookshelfTableManger.addBook(book);
+
+
+
+
+                                //书架历史，只需要存储封面，不需要存储文件，存储到书架历史中
+
+
+                                bookShelfHistoryTableManger bookShelfHistoryTableManger=new bookShelfHistoryTableManger(getApplicationContext());
+                                bookShelfHistoryTableManger.createDb();
+                                //bookShelfHistoryTableManger.deleteTable();
+
+                                if(!bookShelfHistoryTableManger.findBookByName(book_name)){
+                                    System.out.println("开始缓存书籍封面到书架历史");
+                                    String saveFilePath3 = getExternalFilesDir("CoverBookShelfHistory") + "/" + book_name+ ".jpg";
+                                    String url3 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + book_name + ".jpg";
+                                    HttpCaller.getInstance().downloadFile(url3, saveFilePath3, null, new ProgressUIListener() {
+                                        @Override
+                                        public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                                            Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                                        }
+                                    });
+                                    Book addBook=(Book)book;
+                                    addBook.setBook_cover_path(saveFilePath3);
+                                    bookShelfHistoryTableManger.addBook(addBook);
+                                    System.out.println("完成缓存书籍文件封面到书架历史" );
+
+                                }else{
+                                    System.out.println("书架历史中已经存在该书籍" );
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                 String saveFilePath = getExternalFilesDir("Content")  + "/"+book_name + ".txt";
@@ -160,6 +202,16 @@ public class Activity_BookDetail extends Activity{
                                     }
                                 });
                                 System.out.println("下载书籍封面完成");
+
+
+
+
+
+
+
+
+
+
                                 msg.what = MSG_DOWNLOAD_SUCCESS;
                                 handler.sendMessage(msg);
                             }
@@ -167,7 +219,8 @@ public class Activity_BookDetail extends Activity{
                         }
                     }.start();
                     return true;
-                case R.id.navigation_empty:
+                case R.id.navigation_return:
+                    finish();
                     return true;
                 case R.id.navigation_begin_read:
                     Toast.makeText(Activity_BookDetail.this,"点击了开始阅读",Toast.LENGTH_SHORT).show();
@@ -312,8 +365,11 @@ public class Activity_BookDetail extends Activity{
                 postParam.add(new NameValuePair("password", "12"));
                 postParam.add(new NameValuePair("action", "postAction"));
                 Message message=new Message();
-                String saveFilePath = getExternalFilesDir("Content") + "/" + book_name + ".txt";
+                //阅读打开的文件应该放在CacheContent里面，而且封面文件不需要存储
+                String saveFilePath = getExternalFilesDir("CacheContent") + "/" + book_name + ".txt";
                 String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";
+
+
 
                 if(fileIsExists(saveFilePath)){
                     System.out.println("本地已经存在文本文件");
@@ -326,6 +382,13 @@ public class Activity_BookDetail extends Activity{
                         }
                     });
                     System.out.println("缓存书籍文件完成");
+
+
+
+
+
+
+
                 }
                 message.what=MSG_DOWNLOADCHCHE_SUCCESS;
                 message.obj=saveFilePath;

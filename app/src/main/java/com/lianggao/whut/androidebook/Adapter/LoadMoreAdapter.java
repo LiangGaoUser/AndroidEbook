@@ -2,7 +2,8 @@ package com.lianggao.whut.androidebook.Adapter;
 
 /**
  * @author LiangGao
- * @description:在书的种类界面用来显示recycler列表，LoadMoreRecyclerView
+ * @description:在书的种类界面用来显示recycler列表，LoadMoreRecyclerView，多个种类的书共用一个LoadMoreAdapter和LoadAdapter，
+ * 但是需要选择时把种类也设置。
  * @data:${DATA} 21:50
  */
 
