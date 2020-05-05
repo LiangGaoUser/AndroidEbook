@@ -18,29 +18,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lianggao.whut.androidebook.Adapter.DeleteBookShelfRecyclerViewAdapter;
-import com.lianggao.whut.androidebook.Adapter.LoadMoreBookAdapter;
-import com.lianggao.whut.androidebook.Adapter.NetRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Fragment.MyAlertDialogFragment;
 import com.lianggao.whut.androidebook.Model.Book;
-import com.lianggao.whut.androidebook.Net.HttpCaller;
-import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
-import com.lianggao.whut.androidebook.View.LoadMoreRankBookRecyclerView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-//import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 
 public class Activity_BookShelf_Delete extends FragmentActivity {
     private RecyclerView recyclerView;
@@ -71,9 +59,7 @@ public class Activity_BookShelf_Delete extends FragmentActivity {
             switch(msg.what){
                 case MSG_GET_LOCAL_BOOKS_SUCCESS:
                     Log.i("获取图片","批量获取图片成功");
-                    /*recyclerViewAdapter=new NetRecyclerViewAdapter(getApplicationContext(),book_post_path_list,book_name_list,book_author_list,book_kind_list,book_shortcontent_list);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(recyclerViewAdapter);*/
+
 
                     deleteBookShelfRecyclerViewAdapter=new DeleteBookShelfRecyclerViewAdapter(getApplicationContext(),book_post_list, book_name_list,book_author_list,book_check_list,book_shortcontent_list);
 

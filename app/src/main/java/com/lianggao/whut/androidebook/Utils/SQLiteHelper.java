@@ -21,7 +21,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //书本id，书本名称，书本作者，书本封面路径，书本内容文件路径
-        String sql="create table if not exists bookshelf( book_id int , book_name varchar(100),book_author varchar(100), book_cover_path varchar(100), book_path varchar(100))";
+        String sql="create table if not exists bookshelf( book_id int , book_name varchar(100),book_author varchar(100), book_cover_path varchar(100), book_path varchar(100),book_main_kind varchar(50),book_detail_kind varchar(50))";
         db.execSQL(sql);
         Log.i("SQLiteHelper","建立了bookshelf表");
     }
@@ -32,7 +32,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public void createBookShelfHistoryTable(SQLiteDatabase db){
-        String sql="create table if not exists bookshelf_history(book_id int ,book_name varchar(100),book_author varchar(100), book_cover_path varchar(100))";
+        String sql="create table if not exists bookshelf_history(book_id int ,book_name varchar(100),book_author varchar(100), book_cover_path varchar(100),book_main_kind varchar(50),book_detail_kind varchar(50))";
         db.execSQL(sql);
         Log.i("SQLiteHelper","建立了bookshelf_history表");
     }

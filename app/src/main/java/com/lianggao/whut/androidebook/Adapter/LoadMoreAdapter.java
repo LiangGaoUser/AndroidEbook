@@ -40,7 +40,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
     private LinkedList<String> bookNameList;
     private LinkedList<String> bookShortContentList;
     private LinkedList<String> bookAuthorList;
-    private LinkedList<String> bookKindList;
+    private LinkedList<String> bookMainKindList;
+    private LinkedList<String> bookDetailKindList;
 
     private int bookKind;//专门记录书的种类
     private final int MSG_GET_KIND_1_SUCCESS=1;
@@ -74,7 +75,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         bookNameList = new LinkedList<>();
         bookShortContentList = new LinkedList<>();
         bookAuthorList = new LinkedList<>();
-        bookKindList = new LinkedList<>();
+        bookMainKindList = new LinkedList<>();
+        bookDetailKindList=new LinkedList<>();
         //setBookKind(1);
        /* for (int i = 0; i < 10; i++) {
             bookPostList.add("http://192.168.1.4:8080/com.lianggao.whut/Images_recommend/recommend1.jpg");
@@ -105,7 +107,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         this.bookKind=bookKind;
 
         bookNameList.clear();
-        bookKindList.clear();
+        bookMainKindList.clear();
+        bookDetailKindList.clear();
         bookAuthorList.clear();
         bookPostList.clear();
         bookShortContentList.clear();
@@ -224,7 +227,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -238,7 +242,6 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
             }
         }.start();
     }
-
 
     public void LoadKind2() {
         new Thread() {
@@ -264,7 +267,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -278,18 +282,6 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
             }
         }.start();
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     public void LoadKind3() {
         new Thread() {
@@ -315,7 +307,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -354,7 +347,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -393,7 +387,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -432,7 +427,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -479,6 +475,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
             TextView tv2 = holder.getView(R.id.id_tv_book_shortcontent);
             TextView tv3 = holder.getView(R.id.id_tv_book_author);
             TextView tv4 = holder.getView(R.id.id_tv_book_kind);
+            TextView tv5=holder.getView(R.id.id_tv_book_main_kind);
             //imageView.setImageResource(bookPostList.get(position));
 
             if(onItemClickListener!=null){
@@ -518,8 +515,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
             tv.setText(bookNameList.get(position));
             tv2.setText(bookShortContentList.get(position));
             tv3.setText(bookAuthorList.get(position));
-            tv4.setText(bookKindList.get(position));
-
+            tv4.setText(bookDetailKindList.get(position));
+            tv5.setText(bookMainKindList.get(position));
 
         }else {
             TextView tv = holder.getView(R.id.tv);
@@ -549,7 +546,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -596,7 +594,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -611,30 +610,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
         }.start();
     }
 
-    /*public void loadMore() {
-        int startPosition = bookNameList.size();
-        if (bookNameList.size() < 100) {
-            for (int i = 0; i < 10; i++) {
-                bookPostList.add(R.drawable.img_bookshelf_everybook);
-                bookNameList.add("more "+i + "");
-                bookShortContentList.add("more "+i + "");
-                bookAuthorList.add("more "+i + "");
-                bookKindList.add("more "+i + "");
 
-            }
-            int endPosition = bookNameList.size()-1;
-            *//*View view=new View();
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            })*//*
-            notifyItemRangeInserted(startPosition,10);
-        }else {
-            setLoadMoreText("没有更多了");
-        }
-    }*/
 
     public void LoadMore3() {
         new Thread() {
@@ -658,7 +634,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -695,7 +672,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -732,7 +710,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -769,7 +748,8 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -808,8 +788,11 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
     public List<String>getBookShortContentList(){
         return bookShortContentList;
     }
-    public List<String>getBookKindList(){
-        return bookKindList;
+    public List<String>getBookMainKindList(){
+        return bookMainKindList;
+    }
+    public List<String>getBookDetailKindList(){
+        return  bookDetailKindList;
     }
 }
 

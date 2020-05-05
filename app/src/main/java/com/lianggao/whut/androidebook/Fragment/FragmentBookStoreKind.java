@@ -63,49 +63,6 @@ public class FragmentBookStoreKind extends Fragment {
     private String[] kindList={"小说","文学","社科","计算机","励志","经济"};
 
 
-
-
-   /* private final int MSG_GET_MUTIBITMAP_SUCCESS=1;
-    private FragmentActivity fragmentActivity;
-    Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch(msg.what){
-                case MSG_GET_MUTIBITMAP_SUCCESS:
-                    Log.i("获取图片","批量获取图片成功");
-
-
-                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_kind_list);
-                    loadMoreRankBookRecyclerView.setManager();
-                    loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
-                            Intent intent=new Intent(Activity_More_Rank_Books.this, Activity_BookDetail.class);
-                            startActivity(intent);
-                        }
-                    });
-                    loadMoreRankBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);
-
-
-
-
-                    Log.i("初始化","初始化结束");
-                    break;
-            }
-        }
-    };
-*/
-
-
-
-
-
-
-
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -128,10 +85,7 @@ public class FragmentBookStoreKind extends Fragment {
                 textrecyclerViewAdapter.notifyDataSetChanged();
                 if(position==0){loadMoreAdapter.setBookKind(position+1);
                     Toast.makeText(getContext(),"点击了小说",Toast.LENGTH_LONG).show();
-                    //initdata3();
-                    //recyclerViewAdapter = new RecyclerViewAdapter(getContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
-                    // recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-                    //recyclerView1.setAdapter(recyclerViewAdapter);
+
                     loadMoreRecyclerView=(LoadMoreRecyclerView)rootView.findViewById(R.id.id_recycleview_book);
                     loadMoreAdapter=new LoadMoreAdapter(getContext());
                     loadMoreAdapter.setBookKind(position+1);
@@ -145,6 +99,8 @@ public class FragmentBookStoreKind extends Fragment {
                             book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
                             book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreAdapter.getBookDetailKindList().get(position));
                             intent.putExtra("book",book);
                             startActivity(intent);
                         }
@@ -166,6 +122,8 @@ public class FragmentBookStoreKind extends Fragment {
                             book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
                             book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreAdapter.getBookDetailKindList().get(position));
                             intent.putExtra("book",book);
                             startActivity(intent);
                         }
@@ -187,6 +145,8 @@ public class FragmentBookStoreKind extends Fragment {
                             book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
                             book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreAdapter.getBookDetailKindList().get(position));
                             intent.putExtra("book",book);
                             startActivity(intent);
                         }
@@ -208,6 +168,8 @@ public class FragmentBookStoreKind extends Fragment {
                             book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
                             book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreAdapter.getBookDetailKindList().get(position));
                             intent.putExtra("book",book);
                             startActivity(intent);
                         }
@@ -229,6 +191,8 @@ public class FragmentBookStoreKind extends Fragment {
                             book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
                             book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreAdapter.getBookDetailKindList().get(position));
                             intent.putExtra("book",book);
                             startActivity(intent);
                         }
@@ -250,6 +214,8 @@ public class FragmentBookStoreKind extends Fragment {
                             book.setBook_name(loadMoreAdapter.getBookNameList().get(position));
                             book.setBook_short_content_path(loadMoreAdapter.getBookShortContentList().get(position));
                             book.setBook_author(loadMoreAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreAdapter.getBookDetailKindList().get(position));
                             intent.putExtra("book",book);
                             startActivity(intent);
                         }
@@ -294,32 +260,5 @@ public class FragmentBookStoreKind extends Fragment {
         }
     }
 
-    void initdata2(){
-        book_post_list=new LinkedList<>();
-        book_name_list=new LinkedList<>();
-        book_author_list=new LinkedList<>();
-        book_shortcontent_list=new LinkedList<>();
-        book_kind_list=new LinkedList<>();
-        for(int i=0;i<15;i++){
-            book_author_list.add("梁高");
-            book_name_list.add("离开的每一种方式");
-            book_post_list.add(R.drawable.img_bookshelf_everybook);
-            book_shortcontent_list.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
-            book_kind_list.add("世界名著");
-        }
-    }
-    void initdata3(){
-        book_post_list=new LinkedList<>();
-        book_name_list=new LinkedList<>();
-        book_author_list=new LinkedList<>();
-        book_shortcontent_list=new LinkedList<>();
-        book_kind_list=new LinkedList<>();
-        for(int i=0;i<15;i++){
-            book_author_list.add("佚名");
-            book_name_list.add("离开的每一种方式");
-            book_post_list.add(R.drawable.img_bookshelf_everybook);
-            book_shortcontent_list.add("是法国作家安托万·德·圣·埃克苏佩里于1942年写成的著名儿童文学短篇小说。本书的主人公是来自外星球的小王子。书中以一位飞行员作为故事叙述者，讲述了小王子从自己星球出发前往地球的过程中，所经历的各种历险");
-            book_kind_list.add("世界名著");
-        }
-    }
+
 }

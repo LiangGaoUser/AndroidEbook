@@ -13,46 +13,44 @@ import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.View.BookNameTextView;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 /**
  * @author LiangGao
- * @description:recyclerView的适配器，可以用来展示书，对应地是part_activity_book_recycler.xml
+ * @description:bookshelf分类的适配器,可以用于小说等等
  * @data:${DATA} 16:17
  */
-public class NetRecyclerViewAdapter extends RecyclerView.Adapter<NetRecyclerViewAdapter.MyViewHolder> {
+public class BookshelfKindRecyclerViewAdapter extends RecyclerView.Adapter<BookshelfKindRecyclerViewAdapter.MyViewHolder> {
     private List<String>book_post_path_list;//书的封面集合
     private List<String>book_name_list;//书的名字集合
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
-    private List<String>book_main_kind_list;//书的种类集合
-    private List<String>book_detail_kind_list;//书的种类集合
-
+    private List<String>book_kind_list;//书的种类集合
     private LayoutInflater inflater;
     private OnItemClickListener onItemClickListener;//接口1
     private OnItemLongClickListener onItemLongClickListener;//接口2
     private Context context;
-    public NetRecyclerViewAdapter(Context context, List<String>book_post_path_list, List<String>book_name_list, List<String>book_author_list, List<String>book_main_kind_list,List<String>book_detail_kind_list, List<String>book_shortcontent_list){
+    public BookshelfKindRecyclerViewAdapter(Context context, List<String>book_post_path_list, List<String>book_name_list, List<String>book_author_list, List<String>book_kind_list, List<String>book_shortcontent_list){
         inflater=LayoutInflater.from(context);
         this.book_post_path_list=book_post_path_list;
         this.book_name_list=book_name_list;
         this.book_author_list=book_author_list;
         this.book_shortcontent_list=book_shortcontent_list;
-        this.book_main_kind_list=book_main_kind_list;
-        this.book_detail_kind_list=book_detail_kind_list;
+        this.book_kind_list=book_kind_list;
         this.context=context;//
     }
 
 
     @NonNull
     @Override
-    public NetRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public BookshelfKindRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView=inflater.inflate(R.layout.part_activity_book_recycler,null);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NetRecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final BookshelfKindRecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tvBookAuthor.setText(book_author_list.get(i));
         myViewHolder.tvBookName.setText(book_name_list.get(i));
         if(book_post_path_list.get(i)==null){
@@ -64,7 +62,7 @@ public class NetRecyclerViewAdapter extends RecyclerView.Adapter<NetRecyclerView
         }else{
             Picasso
                     .with(context)
-                    .load(book_post_path_list.get(i))
+                    .load(new File(book_post_path_list.get(i)))
                     .placeholder(R.drawable.icon_arrow_return)//占位符
                     .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                     .into(myViewHolder.tvBookPost);
@@ -72,8 +70,7 @@ public class NetRecyclerViewAdapter extends RecyclerView.Adapter<NetRecyclerView
 
 
         myViewHolder.bookNameTextView.setText(book_shortcontent_list.get(i));
-        myViewHolder.tvBookKind.setText(book_detail_kind_list.get(i));
-        myViewHolder.tvBookMainKind.setText(book_main_kind_list.get(i));
+        myViewHolder.tvBookKind.setText(book_kind_list.get(i));
 
        //判断是否在activity中设置监听，回调
        if(onItemClickListener!=null){
@@ -110,7 +107,6 @@ public class NetRecyclerViewAdapter extends RecyclerView.Adapter<NetRecyclerView
         private TextView tvBookAuthor;
         private TextView bookNameTextView;
         private TextView tvBookKind;
-        private TextView tvBookMainKind;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvBookAuthor=(TextView)itemView.findViewById(R.id.id_tv_book_author);
@@ -118,7 +114,6 @@ public class NetRecyclerViewAdapter extends RecyclerView.Adapter<NetRecyclerView
             tvBookName=(BookNameTextView)itemView.findViewById(R.id.id_tv_book_name);
             bookNameTextView=(TextView)itemView.findViewById(R.id.id_tv_book_shortcontent);
             tvBookKind=(TextView)itemView.findViewById(R.id.id_tv_book_kind);
-            tvBookMainKind=(TextView)itemView.findViewById(R.id.id_tv_book_main_kind);
         }
     }
     /**

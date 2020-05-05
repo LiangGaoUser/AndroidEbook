@@ -66,6 +66,21 @@
         android:textSize="9dp"
         android:textStyle="normal"
          />
+
+    <TextView
+        android:id="@+id/id_tv_book_main_kind"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/id_tv_book_post"
+        android:layout_toLeftOf="@+id/id_tv_book_kind"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/id_tv_book_shortcontent"
+        android:layout_marginTop="5dp"
+        android:text="主种类"
+        android:textColor="#80000000"
+        android:textSize="9dp"
+        android:textStyle="normal"
+        />
     <ImageView
         android:id="@+id/id_iv_divider_top"
         android:layout_width="match_parent"

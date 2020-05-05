@@ -101,14 +101,16 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
     private List<String>book_author_hot_list;//作者
     private List<String>book_post_hot_list;//封面
     private List<String>book_shortcontent_hot_list;//简介
-    private List<String>book_kind_hot_list;//种类
+    private List<String>book_main_kind_hot_list;//种类
+    private List<String>book_detail_kind_hot_list;//种类
     private NetRecyclerViewAdapter hotRecyclerViewAdapter;
     //排行榜
     private List<String>book_name_rank_list;//名字列表
     private List<String>book_author_rank_list;//作者列表
     private List<String>book_post_rank_list;//封面列表
     private List<String>book_shortcontent_rank_list;//简介
-    private List<String>book_kind_rank_list;//种类
+    private List<String>book_main_kind_rank_list;//种类
+    private List<String>book_detail_kind_rank_list;//种类
     private NetRecyclerViewAdapter rankRecyclerViewAdapter;
 
 
@@ -154,7 +156,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                     break;
 
                 case MSG_GET_HOT_SUCCESS:
-                    hotRecyclerViewAdapter = new NetRecyclerViewAdapter(getContext(), book_post_hot_list, book_name_hot_list, book_author_hot_list, book_kind_hot_list, book_shortcontent_hot_list);
+                    hotRecyclerViewAdapter = new NetRecyclerViewAdapter(getContext(), book_post_hot_list, book_name_hot_list, book_author_hot_list, book_main_kind_hot_list,book_detail_kind_hot_list, book_shortcontent_hot_list);
                     hotRecyclerViewAdapter.setOnItemClickListener(new NetRecyclerViewAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
@@ -165,7 +167,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                     recyclerView.setAdapter(hotRecyclerViewAdapter);
                     break;
                 case MSG_GET_RANK_SUCCESS:
-                    rankRecyclerViewAdapter = new NetRecyclerViewAdapter(getContext(), book_post_rank_list, book_name_rank_list, book_author_rank_list, book_kind_rank_list, book_shortcontent_rank_list);
+                    rankRecyclerViewAdapter = new NetRecyclerViewAdapter(getContext(), book_post_rank_list, book_name_rank_list, book_author_rank_list, book_main_kind_rank_list,book_detail_kind_rank_list, book_shortcontent_rank_list);
                     rankRecyclerViewAdapter.setOnItemClickListener(new NetRecyclerViewAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
@@ -356,7 +358,8 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 postParam.add(new NameValuePair("action","postAction"));
                 book_post_hot_list=new LinkedList<>();
                 book_name_hot_list=new LinkedList<>();
-                book_kind_hot_list=new LinkedList<>();
+                book_main_kind_hot_list=new LinkedList<>();
+                book_detail_kind_hot_list=new LinkedList<>();
                 book_shortcontent_hot_list=new LinkedList<>();
                 book_author_hot_list=new LinkedList<>();
                 List<Book>bookHotList;
@@ -369,7 +372,8 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                     book_name_hot_list.add(book.getBook_name());
                     book_shortcontent_hot_list.add(book.getBook_short_content_path());
                     book_author_hot_list.add(book.getBook_author());
-                    book_kind_hot_list.add("文学名著");
+                    book_main_kind_hot_list.add(book.getBook_main_kind());
+                    book_detail_kind_hot_list.add(book.getBook_detail_kind());
 
                 }
                 Message message=new Message();
@@ -442,7 +446,8 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 postParam.add(new NameValuePair("action","postAction"));
                 book_post_rank_list=new LinkedList<>();
                 book_name_rank_list=new LinkedList<>();
-                book_kind_rank_list=new LinkedList<>();
+                book_main_kind_rank_list=new LinkedList<>();
+                book_detail_kind_rank_list=new LinkedList<>();
                 book_shortcontent_rank_list=new LinkedList<>();
                 book_author_rank_list=new LinkedList<>();
                 List<Book>bookRankList;
@@ -456,7 +461,8 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                     book_name_rank_list.add(book.getBook_name());
                     book_shortcontent_rank_list.add(book.getBook_short_content_path());
                     book_author_rank_list.add(book.getBook_author());
-                    book_kind_rank_list.add("文学名著");
+                    book_main_kind_rank_list.add(book.getBook_main_kind());
+                    book_detail_kind_rank_list.add(book.getBook_detail_kind());
 
                 }
                 Message message=new Message();

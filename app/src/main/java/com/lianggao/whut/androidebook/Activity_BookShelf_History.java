@@ -21,13 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.Adapter.BookShelfHistoryRecyclerViewAdapter;
-import com.lianggao.whut.androidebook.Adapter.DeleteBookShelfRecyclerViewAdapter;
-import com.lianggao.whut.androidebook.Adapter.NetRecyclerViewAdapter;
+
 import com.lianggao.whut.androidebook.Fragment.MyAlertDialogFragment;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.Utils.bookShelfHistoryTableManger;
-import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 
 import java.util.LinkedList;
 import java.util.List;

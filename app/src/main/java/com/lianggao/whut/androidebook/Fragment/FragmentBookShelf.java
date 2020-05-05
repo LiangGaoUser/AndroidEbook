@@ -51,6 +51,7 @@ import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Activity_BookDetail;
 import com.lianggao.whut.androidebook.Activity_BookShelf_Delete;
 import com.lianggao.whut.androidebook.Activity_BookShelf_History;
+import com.lianggao.whut.androidebook.Activity_BookShelf_Kind;
 import com.lianggao.whut.androidebook.Activity_Read;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
@@ -193,6 +194,8 @@ public class FragmentBookShelf extends ViewPageFragment {
                             return true;
                         case R.id.toolbar_action4:
                             Log.i("haha", "toolbar_action4");
+                            Intent intent3=new Intent(getActivity(), Activity_BookShelf_Kind.class);
+                            startActivity(intent3);
                             return true;
                         case R.id.toolbar_action5:
                             Log.i("haha", "toolbar_action5");
@@ -530,6 +533,8 @@ public class FragmentBookShelf extends ViewPageFragment {
                 book.setBook_name(name);
                 book.setBook_cover_path(newPostPath);
                 book.setBook_path(newPath);
+                book.setBook_main_kind("本地");
+                book.setBook_detail_kind("文档");
                 bookshelfTableManger.addBook(book);
                 getLocalBookShelf();
             }

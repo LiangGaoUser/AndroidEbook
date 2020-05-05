@@ -41,8 +41,10 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
     private List<String> bookNameList;
     private List<String> bookShortContentList;
     private List<String> bookAuthorList;
-    private List<String> bookKindList;
-    private List<Integer>bookIdList;///////////////////////////////////
+    //private List<String> bookKindList;
+    private List<String> bookMainKindList;
+    private List<String> bookDetailKindList;
+    private List<Integer>bookIdList;
     private Context context;
     private int totalNumber;//总的数目
     private int currentTotalNumber;//现在已有的数目
@@ -72,41 +74,28 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
         }
     };
     ////////////////////////////////////////
-    public LoadMoreBookAdapter(Context context, int totalNumber,List<String>bookPostList, List<String> bookNameList, List<String>bookAuthorList, List<String>bookShortContentList, List<String>bookKindList,List<Integer>bookIdList){
+    public LoadMoreBookAdapter(Context context, int totalNumber,List<String>bookPostList, List<String> bookNameList, List<String>bookAuthorList, List<String>bookShortContentList, List<String>bookMainKindList,List<String>bookDetailKindList,List<Integer>bookIdList){
         bookPostList=new LinkedList<>();
         bookNameList = new LinkedList<>();
         bookShortContentList = new LinkedList<>();
         bookAuthorList = new LinkedList<>();
-        bookKindList = new LinkedList<>();
-        bookIdList=new LinkedList<>();//////////////////////////
+        bookMainKindList = new LinkedList<>();
+        bookDetailKindList=new LinkedList<>();
+        bookIdList=new LinkedList<>();
         this.context=context;
         this.bookNameList=bookNameList;
         this.bookAuthorList=bookAuthorList;
         this.bookPostList=bookPostList;
         this.bookShortContentList=bookShortContentList;
-        this.bookKindList=bookKindList;
-        this.bookIdList=bookIdList;////////////////////////
+        this.bookMainKindList=bookMainKindList;
+        this.bookDetailKindList=bookDetailKindList;
+        this.bookIdList=bookIdList;
         this.totalNumber=totalNumber;
         this.currentTotalNumber=bookNameList.size();
 
     }
 
-    public void LoadMore(List<String>addBookPostList,List<String> addBookNameList,List<String>addBookAuthorList,List<String>addBookShortContentList,List<String>addBookKindList){
-        for(int i=0;i<addBookNameList.size();i++){
-            bookNameList.add(addBookNameList.get(i));
-            bookAuthorList.add(addBookAuthorList.get(i));
-            bookPostList.add(addBookPostList.get(i));
-            bookShortContentList.add(addBookShortContentList.get(i));
-            bookKindList.add(addBookKindList.get(i));
-        }
-        int startPosition = bookNameList.size();
-        if (addBookNameList.size() < 100) {
-            int endPosition = bookNameList.size()-1;
-            notifyItemRangeInserted(startPosition,10);
-        }else {
-            setLoadMoreText("没有更多了");
-        }
-    }
+
 
     public void LoadMore() {
         new Thread() {
@@ -133,7 +122,8 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -169,12 +159,13 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     String jsonStr = gson.toJson(userList2.get(i));
                     Book book = new Book();
                     book = gson.fromJson(jsonStr, Book.class);
-                    bookIdList.add(book.getBook_id());/////////////////////////////////////
+                    bookIdList.add(book.getBook_id());
                     bookPostList.add(book.getBook_cover_path());
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -214,7 +205,8 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -260,7 +252,8 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                     bookAuthorList.add(book.getBook_author());
                     bookNameList.add(book.getBook_name());
                     bookShortContentList.add(book.getBook_short_content_path());
-                    bookKindList.add("文学名著");
+                    bookMainKindList.add(book.getBook_main_kind());
+                    bookDetailKindList.add(book.getBook_detail_kind());
                     Log.i("用户输出", book.getBook_name() + book.getBook_author());
 
                 }
@@ -314,6 +307,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
             TextView tv2 = holder.getView(R.id.id_tv_book_shortcontent);
             TextView tv3 = holder.getView(R.id.id_tv_book_author);
             TextView tv4 = holder.getView(R.id.id_tv_book_kind);
+            TextView tv5=holder.getView(R.id.id_tv_book_main_kind);
             //imageView.setImageResource(bookPostList.get(position));
 
 
@@ -356,8 +350,8 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
             tv.setText(bookNameList.get(position));
             tv2.setText(bookShortContentList.get(position));
             tv3.setText(bookAuthorList.get(position));
-            tv4.setText(bookKindList.get(position));
-
+            tv4.setText(bookDetailKindList.get(position));
+            tv5.setText(bookMainKindList.get(position));
 
         }else {
             TextView tv = holder.getView(R.id.tv);
@@ -400,9 +394,10 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
     public List<String>getBookShortContentList(){
         return bookShortContentList;
     }
-    public List<String>getBookKindList(){
-        return bookKindList;
+    public List<String>getBookDetailKindListList(){
+        return bookDetailKindList;
     }
+    public List<String>getBookMainKindList(){return bookMainKindList; }
     public List<Integer>getBookIdList(){/////////////////////////////////////
         return bookIdList;
     }

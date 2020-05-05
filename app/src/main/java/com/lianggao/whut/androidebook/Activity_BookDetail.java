@@ -69,9 +69,15 @@ public class Activity_BookDetail extends Activity{
     private BookNameTextView id_tv_book_name;
     private TextView  id_tv_book_shortcontent;
     private TextView id_tv_book_author;
+    private TextView id_tv_book_kind;
+
+
     private int bookid;
     private String book_name;
+
     public bookShelfTableManger bookshelfTableManger;
+
+
     private final int MSG_DOWNLOAD_SUCCESS=1;
     private final int MSG_DOWNLOADCHCHE_SUCCESS=2;
     private final int MSG_ALREADY_HAVED=3;
@@ -130,14 +136,16 @@ public class Activity_BookDetail extends Activity{
                                 bookshelfTableManger = new bookShelfTableManger(getContext());
                                 bookshelfTableManger.createDb();
                                 //bookshelfTableManger.deleteTable();
-                                Book book = new Book();
-                                book.setBook_id(bookid);
-                                book.setBook_name(id_tv_book_name.getText().toString());
-                                book.setBook_author(id_tv_book_author.getText().toString());
-                                book.setBook_cover_path( getExternalFilesDir("Cover")+"/"+ book_name + ".jpg");//"/storage/emulated/0/android_ebook/Cover/"
-                                book.setBook_path(getExternalFilesDir("Content") +"/"+ book_name + ".txt");
-                                System.out.println( book.getBook_id() + book.getBook_name() + book.getBook_author() + book.getBook_cover_path() + book.getBook_path());
-                                bookshelfTableManger.addBook(book);
+                                Book bookAdd = new Book();
+                                bookAdd.setBook_id(bookid);
+                                bookAdd.setBook_name(id_tv_book_name.getText().toString());
+                                bookAdd.setBook_author(id_tv_book_author.getText().toString());
+                                bookAdd.setBook_cover_path( getExternalFilesDir("Cover")+"/"+ book_name + ".jpg");//"/storage/emulated/0/android_ebook/Cover/"
+                                bookAdd.setBook_path(getExternalFilesDir("Content") +"/"+ book_name + ".txt");
+                                bookAdd.setBook_main_kind(book.getBook_main_kind());
+                                bookAdd.setBook_detail_kind(book.getBook_detail_kind());
+                                System.out.println( bookAdd.getBook_id() + bookAdd.getBook_name() + bookAdd.getBook_author() + bookAdd.getBook_cover_path() + bookAdd.getBook_path()+bookAdd.getBook_main_kind()+bookAdd.getBook_detail_kind());
+                                bookshelfTableManger.addBook(bookAdd);
 
 
 
@@ -169,18 +177,6 @@ public class Activity_BookDetail extends Activity{
                                 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                                 String saveFilePath = getExternalFilesDir("Content")  + "/"+book_name + ".txt";
                                 String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";//这里是以name请求的
                                 System.out.println("开始下载书籍文件" + saveFilePath + "  " + url);
@@ -202,15 +198,6 @@ public class Activity_BookDetail extends Activity{
                                     }
                                 });
                                 System.out.println("下载书籍封面完成");
-
-
-
-
-
-
-
-
-
 
                                 msg.what = MSG_DOWNLOAD_SUCCESS;
                                 handler.sendMessage(msg);
@@ -245,7 +232,12 @@ public class Activity_BookDetail extends Activity{
         id_tv_book_shortcontent.setText(book.getBook_short_content_path());
         id_tv_book_author=(TextView)findViewById(R.id.id_tv_book_author) ;
         id_tv_book_author.setText(book.getBook_author());
-        bookid=book.getBook_id();////////////////////////////////
+        id_tv_book_kind=(TextView)findViewById(R.id.id_tv_book_kind) ;
+        id_tv_book_kind.setText(book.getBook_detail_kind());
+
+
+
+        bookid=book.getBook_id();
         book_name=book.getBook_name();
         imageView=(ImageView)findViewById(R.id.id_tv_book_post) ;
         if(book.getBook_cover_path()==null){
@@ -262,15 +254,6 @@ public class Activity_BookDetail extends Activity{
                     .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                     .into(imageView);
         }
-      /*  ratingBar=(RatingBar)findViewById(R.id.ratingbar) ;
-        ratingBar.setRating(3);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                Toast.makeText(Activity_BookDetail.this,"rating "+rating+"",Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
         gridView=(GridView)findViewById(R.id.id_gv_book_list);
         data_list = new ArrayList<Map<String, Object>>();
         //新建适配器
@@ -287,26 +270,10 @@ public class Activity_BookDetail extends Activity{
             }
         });
 
-
-
-
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        //设置图标大小和监听
-       /* textViewCatalog=(DrawableTextView)findViewById(R.id.id_tv_catalog);
-        Drawable drawable= getResources().getDrawable(R.drawable.icon_book_catalog);
-        drawable.setBounds(0, 0, 70, 70);
-        textViewCatalog.setCompoundDrawables(null, drawable, null, null);
-        textViewCatalog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"点击了图片 ",Toast.LENGTH_LONG).show();
-            }
-        });*/
         textViewReturn=(TextView)findViewById(R.id.id_tv_return);
         textViewReturn.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -315,19 +282,6 @@ public class Activity_BookDetail extends Activity{
                 return true;
             }
         });
-
-        /*textViewCatalog.setDrawableTopClick(new DrawableTextView.DrawableTopClickListener() {
-            @Override
-            public void onDrawableTopClickListener(View view) {
-                Toast.makeText(getApplicationContext(),"点击了图片 ",Toast.LENGTH_LONG).show();
-
-            }
-        });*/
-
-
-
-
-
 
 
     }
