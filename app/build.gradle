@@ -62,7 +62,8 @@ dependencies {
 
     //阅读模块
     implementation 'com.github.bifan-wei:HwTxtReader:V2.2'
-
+//pdf阅读模块
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     //设置阴影
     //implementation 'com.github.wangjiegulu:ShadowViewhelper:1.0.4'
     //图片上传器

@@ -137,7 +137,7 @@ public class Util {
 		try{
 			System.out.println("开始复制封面到本地文件夹");
 
-			InputStream in=assetManager.open("defaultCover.jpg");
+			InputStream in=assetManager.open("defaultTxtCover.jpg");
 			OutputStream out=new FileOutputStream(new File(newPath));
 			byte[]buff=new byte[1024];
 			int read;
@@ -156,6 +156,30 @@ public class Util {
 		}
 	};
 
+
+
+	public static boolean copyFilePdfPost(AssetManager assetManager,String newPath){
+		try{
+			System.out.println("开始复制封面到本地文件夹");
+
+			InputStream in=assetManager.open("defaultPdfCover.jpg");
+			OutputStream out=new FileOutputStream(new File(newPath));
+			byte[]buff=new byte[1024];
+			int read;
+			while((read=in.read(buff))!=-1){
+				out.write(buff,0,read);
+			}
+			in.close();
+			out.flush();
+			out.close();
+			System.out.println("完成复制封面到本地文件夹");
+			return true;
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			System.out.println("失败复制封面到本地文件夹");
+			return false;
+		}
+	};
 
 	public static boolean deleteAllBook(List<String>pathList,List<String>coverList){
 		try {
@@ -197,6 +221,18 @@ public class Util {
 			System.out.println("删除封面文件失败");
 			return false;
 		}
+	}
+
+
+	public static boolean isPdf(String path){
+		File file=new File(path);
+		String fileName=file.getName();
+		if(fileName.endsWith("txt")){
+			return false;
+		}else{
+			return true;
+		}
+
 	}
 
 

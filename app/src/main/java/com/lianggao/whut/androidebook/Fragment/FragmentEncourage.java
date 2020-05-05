@@ -37,7 +37,8 @@ public class FragmentEncourage extends Fragment {
     private List<String>book_name_list;
     private List<String>book_author_list;
     private List<String>book_shortcontent_list;
-    private List<String>book_kind_list;
+    private List<String>book_main_kind_list;
+    private List<String>book_detail_kind_list;
     private List<String>book_path_list;
 
     //
@@ -47,7 +48,7 @@ public class FragmentEncourage extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_GET_NOVEL_SUCCESS:
-                    netRecyclerViewAdapter=new BookshelfKindRecyclerViewAdapter(getContext(),book_post_list,book_name_list,book_author_list,book_kind_list,book_shortcontent_list);
+                    netRecyclerViewAdapter=new BookshelfKindRecyclerViewAdapter(getContext(),book_post_list,book_name_list,book_author_list,book_main_kind_list,book_detail_kind_list,book_shortcontent_list);
                     netRecyclerViewAdapter.setOnItemClickListener(new BookshelfKindRecyclerViewAdapter.OnItemClickListener(){
                         @Override
                         public void onItemClick(View view, int position) {
@@ -85,14 +86,15 @@ public class FragmentEncourage extends Fragment {
             public void run() {
                 bookShelfTableManger=new bookShelfTableManger(getContext());
                 bookShelfTableManger.createDb();
-                bookList= bookShelfTableManger.findAllEncourage();
+                bookList= bookShelfTableManger.findAllEcnomy();
                 System.out.println("开始获取书架历史图书");
 
                 book_name_list=new LinkedList<>();
                 book_post_list=new LinkedList<>();
                 book_author_list=new LinkedList<>();
                 book_shortcontent_list=new LinkedList<>();
-                book_kind_list=new LinkedList<>();
+                book_main_kind_list=new LinkedList<>();
+                book_detail_kind_list=new LinkedList<>();
                 book_path_list=new LinkedList<>();
                 for(int i=0;i<bookList.size();i++){
 
@@ -100,7 +102,8 @@ public class FragmentEncourage extends Fragment {
                     book_post_list.add(bookList.get(i).getBook_cover_path());
                     book_author_list.add(bookList.get(i).getBook_author());
                     book_shortcontent_list.add(" ");
-                    book_kind_list.add(" ");
+                    book_main_kind_list.add(bookList.get(i).getBook_main_kind());
+                    book_detail_kind_list.add(bookList.get(i).getBook_detail_kind());
                     book_path_list.add(bookList.get(i).getBook_path());
                 }
                 Message message=new Message();

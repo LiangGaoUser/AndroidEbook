@@ -26,18 +26,22 @@ public class BookshelfKindRecyclerViewAdapter extends RecyclerView.Adapter<Books
     private List<String>book_name_list;//书的名字集合
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
-    private List<String>book_kind_list;//书的种类集合
+    private List<String>book_main_kind_list;
+    private List<String>book_detail_kind_list;
+
+
     private LayoutInflater inflater;
     private OnItemClickListener onItemClickListener;//接口1
     private OnItemLongClickListener onItemLongClickListener;//接口2
     private Context context;
-    public BookshelfKindRecyclerViewAdapter(Context context, List<String>book_post_path_list, List<String>book_name_list, List<String>book_author_list, List<String>book_kind_list, List<String>book_shortcontent_list){
+    public BookshelfKindRecyclerViewAdapter(Context context, List<String>book_post_path_list, List<String>book_name_list, List<String>book_author_list, List<String>book_main_kind_list, List<String>book_detail_kind_list,List<String>book_shortcontent_list){
         inflater=LayoutInflater.from(context);
         this.book_post_path_list=book_post_path_list;
         this.book_name_list=book_name_list;
         this.book_author_list=book_author_list;
         this.book_shortcontent_list=book_shortcontent_list;
-        this.book_kind_list=book_kind_list;
+        this.book_main_kind_list=book_main_kind_list;
+        this.book_detail_kind_list=book_detail_kind_list;
         this.context=context;//
     }
 
@@ -70,7 +74,8 @@ public class BookshelfKindRecyclerViewAdapter extends RecyclerView.Adapter<Books
 
 
         myViewHolder.bookNameTextView.setText(book_shortcontent_list.get(i));
-        myViewHolder.tvBookKind.setText(book_kind_list.get(i));
+        myViewHolder.tvBookKind.setText(book_detail_kind_list.get(i));
+        myViewHolder.tvMainBookKind.setText(book_main_kind_list.get(i));
 
        //判断是否在activity中设置监听，回调
        if(onItemClickListener!=null){
@@ -107,6 +112,7 @@ public class BookshelfKindRecyclerViewAdapter extends RecyclerView.Adapter<Books
         private TextView tvBookAuthor;
         private TextView bookNameTextView;
         private TextView tvBookKind;
+        private TextView tvMainBookKind;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvBookAuthor=(TextView)itemView.findViewById(R.id.id_tv_book_author);
@@ -114,6 +120,7 @@ public class BookshelfKindRecyclerViewAdapter extends RecyclerView.Adapter<Books
             tvBookName=(BookNameTextView)itemView.findViewById(R.id.id_tv_book_name);
             bookNameTextView=(TextView)itemView.findViewById(R.id.id_tv_book_shortcontent);
             tvBookKind=(TextView)itemView.findViewById(R.id.id_tv_book_kind);
+            tvMainBookKind=(TextView)itemView.findViewById(R.id.id_tv_book_main_kind);
         }
     }
     /**

@@ -53,6 +53,7 @@ import com.lianggao.whut.androidebook.Activity_BookShelf_Delete;
 import com.lianggao.whut.androidebook.Activity_BookShelf_History;
 import com.lianggao.whut.androidebook.Activity_BookShelf_Kind;
 import com.lianggao.whut.androidebook.Activity_Read;
+import com.lianggao.whut.androidebook.Activity_Read_Pdf;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.Utils.Util;
@@ -66,6 +67,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Response;
 
 import static org.litepal.LitePalApplication.getContext;
 
@@ -121,7 +124,16 @@ public class FragmentBookShelf extends ViewPageFragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
-                            HwTxtPlayActivity.loadTxtFile(getContext(), book_path_list.get(position));
+
+                            if(!Util.isPdf(book_path_list.get(position))){
+                                HwTxtPlayActivity.loadTxtFile(getContext(), book_path_list.get(position));
+                            }else{
+                                Intent intent=new Intent(getActivity(), Activity_Read_Pdf.class);
+                                intent.putExtra("path",book_path_list.get(position));
+                                intent.putExtra("name",book_name_list.get(position));
+                                startActivity(intent);
+                            }
+
                         }
                     });
                     System.out.println("本地书架图书加载完成");
@@ -341,10 +353,19 @@ public class FragmentBookShelf extends ViewPageFragment {
     private String path;
     private boolean  Permit;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0x01;
-    public void chooseFile() {
+   /* public void chooseFile() {
         System.out.println("选择本地文件到书架开始");
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("text/plain");//设置类型
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, 3);
+    }*/
+    public void chooseFile() {
+        System.out.println("选择本地文件到书架开始");
+        String [] mimeTypes={"application/pdf","text/plain"};
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.putExtra("android.intent.extra.MIME_TYPES",mimeTypes);
+        intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, 3);
     }
@@ -465,7 +486,12 @@ public class FragmentBookShelf extends ViewPageFragment {
             book.setBook_path(path);
             book.setBook_id(0);
             book.setBook_name(file.getName());
-            addLocalBook(book);
+            if(!Util.isPdf(path)){
+                addLocalBook(book);
+            }else{
+                addLocalBookPDF(book);
+            }
+
             Log.i("输出","#######"+path);
             System.out.println("选择本地文件到书架完成");
         }
@@ -511,7 +537,7 @@ public class FragmentBookShelf extends ViewPageFragment {
         t.show();
     }
     //本地选择文件导入到书架中
-    private void addLocalBook(final Book book){
+    private void addLocalBook(final Book book){//上传txt类型的书籍
         new Thread(){
             @Override
             public void run() {
@@ -554,6 +580,37 @@ public class FragmentBookShelf extends ViewPageFragment {
             }
         }.start();
 
+    }
+
+
+    private void addLocalBookPDF(final Book book){//上传pdf类型的书籍
+        new Thread(){
+            @Override
+            public void run() {
+                bookshelfTableManger=new bookShelfTableManger(getContext());
+                bookshelfTableManger.createDb();
+                //bookshelfTableManger.addBook(book);
+                String newPath=getActivity().getExternalFilesDir("Content")+"/"+book.getBook_name();
+                //复制文件到path文件夹
+                Util.copyFile(book.getBook_path(),newPath);
+                //复制系统默认封面到post文件夹
+                String name=book.getBook_name().substring(0,book.getBook_name().length()-4);
+                String newPostPath=getActivity().getExternalFilesDir("Cover")+"/"+name+".jpg";
+                AssetManager assetManager=getActivity().getAssets();
+                Util.copyFilePdfPost(assetManager,newPostPath);
+                bookshelfTableManger=new bookShelfTableManger(getContext());
+                bookshelfTableManger.createDb();
+                Book book=new Book();
+                book.setBook_id(0);
+                book.setBook_name(name);
+                book.setBook_cover_path(newPostPath);
+                book.setBook_path(newPath);
+                book.setBook_main_kind("本地");
+                book.setBook_detail_kind("文档");
+                bookshelfTableManger.addBook(book);
+                getLocalBookShelf();
+            }
+        }.start();
     }
 
 

@@ -51,6 +51,7 @@
         <activity android:name=".Activity_BookShelf_Delete"></activity>
         <activity android:name=".Activity_BookShelf_History"></activity>
         <activity android:name=".Activity_BookShelf_Kind"></activity>
+        <activity android:name=".Activity_Read_Pdf"></activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
