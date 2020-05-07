@@ -21,15 +21,7 @@ public class FragmentClassTable extends ViewPageFragment {
         }
         return rootView;
     }
-    /*@Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        if(isVisibleToUser){
-            //Log.i("MainActivityBook","MainActivity出现时这里可以加载数据");
-        }else{
-            //Log.i("MainActivityBook","退出时执行操作");
-        }
-        super.setUserVisibleHint(isVisibleToUser);
-    }*/
+
     @Override
     public void onStart() {
         super.onStart();

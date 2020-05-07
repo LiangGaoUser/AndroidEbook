@@ -142,7 +142,7 @@ public class MainActivity extends FragmentActivity {
         adapter.addFragment(new FragmentBookShelf());//0
         adapter.addFragment(new FragmentBookStore());//1
         adapter.addFragment(new FragmentContinue());//2
-        adapter.addFragment(new FragmentClassTable());//3
+        adapter.addFragment(new FragmentClassTable2());//3
         adapter.addFragment(new FragmentSelfInfo());//4
         Log.i("MainActivity",adapter.getCount()+"ddd");
         viewPager.setAdapter(adapter);
