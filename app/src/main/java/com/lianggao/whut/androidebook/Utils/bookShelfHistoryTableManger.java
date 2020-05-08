@@ -27,7 +27,6 @@ public class bookShelfHistoryTableManger {
         sqLiteHelper=new SQLiteHelper(context);
         sqLiteDatabase=sqLiteHelper.getWritableDatabase();
         sqLiteHelper.createBookShelfHistoryTable(sqLiteDatabase);
-
     }
     public void deleteTable(){
         sqLiteDatabase.execSQL("drop  table  bookshelf_history");
@@ -131,7 +130,6 @@ public class bookShelfHistoryTableManger {
         for(int i=0;i<nameList.size();i++){
             sqLiteDatabase.delete("bookshelf_history","book_name=?",new String[]{nameList.get(i)});
         }
-
     }
 
 }

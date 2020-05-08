@@ -137,14 +137,18 @@ public class DeleteBookShelfRecyclerViewAdapter extends RecyclerView.Adapter<Del
     public void setCheckListTrue(int i){
         book_check_list.set(i,"true");
     }
+
+
     public void setCheckListAllFalse(){
         for(int i=0;i<book_check_list.size();i++){
             book_check_list.set(i,"false");
         }
+        notifyDataSetChanged();
     }
     public void setCheckListAllTrue(){
         for(int i=0;i<book_check_list.size();i++){
             book_check_list.set(i,"true");
         }
+        notifyDataSetChanged();
     }
 }

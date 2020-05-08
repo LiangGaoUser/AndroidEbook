@@ -107,7 +107,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                 postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
                 currentTotalNumber+=userList2.size();
 
@@ -149,7 +149,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                 postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
                 currentTotalNumber+=userList2.size();
 
@@ -190,7 +190,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                 postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
                 currentTotalNumber+=userList2.size();
 
@@ -237,7 +237,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
                 postParam.add(new NameValuePair("currentTotalNumber",Integer.toString(currentTotalNumber)));
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
                 currentTotalNumber+=userList2.size();
 

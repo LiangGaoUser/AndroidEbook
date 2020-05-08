@@ -119,7 +119,7 @@ public class Activity_BookDetail extends Activity{
                         @Override
                         public void run() {
                             Looper.prepare();
-                            Message msg=new Message();
+                            final Message msg=new Message();
                             if(bookshelfTableManger.findBookByName(book_name)){
                                 msg.what=MSG_ALREADY_HAVED;
                                 handler.sendMessage(msg);
@@ -160,7 +160,7 @@ public class Activity_BookDetail extends Activity{
                                 if(!bookShelfHistoryTableManger.findBookByName(book_name)){
                                     System.out.println("开始缓存书籍封面到书架历史");
                                     String saveFilePath3 = getExternalFilesDir("CoverBookShelfHistory") + "/" + book_name+ ".jpg";
-                                    String url3 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + book_name + ".jpg";
+                                    String url3 = "http://139.196.97.6/com.lianggao.whut/images_cover/" + book_name + ".jpg";
                                     HttpCaller.getInstance().downloadFile(url3, saveFilePath3, null, new ProgressUIListener() {
                                         @Override
                                         public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
@@ -178,7 +178,7 @@ public class Activity_BookDetail extends Activity{
 
 
                                 String saveFilePath = getExternalFilesDir("Content")  + "/"+book_name + ".txt";
-                                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";//这里是以name请求的
+                                String url = "http://139.196.97.6/com.lianggao.whut/txtbooks/" + book_name + ".txt";//这里是以name请求的
                                 System.out.println("开始下载书籍文件" + saveFilePath + "  " + url);
                                 HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
                                     @Override
@@ -190,17 +190,20 @@ public class Activity_BookDetail extends Activity{
 
                                 System.out.println("开始书籍封面下载");
                                 String saveFilePath2 = getExternalFilesDir("Cover") + "/" + book_name+ ".jpg";
-                                String url2 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + book_name + ".jpg";
+                                String url2 = "http://139.196.97.6/com.lianggao.whut/images_cover/" + book_name + ".jpg";
                                 HttpCaller.getInstance().downloadFile(url2, saveFilePath2, null, new ProgressUIListener() {
                                     @Override
                                     public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
                                         Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                                        if(percent==1.0){
+
+                                            msg.what = MSG_DOWNLOAD_SUCCESS;
+                                            handler.sendMessage(msg);
+                                        }
                                     }
                                 });
                                 System.out.println("下载书籍封面完成");
 
-                                msg.what = MSG_DOWNLOAD_SUCCESS;
-                                handler.sendMessage(msg);
                             }
 
                         }
@@ -210,7 +213,8 @@ public class Activity_BookDetail extends Activity{
                     finish();
                     return true;
                 case R.id.navigation_begin_read:
-                    Toast.makeText(Activity_BookDetail.this,"点击了开始阅读",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_BookDetail.this,"正在下载，下载完成会自动打开，请稍后...",Toast.LENGTH_LONG).show();
+
                     startRead();
 
 
@@ -318,21 +322,31 @@ public class Activity_BookDetail extends Activity{
                 postParam.add(new NameValuePair("username", "lianggao"));
                 postParam.add(new NameValuePair("password", "12"));
                 postParam.add(new NameValuePair("action", "postAction"));
-                Message message=new Message();
+                final Message message=new Message();
                 //阅读打开的文件应该放在CacheContent里面，而且封面文件不需要存储
-                String saveFilePath = getExternalFilesDir("CacheContent") + "/" + book_name + ".txt";
-                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";
+                final String saveFilePath = getExternalFilesDir("CacheContent") + "/" + book_name + ".txt";
+                String url = "http://139.196.97.6/com.lianggao.whut/txtbooks/" + book_name + ".txt";
 
 
 
                 if(fileIsExists(saveFilePath)){
                     System.out.println("本地已经存在文本文件");
+                    message.what=MSG_DOWNLOADCHCHE_SUCCESS;
+                    message.obj=saveFilePath;
+                    handler.sendMessage(message);
                 }else{
                     System.out.println("开始缓存书籍文件" + saveFilePath + "  " + url);
+                    Toast.makeText(getContext(),"请稍等正在缓存书籍，缓存完将自动打开...",Toast.LENGTH_SHORT).show();
                     HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
                         @Override
                         public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
                             Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                            if(percent==1.0){
+                                Toast.makeText(getContext(),"下载完成",Toast.LENGTH_SHORT).show();
+                                message.what=MSG_DOWNLOADCHCHE_SUCCESS;
+                                message.obj=saveFilePath;
+                                handler.sendMessage(message);
+                            }
                         }
                     });
                     System.out.println("缓存书籍文件完成");
@@ -344,9 +358,7 @@ public class Activity_BookDetail extends Activity{
 
 
                 }
-                message.what=MSG_DOWNLOADCHCHE_SUCCESS;
-                message.obj=saveFilePath;
-                handler.sendMessage(message);
+
 
             }
         }.start();

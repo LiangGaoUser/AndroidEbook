@@ -81,7 +81,9 @@ public class ClassTableManger {
     public void deleteTableContent(){
         sqLiteDatabase.execSQL("delete  from  class_table");
     }
-
+    public void dropTable(String className){
+        sqLiteDatabase.delete("class_table","name=?",new String[]{className});
+    }
 
 
 

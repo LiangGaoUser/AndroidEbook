@@ -257,13 +257,14 @@ public class FragmentBookShelf extends ViewPageFragment {
     @Override
     public void onStart() {
         super.onStart();
-        getLocalBookShelf();
+
         Log.i("FragmentBookShelf","onStart");
     }
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("FragmentBookShelf","onResume");
+        //Log.i("FragmentBookShelf","onResume");
+        //getLocalBookShelf();
     }
     @Override
     public void onPause() {

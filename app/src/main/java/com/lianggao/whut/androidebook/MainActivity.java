@@ -7,22 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.text.Layout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 
 import com.lianggao.whut.androidebook.Adapter.BottomAdapter;
 import com.lianggao.whut.androidebook.Fragment.FragmentBookShelf;
 import com.lianggao.whut.androidebook.Fragment.FragmentBookStore;
-import com.lianggao.whut.androidebook.Fragment.FragmentBookStoreBook;
-import com.lianggao.whut.androidebook.Fragment.FragmentBookStoreKind;
-import com.lianggao.whut.androidebook.Fragment.FragmentBookStoreList;
-import com.lianggao.whut.androidebook.Fragment.FragmentContinue;
 import com.lianggao.whut.androidebook.Fragment.FragmentClassTable;
+import com.lianggao.whut.androidebook.Fragment.FragmentContinue;
 import com.lianggao.whut.androidebook.Fragment.FragmentSelfInfo;
 
 public class MainActivity extends FragmentActivity {
@@ -142,7 +135,7 @@ public class MainActivity extends FragmentActivity {
         adapter.addFragment(new FragmentBookShelf());//0
         adapter.addFragment(new FragmentBookStore());//1
         adapter.addFragment(new FragmentContinue());//2
-        adapter.addFragment(new FragmentClassTable2());//3
+        adapter.addFragment(new FragmentClassTable());//3
         adapter.addFragment(new FragmentSelfInfo());//4
         Log.i("MainActivity",adapter.getCount()+"ddd");
         viewPager.setAdapter(adapter);

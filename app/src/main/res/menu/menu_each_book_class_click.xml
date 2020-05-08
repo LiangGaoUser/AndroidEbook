@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/id_delete_file"
+        android:title="删除文件" />
+
+    <item
+        android:id="@+id/id_input_file"
+        android:title="导入文件" />
+
+    <item
+        android:id="@+id/id_start_read"
+        android:title="开始阅读" />
+    <item
+        android:id="@+id/id_delete_class"
+        android:title="删除该课程" />
+</menu>

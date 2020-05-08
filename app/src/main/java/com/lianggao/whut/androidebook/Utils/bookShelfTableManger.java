@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.lianggao.whut.androidebook.Model.Book;
+import com.lianggao.whut.androidebook.Model.ClassBook;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -92,6 +93,19 @@ public class bookShelfTableManger {
 
     }
 
+
+    public ClassBook findBookByName2(String book_name){
+        Cursor cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_name","book_path"},"book_name=?",new String[]{book_name},null,null,null);
+         ClassBook classBook=new ClassBook();
+        while(cursor.moveToNext()) {
+            String book_name2=cursor.getString(0);
+            String book_path2=cursor.getString(1);
+            classBook.setFile_name(book_name);
+            classBook.setFile_path(book_path2);
+        }
+        return classBook;
+
+    }
 
     public List<Book> findAllBook(){
         Cursor cursor=sqLiteDatabase.query("bookshelf",new String[]{"book_id","book_name","book_author","book_cover_path","book_path","book_main_kind","book_detail_kind"},null,null,null,null,null);

@@ -213,7 +213,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
 
@@ -253,7 +253,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
 
@@ -293,7 +293,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
 
@@ -333,7 +333,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
 
@@ -373,7 +373,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
 
@@ -413,7 +413,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
 
 
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
 
@@ -533,7 +533,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("kind", "1"));
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
                 Gson gson = new Gson();
@@ -581,7 +581,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("kind", "2"));
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
                 Gson gson = new Gson();
@@ -621,7 +621,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("kind", "3"));
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
                 Gson gson = new Gson();
@@ -659,7 +659,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("kind", "4"));
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
                 Gson gson = new Gson();
@@ -697,7 +697,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("kind", "5"));
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
                 Gson gson = new Gson();
@@ -735,7 +735,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("kind", "6"));
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
-                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
+                userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://139.196.97.6/com.lianggao.whut/Get_Load_More_Servlet", postParam);
                 Log.i("用户4", userList2 + "");
 
                 Gson gson = new Gson();

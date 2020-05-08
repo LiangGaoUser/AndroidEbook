@@ -44,7 +44,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         Log.i("SQLiteHelper","建立了class_table表");
     }
-
+    public void createClassBookTable(SQLiteDatabase db){
+        String sql="create table if not exists class_book_table(class_name varchar(50),file_name varrchar(100),file_path varchar(100))";
+        db.execSQL(sql);
+        Log.i("SQLiteHelper","建立了class_book_table表");
+    }
 
 
 }

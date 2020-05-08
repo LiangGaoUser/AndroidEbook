@@ -122,26 +122,26 @@ public class FragmentBookStoreList extends Fragment {
         imageView4=(ImageView)rootView.findViewById(R.id.id_tv_book_list8);
         Picasso
                 .with(getContext())
-                .load("http://192.168.1.4:8080/com.lianggao.whut/images_booklist/2019.jpg")
+                .load("http://139.196.97.6/com.lianggao.whut/images_booklist/2019.jpg")
                 .placeholder(R.drawable.icon_arrow_return)//占位符
                 .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                 .into(imageView1);
 
         Picasso
                 .with(getContext())
-                .load("http://192.168.1.4:8080/com.lianggao.whut/images_booklist/2018.jpg")
+                .load("http://139.196.97.6/com.lianggao.whut/images_booklist/2018.jpg")
                 .placeholder(R.drawable.icon_arrow_return)//占位符
                 .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                 .into(imageView2);
         Picasso
                 .with(getContext())
-                .load("http://192.168.1.4:8080/com.lianggao.whut/images_booklist/2017.jpg")
+                .load("http://139.196.97.6/com.lianggao.whut/images_booklist/2017.jpg")
                 .placeholder(R.drawable.icon_arrow_return)//占位符
                 .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                 .into(imageView3);
         Picasso
                 .with(getContext())
-                .load("http://192.168.1.4:8080/com.lianggao.whut/images_booklist/2016.jpg")
+                .load("http://139.196.97.6/com.lianggao.whut/images_booklist/2016.jpg")
                 .placeholder(R.drawable.icon_arrow_return)//占位符
                 .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                 .into(imageView4);
@@ -209,7 +209,7 @@ public class FragmentBookStoreList extends Fragment {
                 postParam.add(new NameValuePair("password","12"));
                 postParam.add(new NameValuePair("action","postAction"));
                 List<Book>bookRecommendList;
-                bookRecommendList= HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
+                bookRecommendList= HttpCaller.getInstance().postSyncList(Book.class,"http://139.196.97.6/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
                 Gson gson=new Gson();
                 Map<String ,Object>map;
                 for(int i=0;i<bookRecommendList.size();i++){
