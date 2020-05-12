@@ -39,7 +39,7 @@ public class Activity_BookShelf_Delete extends FragmentActivity {
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_check_list;//书的种类集合
-    private List<Integer>book_id_list;
+
     private List<Book> bookList;
 
     private List<String> book_chosed_path_list;//书的封面集合

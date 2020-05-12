@@ -54,6 +54,7 @@ import com.lianggao.whut.androidebook.Activity_BookShelf_History;
 import com.lianggao.whut.androidebook.Activity_BookShelf_Kind;
 import com.lianggao.whut.androidebook.Activity_Read;
 import com.lianggao.whut.androidebook.Activity_Read_Pdf;
+import com.lianggao.whut.androidebook.HwTxtPlayActivityOverWrite;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.Utils.Util;
@@ -126,7 +127,8 @@ public class FragmentBookShelf extends ViewPageFragment {
                             Toast.makeText(getContext(),"点击了gridview的第"+position+"个图书",Toast.LENGTH_LONG).show();
 
                             if(!Util.isPdf(book_path_list.get(position))){
-                                HwTxtPlayActivity.loadTxtFile(getContext(), book_path_list.get(position));
+                                //HwTxtPlayActivity.loadTxtFile(getContext(), book_path_list.get(position));
+                                HwTxtPlayActivityOverWrite.loadTxtFile(getContext(), book_path_list.get(position),book_name_list.get(position));
                             }else{
                                 Intent intent=new Intent(getActivity(), Activity_Read_Pdf.class);
                                 intent.putExtra("path",book_path_list.get(position));
@@ -140,7 +142,7 @@ public class FragmentBookShelf extends ViewPageFragment {
                     break;
 
                 case MSG_DELETE_ALL_BOOKS_SUCCESS:
-
+                    break;
 
 
 
@@ -485,7 +487,7 @@ public class FragmentBookShelf extends ViewPageFragment {
             Book book=new Book();
             File file=new File(path);
             book.setBook_path(path);
-            book.setBook_id(0);
+
             book.setBook_name(file.getName());
             if(!Util.isPdf(path)){
                 addLocalBook(book);
@@ -556,7 +558,7 @@ public class FragmentBookShelf extends ViewPageFragment {
                 bookshelfTableManger=new bookShelfTableManger(getContext());
                 bookshelfTableManger.createDb();
                 Book book=new Book();
-                book.setBook_id(0);
+
                 book.setBook_name(name);
                 book.setBook_cover_path(newPostPath);
                 book.setBook_path(newPath);
@@ -602,7 +604,6 @@ public class FragmentBookShelf extends ViewPageFragment {
                 bookshelfTableManger=new bookShelfTableManger(getContext());
                 bookshelfTableManger.createDb();
                 Book book=new Book();
-                book.setBook_id(0);
                 book.setBook_name(name);
                 book.setBook_cover_path(newPostPath);
                 book.setBook_path(newPath);

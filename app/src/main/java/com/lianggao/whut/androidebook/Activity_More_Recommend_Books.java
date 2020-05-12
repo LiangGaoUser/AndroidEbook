@@ -46,7 +46,7 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
     private List<String>book_shortcontent_list;//书的简介集合
     private List<String>book_main_kind_list;
     private List<String>book_detail_kind_list;
-    private List<Integer>book_id_list;
+
     private final int MSG_GET_MUTIBITMAP_SUCCESS=1;
     private FragmentActivity fragmentActivity;
     Handler handler=new Handler(){
@@ -57,7 +57,7 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
                     Log.i("获取图片","批量获取图片成功");
 
 
-                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_main_kind_list,book_detail_kind_list,book_id_list);
+                    loadMoreBookAdapter=new LoadMoreBookAdapter(getApplicationContext(),36,book_post_path_list,book_name_list,book_author_list,book_shortcontent_list,book_main_kind_list,book_detail_kind_list);
                     loadMoreRecommendBookRecyclerView.setManager();
 
                     loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
@@ -126,7 +126,7 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
                 book_shortcontent_list=new LinkedList<String>();
                 book_main_kind_list=new LinkedList<>();
                 book_detail_kind_list=new LinkedList<>();
-                book_id_list=new LinkedList<>();
+
                 Gson gson=new Gson();
 
                 for(int i=0;i<userList2.size();i++){
@@ -139,7 +139,7 @@ public class Activity_More_Recommend_Books extends FragmentActivity {
                     book_shortcontent_list.add(book.getBook_short_content_path());
                     book_main_kind_list.add(book.getBook_main_kind());
                     book_detail_kind_list.add(book.getBook_detail_kind());
-                    book_id_list.add(book.getBook_id());
+
                     Log.i("用户输出",book.getBook_name()+book.getBook_author());
 
                 }

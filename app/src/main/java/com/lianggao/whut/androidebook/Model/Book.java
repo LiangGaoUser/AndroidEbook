@@ -9,7 +9,7 @@ import android.os.Parcelable;
  * @data:${DATA} 15:11
  */
 public class Book implements Parcelable {
-    private int book_id;//书本编号
+
     private String book_name;//书本名称
     private String book_author;//书本作者
     private String book_short_content_path;//书本简介路径
@@ -28,13 +28,9 @@ public class Book implements Parcelable {
     private int book_catalog_total_number;//书的总共章节数目
     private String book_path;//书的文件路径
 
-    public int getBook_id() {
-        return book_id;
-    }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
-    }
+
+
 
     public String getBook_name() {
         return book_name;
@@ -147,7 +143,7 @@ public class Book implements Parcelable {
         @Override
         public Book createFromParcel(Parcel source) {
             Book book=new Book();
-            book.setBook_id(source.readInt());
+
             book.setBook_name(source.readString());
             book.setBook_author(source.readString());
             book.setBook_short_content_path(source.readString());
@@ -178,7 +174,7 @@ public class Book implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(book_id);
+
         dest.writeString(book_name);
         dest.writeString(book_author);
         dest.writeString(book_short_content_path);

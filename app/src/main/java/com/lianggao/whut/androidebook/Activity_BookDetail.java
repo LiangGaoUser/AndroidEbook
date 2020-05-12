@@ -2,6 +2,7 @@ package com.lianggao.whut.androidebook;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -13,6 +14,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -76,7 +78,7 @@ public class Activity_BookDetail extends Activity{
     private TextView id_tv_book_kind;
     private TextView id_tv_book_star;
 
-    private int bookid;
+
     private String book_name;
 
     public bookShelfTableManger bookshelfTableManger;
@@ -88,6 +90,7 @@ public class Activity_BookDetail extends Activity{
     private final int MSG_NOT_STAR=4;
     private final int MSG_IS_STAR=5;
     private final int MSG_ADD_STAR=6;
+    private final int MSG_NOT_LOGINED=7;
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -113,6 +116,14 @@ public class Activity_BookDetail extends Activity{
                     Toast.makeText(getContext(),"加入收藏成功",Toast.LENGTH_SHORT).show();
                     id_tv_book_star.setText("已经加入收藏");
                     break;
+                case MSG_NOT_LOGINED:
+                    new AlertDialog.Builder(Activity_BookDetail.this)
+                            .setTitle("操作结果")
+                            .setMessage("还没有登录，请返回登录")
+                            .setPositiveButton("确定返回", onClickListener)
+                            .show();
+                    break;
+
             }
         }
     };
@@ -154,14 +165,14 @@ public class Activity_BookDetail extends Activity{
                                 bookshelfTableManger.createDb();
                                 //bookshelfTableManger.deleteTable();
                                 Book bookAdd = new Book();
-                                bookAdd.setBook_id(bookid);
+
                                 bookAdd.setBook_name(id_tv_book_name.getText().toString());
                                 bookAdd.setBook_author(id_tv_book_author.getText().toString());
                                 bookAdd.setBook_cover_path( getExternalFilesDir("Cover")+"/"+ book_name + ".jpg");//"/storage/emulated/0/android_ebook/Cover/"
                                 bookAdd.setBook_path(getExternalFilesDir("Content") +"/"+ book_name + ".txt");
                                 bookAdd.setBook_main_kind(book.getBook_main_kind());
                                 bookAdd.setBook_detail_kind(book.getBook_detail_kind());
-                                System.out.println( bookAdd.getBook_id() + bookAdd.getBook_name() + bookAdd.getBook_author() + bookAdd.getBook_cover_path() + bookAdd.getBook_path()+bookAdd.getBook_main_kind()+bookAdd.getBook_detail_kind());
+                                System.out.println(  bookAdd.getBook_name() + bookAdd.getBook_author() + bookAdd.getBook_cover_path() + bookAdd.getBook_path()+bookAdd.getBook_main_kind()+bookAdd.getBook_detail_kind());
                                 bookshelfTableManger.addBook(bookAdd);
 
 
@@ -230,7 +241,7 @@ public class Activity_BookDetail extends Activity{
                     addStart();
                     return true;
                 case R.id.navigation_begin_read:
-                    Toast.makeText(Activity_BookDetail.this,"正在下载，下载完成会自动打开，请稍后...",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Activity_BookDetail.this,"正在下载，下载完成会自动打开，请稍后...",Toast.LENGTH_LONG).show();
 
                     startRead();
 
@@ -268,7 +279,7 @@ public class Activity_BookDetail extends Activity{
 
 
 
-        bookid=book.getBook_id();
+
         book_name=book.getBook_name();
         imageView=(ImageView)findViewById(R.id.id_tv_book_post) ;
         if(book.getBook_cover_path()==null){
@@ -354,29 +365,36 @@ public class Activity_BookDetail extends Activity{
                 final String saveFilePath = getExternalFilesDir("CacheContent") + "/" + book_name + ".txt";
                 String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";
 
-
-
-                if(fileIsExists(saveFilePath)){
-                    System.out.println("本地已经存在文本文件");
-                    message.what=MSG_DOWNLOADCHCHE_SUCCESS;
-                    message.obj=saveFilePath;
+                SharedPreferences sp=getApplicationContext().getSharedPreferences("QQFile", Context.MODE_PRIVATE);
+                String user_id=sp.getString("flag","");
+                if(user_id==""){
+                    message.what=MSG_NOT_LOGINED;
                     handler.sendMessage(message);
                 }else{
-                    System.out.println("开始缓存书籍文件" + saveFilePath + "  " + url);
-                    Toast.makeText(getContext(),"请稍等正在缓存书籍，缓存完将自动打开...",Toast.LENGTH_SHORT).show();
-                    HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
-                        @Override
-                        public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
-                            Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
-                            if(percent==1.0){
-                                Toast.makeText(getContext(),"下载完成",Toast.LENGTH_SHORT).show();
-                                message.what=MSG_DOWNLOADCHCHE_SUCCESS;
-                                message.obj=saveFilePath;
-                                handler.sendMessage(message);
+                    if(fileIsExists(saveFilePath)){
+                        System.out.println("本地已经存在文本文件");
+                        message.what=MSG_DOWNLOADCHCHE_SUCCESS;
+                        message.obj=saveFilePath;
+                        handler.sendMessage(message);
+                    }else{
+                        System.out.println("开始缓存书籍文件" + saveFilePath + "  " + url);
+                        Toast.makeText(getContext(),"请稍等正在缓存书籍，缓存完将自动打开...",Toast.LENGTH_SHORT).show();
+                        HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
+                            @Override
+                            public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
+                                Log.i("正在下载", "dowload file content numBytes:" + numBytes + " totalBytes:" + totalBytes + " percent:" + percent + " speed:" + speed);
+                                if(percent==1.0){
+                                    Toast.makeText(getContext(),"下载完成",Toast.LENGTH_SHORT).show();
+                                    message.what=MSG_DOWNLOADCHCHE_SUCCESS;
+                                    message.obj=saveFilePath;
+                                    handler.sendMessage(message);
+                                }
                             }
-                        }
-                    });
-                    System.out.println("缓存书籍文件完成");
+                        });
+                        System.out.println("缓存书籍文件完成");
+                }
+
+
 
 
 
@@ -448,5 +466,16 @@ public class Activity_BookDetail extends Activity{
 
     }
 
-
+    private DialogInterface.OnClickListener onClickListener=new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch(which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    finish();
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
 }
