@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/id_book_item"
     android:layout_width="match_parent"
     android:layout_height="70dp"
@@ -7,7 +8,26 @@
 
     >
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_bottom"
+        android:layout_below="@+id/cardview_middle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="1dp"
+
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        app:cardMaxElevation="1dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+
+        android:foreground="?android:attr/selectableItemBackground"
+        >
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -60,12 +80,7 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/colorGray"
-        android:layout_below="@+id/linearLayout"/>
 
+    </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+</LinearLayout>

@@ -128,7 +128,7 @@ public class Activity_Class_Book extends Activity {
                         ClassBook classBook=classBookTableManger.findByName2(className);
                         System.out.println("######"+classBook.getFile_path());
                         if(!Util.isPdf(classBook.getFile_path())){
-                            HwTxtPlayActivityOverWrite.loadTxtFile(getApplicationContext(), classBook.getFile_path());
+                            HwTxtPlayActivityOverWrite.loadTxtFile(getApplicationContext(), classBook.getFile_path(),classBook.getFile_name());
                         }else{
                             Intent intent2=new Intent(Activity_Class_Book.this, Activity_Read_Pdf.class);
                             intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

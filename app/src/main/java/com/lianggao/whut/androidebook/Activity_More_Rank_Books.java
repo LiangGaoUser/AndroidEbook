@@ -127,7 +127,7 @@ public class Activity_More_Rank_Books extends FragmentActivity {
 
 
                 List<Book> userList2 ;
-                userList2=HttpCaller.getInstance().postSyncList(Book.class,"http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet",postParam);
+                userList2=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet",postParam);
                 Log.i("用户4",userList2+"");
 
                 book_post_path_list=new LinkedList<String>();

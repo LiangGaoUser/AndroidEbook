@@ -242,7 +242,77 @@ public class HttpCaller {
         return null;
     }
 
+
+    public <T> T postSyncResult(Class<T> clazz, String url, List<NameValuePair> form) {
+        return postSyncResult(clazz,url,form,null);
+    }
+
+    public <T> T postSyncResult(Class<T> clazz, String url, List<NameValuePair> form,Header[] header) {
+        if (checkAgent()) {
+            return null;
+        }
+        Request.Builder builder=getRequestBuild(url,form);
+        byte[] bytes = execute(builder,header);
+        try {
+            String result = new String(bytes, "utf-8");
+            if (clazz != null && !TextUtils.isEmpty(result)) {
+                T t = gson.fromJson(result,clazz);
+                return t;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+    public <T> List<T> getSyncThoughtList(Class<T> clazz, String url, List<NameValuePair> form) {
+        return getSyncThoughtList(clazz,url,form,null);
+    }
+    public <T> List<T> getSyncThoughtList(Class<T> clazz, String url, List<NameValuePair> form, Header[] header) {
+        if (checkAgent()) {
+            return null;
+        }
+        Request.Builder builder=getRequestBuild(url,form);
+        byte[] bytes = execute(builder,header);
+        try {
+            String result = new String(bytes, "utf-8");
+            if ( !TextUtils.isEmpty(result)) {
+                List<T> tList=gson.fromJson(result,new TypeToken<List<T>>(){}.getType());
+                return tList;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -287,6 +357,7 @@ public class HttpCaller {
         }
         RequestBody requestBody = formBuilder.build();
         Request.Builder builder = new Request.Builder();
+        //builder.addHeader("Content-Type","application/x-www-form-urlencoded; charset=utf-8");
         builder.url(url);
         builder.post(requestBody);
         return builder;

@@ -1,7 +1,9 @@
 package com.lianggao.whut.androidebook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 
 import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Model.Book;
+import com.lianggao.whut.androidebook.Model.BookStar;
+import com.lianggao.whut.androidebook.Model.Result;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.Utils.bookShelfHistoryTableManger;
@@ -70,7 +74,7 @@ public class Activity_BookDetail extends Activity{
     private TextView  id_tv_book_shortcontent;
     private TextView id_tv_book_author;
     private TextView id_tv_book_kind;
-
+    private TextView id_tv_book_star;
 
     private int bookid;
     private String book_name;
@@ -81,6 +85,9 @@ public class Activity_BookDetail extends Activity{
     private final int MSG_DOWNLOAD_SUCCESS=1;
     private final int MSG_DOWNLOADCHCHE_SUCCESS=2;
     private final int MSG_ALREADY_HAVED=3;
+    private final int MSG_NOT_STAR=4;
+    private final int MSG_IS_STAR=5;
+    private final int MSG_ADD_STAR=6;
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -95,6 +102,16 @@ public class Activity_BookDetail extends Activity{
                     Toast.makeText(getContext(),"打开成功",Toast.LENGTH_SHORT).show();
                     String path=(String)msg.obj;
                     HwTxtPlayActivity.loadTxtFile(Activity_BookDetail.this, path);///storage/emulated/0/d.txt
+                    break;
+                case MSG_NOT_STAR:
+                    id_tv_book_star.setText("加入收藏");
+                    break;
+                case MSG_IS_STAR:
+                    id_tv_book_star.setText("已经加入收藏");
+                    break;
+                case MSG_ADD_STAR:
+                    Toast.makeText(getContext(),"加入收藏成功",Toast.LENGTH_SHORT).show();
+                    id_tv_book_star.setText("已经加入收藏");
                     break;
             }
         }
@@ -160,7 +177,7 @@ public class Activity_BookDetail extends Activity{
                                 if(!bookShelfHistoryTableManger.findBookByName(book_name)){
                                     System.out.println("开始缓存书籍封面到书架历史");
                                     String saveFilePath3 = getExternalFilesDir("CoverBookShelfHistory") + "/" + book_name+ ".jpg";
-                                    String url3 = "http://139.196.97.6/com.lianggao.whut/images_cover/" + book_name + ".jpg";
+                                    String url3 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + book_name + ".jpg";
                                     HttpCaller.getInstance().downloadFile(url3, saveFilePath3, null, new ProgressUIListener() {
                                         @Override
                                         public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
@@ -178,7 +195,7 @@ public class Activity_BookDetail extends Activity{
 
 
                                 String saveFilePath = getExternalFilesDir("Content")  + "/"+book_name + ".txt";
-                                String url = "http://139.196.97.6/com.lianggao.whut/txtbooks/" + book_name + ".txt";//这里是以name请求的
+                                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";//这里是以name请求的
                                 System.out.println("开始下载书籍文件" + saveFilePath + "  " + url);
                                 HttpCaller.getInstance().downloadFile(url, saveFilePath, null, new ProgressUIListener() {
                                     @Override
@@ -190,7 +207,7 @@ public class Activity_BookDetail extends Activity{
 
                                 System.out.println("开始书籍封面下载");
                                 String saveFilePath2 = getExternalFilesDir("Cover") + "/" + book_name+ ".jpg";
-                                String url2 = "http://139.196.97.6/com.lianggao.whut/images_cover/" + book_name + ".jpg";
+                                String url2 = "http://192.168.1.4:8080/com.lianggao.whut/images_cover/" + book_name + ".jpg";
                                 HttpCaller.getInstance().downloadFile(url2, saveFilePath2, null, new ProgressUIListener() {
                                     @Override
                                     public void onUIProgressChanged(long numBytes, long totalBytes, float percent, float speed) {
@@ -210,7 +227,7 @@ public class Activity_BookDetail extends Activity{
                     }.start();
                     return true;
                 case R.id.navigation_return:
-                    finish();
+                    addStart();
                     return true;
                 case R.id.navigation_begin_read:
                     Toast.makeText(Activity_BookDetail.this,"正在下载，下载完成会自动打开，请稍后...",Toast.LENGTH_LONG).show();
@@ -238,6 +255,16 @@ public class Activity_BookDetail extends Activity{
         id_tv_book_author.setText(book.getBook_author());
         id_tv_book_kind=(TextView)findViewById(R.id.id_tv_book_kind) ;
         id_tv_book_kind.setText(book.getBook_detail_kind());
+        id_tv_book_star=(TextView)findViewById(R.id.id_tv_book_star);
+        ifStart();
+        id_tv_book_star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(id_tv_book_star.getText().equals("加入收藏")){
+                    addStart();
+                }
+            }
+        });
 
 
 
@@ -325,7 +352,7 @@ public class Activity_BookDetail extends Activity{
                 final Message message=new Message();
                 //阅读打开的文件应该放在CacheContent里面，而且封面文件不需要存储
                 final String saveFilePath = getExternalFilesDir("CacheContent") + "/" + book_name + ".txt";
-                String url = "http://139.196.97.6/com.lianggao.whut/txtbooks/" + book_name + ".txt";
+                String url = "http://192.168.1.4:8080/com.lianggao.whut/txtbooks/" + book_name + ".txt";
 
 
 
@@ -373,6 +400,52 @@ public class Activity_BookDetail extends Activity{
             return false;
         }
         return true;
+    }
+
+    public void addStart(){
+
+        new Thread() {
+            @Override
+            public void run() {
+                SharedPreferences sp=getApplicationContext().getSharedPreferences("QQFile", Context.MODE_PRIVATE);
+                String user_id=sp.getString("flag","");
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("user_id",user_id));
+                postParam.add(new NameValuePair("book_name",book_name));
+                HttpCaller.getInstance().postSyncResult(Result.class,"http://192.168.1.4:8080/com.lianggao.whut/Post_Book_Star_Servlet",postParam)  ;
+                Message message=new Message();
+                message.what=MSG_ADD_STAR;
+                handler.sendMessage(message);
+
+            }
+        }.start();
+
+
+    }
+    public void ifStart(){
+
+        new Thread() {
+            @Override
+            public void run() {
+                SharedPreferences sp=getApplicationContext().getSharedPreferences("QQFile", Context.MODE_PRIVATE);
+                String user_id=sp.getString("flag","");
+                List<NameValuePair> postParam = new ArrayList<>();
+                postParam.add(new NameValuePair("user_id",user_id));
+                postParam.add(new NameValuePair("book_name",book_name));
+                Result result=HttpCaller.getInstance().postSyncResult(Result.class,"http://192.168.1.4:8080/com.lianggao.whut/Post_If_Book_Star_Servlet",postParam)  ;
+                Message message=new Message();
+                if(result.getResult().equals("false")){
+                    message.what=MSG_NOT_STAR;
+                    handler.sendMessage(message);
+                }else{
+                    message.what=MSG_IS_STAR;
+                    handler.sendMessage(message);
+                }
+
+            }
+        }.start();
+
+
     }
 
 

@@ -112,12 +112,12 @@
                         android:textSize="9dp"
                         android:textStyle="normal" />
                     <TextView
-                        android:id="@+id/id_tv_book_score"
+                        android:id="@+id/id_tv_book_star"
                         android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:text="6.0"
+                        android:layout_height="30dp"
+                        android:text="加入收藏"
                         android:textColor="#80000000"
-                        android:textSize="9dp"
+                        android:textSize="15dp"
                         android:textStyle="normal" />
 
                 </LinearLayout>

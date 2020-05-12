@@ -363,7 +363,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 book_shortcontent_hot_list=new LinkedList<>();
                 book_author_hot_list=new LinkedList<>();
                 List<Book>bookHotList;
-                bookHotList=HttpCaller.getInstance().postSyncList(Book.class,"http://139.196.97.6/com.lianggao.whut/Get_Book_Hot_Servlet",postParam);
+                bookHotList=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Hot_Servlet",postParam);
                 Gson gson=new Gson();
                 for(int i=0;i<bookHotList.size();i++){
                     String jsonStr=gson.toJson(bookHotList.get(i));
@@ -404,7 +404,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 postParam.add(new NameValuePair("password","12"));
                 postParam.add(new NameValuePair("action","postAction"));
                 List<Book>bookRecommendList;
-                bookRecommendList= HttpCaller.getInstance().postSyncList(Book.class,"http://139.196.97.6/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
+                bookRecommendList= HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Recommend_Servlet",postParam);
                 Gson gson=new Gson();
                 Map<String ,Object>map;
                 for(int i=0;i<bookRecommendList.size();i++){
@@ -451,7 +451,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
                 book_shortcontent_rank_list=new LinkedList<>();
                 book_author_rank_list=new LinkedList<>();
                 List<Book>bookRankList;
-                bookRankList=HttpCaller.getInstance().postSyncList(Book.class,"http://139.196.97.6/com.lianggao.whut/Get_Book_Rank_Servlet",postParam);
+                bookRankList=HttpCaller.getInstance().postSyncList(Book.class,"http://192.168.1.4:8080/com.lianggao.whut/Get_Book_Rank_Servlet",postParam);
                 Gson gson=new Gson();
                 for(int i=0;i<bookRankList.size();i++){
                     String jsonStr=gson.toJson(bookRankList.get(i));

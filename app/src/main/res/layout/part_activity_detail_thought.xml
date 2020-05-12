@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="1dp"
+
+        app:cardBackgroundColor="#FFF9F2F2"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="1dp"
+        app:cardMaxElevation="1dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        android:padding="5dp"
+
+        android:foreground="?android:attr/selectableItemBackground"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="原文"
+                android:textColor="#99000000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/id_tv_selected_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="原文"
+                android:textColor="#99676565"
+                android:textSize="12dp" />
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/game1_blue"
+                android:layout_below="@+id/id_tv_book_post"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="想法"
+                android:textColor="#99000000"
+                android:textSize="17dp" />
+            <TextView
+                android:id="@+id/id_tv_thought_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="想法"
+                android:textColor="#99676565"
+                android:textSize="12dp" />
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/game1_blue"
+                android:layout_below="@+id/id_tv_book_post"/>
+            <TextView
+                android:id="@+id/id_tv_datatime"
+                android:layout_width="match_parent"
+                android:textColor="@color/game1_blue"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="3dp"
+
+                android:text="时间"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+</LinearLayout>

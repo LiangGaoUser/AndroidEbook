@@ -1,8 +1,11 @@
 package com.lianggao.whut.androidebook.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,6 +15,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,7 +30,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.lianggao.whut.androidebook.Activity_General_Thought;
 import com.lianggao.whut.androidebook.Model.QQLoginManager;
+import com.lianggao.whut.androidebook.Model.Result;
+import com.lianggao.whut.androidebook.Net.HttpCaller;
+import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.Utils.Util;
 import com.lianggao.whut.androidebook.View.DrawableTextView;
@@ -40,6 +48,8 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -64,9 +74,13 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
     private final int  MSG_LOGIN_SUCCESS=1;
     private final int MSG_LOGIN_CANCLE=0;
     private final int MSG_LOGIN_ERROR=-1;
+    private final int MSG_GET_SHAREPREFERENCE=2;
     private TextView textView;//存放姓名
     private String nickname;
     private String flag;
+    private Bitmap picture;
+
+
     @SuppressLint("HandlerLeak")
     Handler handler=new Handler(){
         @Override
@@ -78,6 +92,12 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
                     niceImageView.setImageBitmap(bitmap);
                     textView.setText(nickname);
                     break;
+                case MSG_GET_SHAREPREFERENCE:
+                    niceImageView.setImageBitmap(picture);
+                    textView.setText(nickname);
+                    System.out.println("得到sharePreference");
+                    break;
+
             }
         }
     };
@@ -91,6 +111,14 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         if(rootView==null){
             rootView=inflater.inflate(R.layout.fragment_selfinfo,null);
         }
+
+
+
+
+
+
+
+
 
 
         qqLoginManager=new QQLoginManager("1110404432",getContext(),this);
@@ -138,7 +166,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         textViewSetting.setCompoundDrawables(setting, null, back, null);
         textViewPlan.setCompoundDrawables(plan, null, back, null);
 
-
+        getSharePreference();
         niceImageView.setOnClickListener(new View.OnClickListener() {//点击头像进行登录
             @Override
             public void onClick(View v) {
@@ -149,7 +177,13 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
             }
         });
 
-
+        textViewThought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), Activity_General_Thought.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -207,6 +241,24 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
                     bitmap = Util.getbitmap(jsonObject.getString("figureurl_qq_2"));
                     nickname=jsonObject.getString("nickname");
                     flag=jsonObject.getString("open_id");
+                    picture=bitmap;
+                    //存储放入SharePreference
+                    ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
+                    String picture=new String(Base64.encodeToString(byteArrayOutputStream.toByteArray(),Base64.DEFAULT));
+                    SharedPreferences sp=getContext().getSharedPreferences("QQFile", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sp.edit();
+                    editor.putString("picture",picture);
+                    editor.putString("nickname",nickname);
+                    editor.putString("flag",flag);
+                    editor.commit();
+
+                    List<NameValuePair> postParam = new ArrayList<>();
+                    postParam.add(new NameValuePair("user_id",flag));
+                    HttpCaller.getInstance().postSyncResult(Result.class,"http://192.168.1.4:8080/com.lianggao.whut/Post_User_Account_Servlet",postParam);
+
+
+
                     msg.obj=bitmap;
                     handler.sendMessage(msg);
                 } catch (JSONException e) {
@@ -231,7 +283,27 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         qqLoginManager.onActivityResultData(requestCode, resultCode, data);
     }
 
+    public void getSharePreference(){
+        new Thread(){
+            @Override
+            public void run() {
+                picture=null;
+                SharedPreferences sp=getContext().getSharedPreferences("QQFile", Context.MODE_PRIVATE);
+                String img=sp.getString("picture","");
+                nickname=sp.getString("nickname","");
+                flag=sp.getString("flag","");
 
+                if(img!=""){
+
+                    byte[] decode=Base64.decode(img.getBytes(),1);
+                    picture= BitmapFactory.decodeByteArray(decode,0,decode.length);
+                    Message message=new Message();
+                    message.what=MSG_GET_SHAREPREFERENCE;
+                    handler.sendMessage(message);
+                }
+            }
+        }.start();
+    }
 
 
 

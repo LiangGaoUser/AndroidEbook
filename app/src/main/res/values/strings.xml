@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidEbook</string>
+    <string name="app_name">今日读书</string>
     <!--定义使用的icon字体-->
     <string name="bookshelf_etc">&#xe603;</string>
     <string name="bookshelf_search">&#xe635;</string>

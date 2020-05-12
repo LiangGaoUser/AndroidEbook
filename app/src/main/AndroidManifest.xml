@@ -53,6 +53,12 @@
         <activity android:name=".Activity_BookShelf_Kind"></activity>
         <activity android:name=".Activity_Read_Pdf"></activity>
         <activity android:name=".Activity_Add_Course"></activity>
+        <activity android:name=".Activity_Class_Book"></activity>
+        <activity android:name=".Activity_Class_Book_Add_Book"></activity>
+        <activity android:name=".HwTxtPlayActivityOverWrite"></activity>
+        <activity android:name=".Activity_My_Thought"></activity>
+        <activity android:name=".Activity_General_Thought"></activity>
+        <activity android:name=".Activity_Detail_Thought"></activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

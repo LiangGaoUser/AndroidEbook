@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bifan.txtreaderlib.R;
+
 import com.bifan.txtreaderlib.bean.TxtChar;
 import com.bifan.txtreaderlib.bean.TxtMsg;
 import com.bifan.txtreaderlib.interfaces.ICenterAreaClickListener;
@@ -47,7 +48,7 @@ import java.io.File;
 public class HwTxtPlayActivityOverWrite extends AppCompatActivity {
     protected Handler mHandler;
     protected boolean FileExist = false;
-
+    private String fileName;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,8 @@ public class HwTxtPlayActivityOverWrite extends AppCompatActivity {
     }
 
     protected int getContentViewLayout() {
-        return R.layout.activity_hwtxtpaly;
+        //return R.layout.activity_hwtxtpaly;
+        return com.lianggao.whut.androidebook.R.layout.activity_hwtxt_play;
     }
 
     protected boolean getIntentData() {
@@ -190,21 +192,28 @@ public class HwTxtPlayActivityOverWrite extends AppCompatActivity {
 
     protected void init() {
         mHandler = new Handler();
-        mChapterMsgView = findViewById(R.id.activity_hwtxtplay_chapter_msg);
+        mChapterMsgView = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_chapter_msg1);
         mChapterMsgName = (TextView) findViewById(R.id.chapter_name);
         mChapterMsgProgress = (TextView) findViewById(R.id.charpter_progress);
-        mTopDecoration = findViewById(R.id.activity_hwtxtplay_top);
-        mBottomDecoration = findViewById(R.id.activity_hwtxtplay_bottom);
-        mTxtReaderView = (TxtReaderView) findViewById(R.id.activity_hwtxtplay_readerView);
-        mChapterNameText = (TextView) findViewById(R.id.activity_hwtxtplay_chaptername);
-        mChapterMenuText = (TextView) findViewById(R.id.activity_hwtxtplay_chapter_menutext);
-        mProgressText = (TextView) findViewById(R.id.activity_hwtxtplay_progress_text);
-        mSettingText = (TextView) findViewById(R.id.activity_hwtxtplay_setting_text);
-        mTopMenu = findViewById(R.id.activity_hwtxtplay_menu_top);
-        mBottomMenu = findViewById(R.id.activity_hwtxtplay_menu_bottom);
-        mCoverView = findViewById(R.id.activity_hwtxtplay_cover);
-        ClipboardView = findViewById(R.id.activity_hwtxtplay_Clipboar);
-        mSelectedText = (TextView) findViewById(R.id.activity_hwtxtplay_selected_text);
+        mTopDecoration = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_top1);
+        mBottomDecoration = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_bottom1);
+        mTxtReaderView = (TxtReaderView) findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_readerView1);
+        mChapterNameText = (TextView) findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_chaptername1);
+        mChapterMenuText = (TextView) findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_chapter_menutext1);
+        mProgressText = (TextView) findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_progress_text1);
+        mSettingText = (TextView) findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_setting_text1);
+        mTopMenu = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_menu_top1);
+        mBottomMenu = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_menu_bottom1);
+        mCoverView = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_cover1);
+        ClipboardView = findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_Clipboar1);
+        mSelectedText = (TextView) findViewById(com.lianggao.whut.androidebook.R.id.activity_hwtxtplay_selected_text1);
+
+        if(mChapterMsgView==null){
+            System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        }
+        if(mSelectedText==null){
+            System.out.println("*************************************");
+        }
 
         mMenuHolder.mTitle = (TextView) findViewById(R.id.txtreadr_menu_title);
         mMenuHolder.mPreChapter = (TextView) findViewById(R.id.txtreadr_menu_chapter_pre);
@@ -778,6 +787,7 @@ public class HwTxtPlayActivityOverWrite extends AppCompatActivity {
 
     public void onCopyText(View view) {
         if (!TextUtils.isEmpty(CurrentSelectedText)) {
+
             toast("已经复制到粘贴板");
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             cm.setText(CurrentSelectedText + "");
@@ -785,7 +795,37 @@ public class HwTxtPlayActivityOverWrite extends AppCompatActivity {
         onCurrentSelectedText("");
         mTxtReaderView.releaseSelectedState();
         Gone(ClipboardView);
+
+
+
+
+
     }
+
+    public void onMyThought(View view) {
+        ClipboardManager cm;
+        String copyText="";
+        if (!TextUtils.isEmpty(CurrentSelectedText)) {
+
+            //toast("已经复制到粘贴板");
+            cm= (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            cm.setText(CurrentSelectedText + "");
+            copyText=CurrentSelectedText;
+        }
+
+        if(copyText!=""){
+            Intent intent = new Intent(getApplicationContext(),Activity_My_Thought.class);
+            intent.putExtra("copytext",copyText);
+            intent.putExtra("FileName",getIntent().getStringExtra("FileName"));
+            startActivityForResult(intent,1);
+        }
+
+
+
+
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -829,6 +869,13 @@ public class HwTxtPlayActivityOverWrite extends AppCompatActivity {
                     mMenuHolder = null;
                 }
             }, 300);
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode==1){
 
         }
     }
