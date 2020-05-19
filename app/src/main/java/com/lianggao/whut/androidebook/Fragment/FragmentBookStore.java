@@ -319,4 +319,27 @@ public class FragmentBookStore extends ViewPageFragment implements MaterialTabLi
         adapter.addFragment(new FragmentBookStoreList());
         viewPager.setAdapter(adapter);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.i("Fragment","FragmentBookStore onStart");
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("Fragment","FragmentBookStore onResume");;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("Fragment","FragmentBookStore onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentBookStore onStop");
+    }
 }

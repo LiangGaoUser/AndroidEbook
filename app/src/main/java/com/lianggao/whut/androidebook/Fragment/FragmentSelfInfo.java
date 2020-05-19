@@ -203,28 +203,34 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
     public void onStart() {
         super.onStart();
         //mVp.setCurrentItem(number);
-        Log.i("FragmentSelfInfo","onStart");
+        Log.i("Fragment","FragmentSelfInfo onStart");
         // Toast.makeText(getContext(),"点击了按钮"+number,Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("FragmentSelfInfo","onResume");
+        Log.i("Fragment","FragmentSelfInfo onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("FragmentSelfInfo","onRause");
+        Log.i("Fragment","FragmentSelfInfo onRause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentSelfInfo onStop");
     }
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if(isVisible){
-            Log.i("FragmentSelfInfo","aaa");
+            Log.i("Fragment","FragmentSelfInfo is visible");
         }else{
-            Log.i("FragmentSelfInfo","bbb");
+            Log.i("FragmentSelfInfo","FragmentSelfInfo is not visible");
         }
     }
 

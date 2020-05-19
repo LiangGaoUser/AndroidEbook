@@ -44,28 +44,32 @@ public class FragmentContinue extends ViewPageFragment {
     public void onStart() {
         super.onStart();
         //mVp.setCurrentItem(number);
-        Log.i("FragmentContinue","onStart");
+        Log.i("Fragment","FragmentContinue onStart");
         // Toast.makeText(getContext(),"点击了按钮"+number,Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("FragmentContinue","onResume");
+        Log.i("Fragment","FragmentContinue onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("FragmentContinue","onRause");
+        Log.i("Fragment","FragmentContinue onRause");
     }
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentContinue onStop");
+    }
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if(isVisible){
-            Log.i("FragmentContinue","aaa");
+            Log.i("Fragment","FragmentContinue is visible");
         }else{
-            Log.i("FragmentContinue","bbb");
+            Log.i("Fragment","FragmentContinue is not visible");
         }
     }
 }

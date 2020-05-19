@@ -237,4 +237,27 @@ public class FragmentBookStoreList extends Fragment {
             }
         }.start();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.i("Fragment","FragmentBookStoreList onStart");
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("Fragment","FragmentBookStoreList onResume");;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("Fragment","FragmentBookStoreList onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentBookStoreList onStop");
+    }
 }

@@ -238,6 +238,7 @@ public class FragmentClassTable extends ViewPageFragment implements View.OnClick
     @Override
     public void onStart() {
         super.onStart();
+        Log.i("Fragment","FragmentClassTable onStart");
         mTimetableView.onDateBuildListener()
                 .onHighLight();
     }
@@ -363,23 +364,43 @@ public class FragmentClassTable extends ViewPageFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("FragmentClassTable","onResume");
+        Log.i("Fragment","FragmentClassTable onResume");
         requestLocalData();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("FragmentClassTable","onRause");
+        Log.i("Fragment","FragmentClassTable onRause");
     }
+
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentClassTable onStop");
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if(isVisible){
-            Log.i("FragmentClassTable","aaa");
+            Log.i("Fragment","FragmentClassTable is visible ");
         }else{
-            Log.i("FragmentClassTable","bbb");
+            Log.i("Fragment","FragmentClassTable is not visible");
         }
     }
 

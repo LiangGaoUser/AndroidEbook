@@ -260,5 +260,26 @@ public class FragmentBookStoreKind extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        Log.i("Fragment","FragmentBookStoreKind onStart");
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("Fragment","FragmentBookStoreKind onResume");;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("Fragment","FragmentBookStoreKind onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentBookStoreKind onStop");
+    }
 }

@@ -335,7 +335,7 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         super.onResume();
         //开始自动翻页
         localConvenientBanner.startTurning();
-        //netConvenientBanner.startTurning();
+        Log.i("Fragment","FragmentBookStoreBook onResume");
     }
 
     @Override
@@ -343,7 +343,19 @@ public class FragmentBookStoreBook extends Fragment implements OnItemClickListen
         super.onPause();
         //停止翻页
         localConvenientBanner.stopTurning();
-        //netConvenientBanner.stopTurning();
+        Log.i("Fragment","FragmentBookStoreBook onPause");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("Fragment","FragmentBookStoreBook onStart");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentBookStoreBook onStop");
     }
 
     //初始化热门书籍数据

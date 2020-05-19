@@ -63,6 +63,8 @@ import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -260,29 +262,35 @@ public class FragmentBookShelf extends ViewPageFragment {
     public void onStart() {
         super.onStart();
 
-        Log.i("FragmentBookShelf","onStart");
+        Log.i("Fragment","FragmentBookShelf onStart");
     }
     @Override
     public void onResume() {
         super.onResume();
-        //Log.i("FragmentBookShelf","onResume");
-        //getLocalBookShelf();
+        Log.i("Fragment","FragmentBookShelf onResume");;
     }
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("FragmentBookShelf","onRause");
+        Log.i("Fragment","FragmentBookShelf onPause");
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("Fragment","FragmentBookShelf onStop");
+    }
+
     @Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         super.onFragmentVisibleChange(isVisible);
         if(isVisible){
-            Log.i("FragmentBookShelf","重新回到书架页面，开始重新加载");
+            Log.i("Fragment","FragmentBookShelf is visible 重新加载本地书架");
             getLocalBookShelf();
             //在这里进行刷新
 
         }else{
-            Log.i("FragmentBookShelf","bbb");
+            Log.i("Fragment","FragmentBookShelf is visible");
         }
     }
     private void showPopupMenu(View view){
@@ -547,12 +555,14 @@ public class FragmentBookShelf extends ViewPageFragment {
                 bookshelfTableManger=new bookShelfTableManger(getContext());
                 bookshelfTableManger.createDb();
                 //bookshelfTableManger.addBook(book);
-                String newPath=getActivity().getExternalFilesDir("Content")+"/"+book.getBook_name();
+                String newPath= null;
+
+                newPath = getActivity().getExternalFilesDir("Content")+"/"+ book.getBook_name();
                 //复制文件到path文件夹
                 Util.copyFile(book.getBook_path(),newPath);
                 //复制系统默认封面到post文件夹
                 String name=book.getBook_name().substring(0,book.getBook_name().length()-4);
-                String newPostPath=getActivity().getExternalFilesDir("Cover")+"/"+name+".jpg";
+                String newPostPath=getActivity().getExternalFilesDir("Cover")+"/"+ name +".jpg";
                 AssetManager assetManager=getActivity().getAssets();
                 Util.copyFilePost(assetManager,newPostPath);
                 bookshelfTableManger=new bookShelfTableManger(getContext());
@@ -566,6 +576,8 @@ public class FragmentBookShelf extends ViewPageFragment {
                 book.setBook_detail_kind("文档");
                 bookshelfTableManger.addBook(book);
                 getLocalBookShelf();
+
+
             }
         }.start();
     }
@@ -593,12 +605,14 @@ public class FragmentBookShelf extends ViewPageFragment {
                 bookshelfTableManger=new bookShelfTableManger(getContext());
                 bookshelfTableManger.createDb();
                 //bookshelfTableManger.addBook(book);
-                String newPath=getActivity().getExternalFilesDir("Content")+"/"+book.getBook_name();
+                String newPath= null;
+
+                newPath = getActivity().getExternalFilesDir("Content")+"/"+ book.getBook_name();
                 //复制文件到path文件夹
                 Util.copyFile(book.getBook_path(),newPath);
                 //复制系统默认封面到post文件夹
                 String name=book.getBook_name().substring(0,book.getBook_name().length()-4);
-                String newPostPath=getActivity().getExternalFilesDir("Cover")+"/"+name+".jpg";
+                String newPostPath=getActivity().getExternalFilesDir("Cover")+"/"+name +".jpg";
                 AssetManager assetManager=getActivity().getAssets();
                 Util.copyFilePdfPost(assetManager,newPostPath);
                 bookshelfTableManger=new bookShelfTableManger(getContext());
@@ -611,6 +625,8 @@ public class FragmentBookShelf extends ViewPageFragment {
                 book.setBook_detail_kind("文档");
                 bookshelfTableManger.addBook(book);
                 getLocalBookShelf();
+
+
             }
         }.start();
     }
