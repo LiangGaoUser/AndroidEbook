@@ -38,6 +38,9 @@ public class bookShelfHistoryTableManger {
         contentValues.put("book_name", book.getBook_name());
         contentValues.put("book_author", book.getBook_author());
         contentValues.put("book_cover_path", book.getBook_cover_path());
+        contentValues.put("book_main_kind", book.getBook_main_kind());
+        contentValues.put("book_detail_kind", book.getBook_detail_kind());
+
         sqLiteDatabase.insert("bookshelf_history", null, contentValues);
         Log.i("bookShelfTableManger", "往bookshelf_history表中添加一本图书");
     }
@@ -60,7 +63,7 @@ public class bookShelfHistoryTableManger {
 
     }
     public List<Book> findAllBook(){
-        Cursor cursor=sqLiteDatabase.query("bookshelf_history",new String[]{"book_name","book_author","book_cover_path"},null,null,null,null,null);
+        Cursor cursor=sqLiteDatabase.query("bookshelf_history",new String[]{"book_name","book_author","book_cover_path","book_main_kind","book_detail_kind"},null,null,null,null,null);
         Book book;
         List<Book>bookList=new LinkedList<>();
         while(cursor.moveToNext()){
@@ -69,11 +72,14 @@ public class bookShelfHistoryTableManger {
             String book_name=cursor.getString(0);
             String book_author=cursor.getString(1);
             String book_cover_path=cursor.getString(2);
-
+            String book_main_kind=cursor.getString(3);
+            String book_detail_kind=cursor.getString(4);
 
             book.setBook_name(book_name);
             book.setBook_author(book_author);
             book.setBook_cover_path(book_cover_path);
+            book.setBook_main_kind(book_main_kind);
+            book.setBook_detail_kind(book_detail_kind);
 
             bookList.add(book);
             Log.i("databaseManger", "book_name"+ "+book_author"+" "+book_cover_path);

@@ -76,11 +76,12 @@ public class Activity_BookDetail extends Activity{
 
     private ImageView imageView;
     private BookNameTextView id_tv_book_name;
-    private TextView  id_tv_book_shortcontent;
+    private TextView  id_tv_book_main_kind;
+    private TextView  id_tv_book_detail_kind;
     private TextView id_tv_book_author;
-    private TextView id_tv_book_kind;
-    private TextView id_tv_book_star;
 
+    private TextView id_tv_book_star;
+    private TextView id_tv_book_content;
 
     private String book_name;
 
@@ -254,7 +255,7 @@ public class Activity_BookDetail extends Activity{
                     }.start();
                     return true;
                 case R.id.navigation_return:
-                    addStart();
+                    finish();
                     return true;
                 case R.id.navigation_begin_read:
                     //Toast.makeText(Activity_BookDetail.this,"正在下载，下载完成会自动打开，请稍后...",Toast.LENGTH_LONG).show();
@@ -276,13 +277,18 @@ public class Activity_BookDetail extends Activity{
         book=getIntent().getParcelableExtra("book");
         id_tv_book_name=(BookNameTextView)findViewById(R.id.id_tv_book_name);
         id_tv_book_name.setText(book.getBook_name());
-        id_tv_book_shortcontent=(TextView)findViewById(R.id.id_tv_book_shortcontent) ;
-        id_tv_book_shortcontent.setText(book.getBook_short_content_path());
+
         id_tv_book_author=(TextView)findViewById(R.id.id_tv_book_author) ;
         id_tv_book_author.setText(book.getBook_author());
-        id_tv_book_kind=(TextView)findViewById(R.id.id_tv_book_kind) ;
-        id_tv_book_kind.setText(book.getBook_detail_kind());
+
+        id_tv_book_main_kind=(TextView)findViewById(R.id.id_tv_book_main_kind) ;
+        id_tv_book_main_kind.setText(book.getBook_main_kind());
+        id_tv_book_detail_kind=(TextView)findViewById(R.id.id_tv_book_detail_kind) ;
+        id_tv_book_detail_kind.setText(book.getBook_detail_kind());
+
         id_tv_book_star=(TextView)findViewById(R.id.id_tv_book_star);
+        id_tv_book_content=(TextView)findViewById(R.id.id_tv_book_content);
+        id_tv_book_content.setText(book.getBook_short_content_path());
         ifStart();
         id_tv_book_star.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -467,6 +473,7 @@ public class Activity_BookDetail extends Activity{
                 postParam.add(new NameValuePair("book_name",book_name));
                 Result result=HttpCaller.getInstance().postSyncResult(Result.class,"http://192.168.1.4:8080/com.lianggao.whut/Post_If_Book_Star_Servlet",postParam)  ;
                 Message message=new Message();
+
                 if(result.getResult().equals("false")){
                     message.what=MSG_NOT_STAR;
                     handler.sendMessage(message);

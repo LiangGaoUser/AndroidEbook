@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.lianggao.whut.androidebook.Adapter.BookShelfHistoryRecyclerViewAdapter;
 
+import com.lianggao.whut.androidebook.Adapter.BookStarRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Fragment.MyAlertDialogFragment;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Utils.Util;
@@ -36,13 +37,13 @@ public class Activity_BookShelf_History extends FragmentActivity {
     //adpter
     private RecyclerView recyclerView;
     private BookShelfHistoryRecyclerViewAdapter bookShelfHistoryRecyclerViewAdapter;
-
     //数据类型
     private List<String> book_post_list;//书的封面集合
     private List<String>book_name_list;//书的名字集合
     private List<String>book_author_list;//书的作者集合
     private List<String>book_shortcontent_list;//书的简介集合
-    private List<String>book_kind_list;//书的简介集合
+    private List<String>book_detail_kind_list;
+    private List<String>book_main_kind_list;
     private List<Book> bookList;
 
     //xml页面元素
@@ -64,7 +65,8 @@ public class Activity_BookShelf_History extends FragmentActivity {
                     Log.i("获取图片","批量获取图片成功");
 
 
-                    bookShelfHistoryRecyclerViewAdapter=new  BookShelfHistoryRecyclerViewAdapter(getApplicationContext(), book_post_list, book_name_list, book_author_list, book_kind_list, book_shortcontent_list);
+                    bookShelfHistoryRecyclerViewAdapter=new BookShelfHistoryRecyclerViewAdapter(getApplicationContext(),book_post_list,book_name_list,book_author_list,book_main_kind_list,book_detail_kind_list,book_shortcontent_list);
+
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(bookShelfHistoryRecyclerViewAdapter);
                     Log.i("初始化","初始化结束");
@@ -152,7 +154,8 @@ public class Activity_BookShelf_History extends FragmentActivity {
                 book_post_list=new LinkedList<>();
                 book_author_list=new LinkedList<>();
                 book_shortcontent_list=new LinkedList<>();
-                book_kind_list=new LinkedList<>();
+                book_main_kind_list=new LinkedList<>();
+                book_detail_kind_list=new LinkedList<>();
 
                 for(int i=0;i<bookList.size();i++){
 
@@ -160,7 +163,8 @@ public class Activity_BookShelf_History extends FragmentActivity {
                     book_post_list.add(bookList.get(i).getBook_cover_path());
                     book_author_list.add(bookList.get(i).getBook_author());
                     book_shortcontent_list.add(" ");
-                    book_kind_list.add(" ");
+                    book_main_kind_list.add(bookList.get(i).getBook_main_kind());
+                    book_detail_kind_list.add(bookList.get(i).getBook_detail_kind());
                 }
                 Message message=new Message();
                 message.what=MSG_GET_LOCAL_BOOKS_HISTORY_SUCCESS;

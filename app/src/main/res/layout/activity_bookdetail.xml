@@ -74,7 +74,7 @@
                         android:textColor="#99000000"
                         android:textSize="15dp" />
                     <TextView
-                        android:id="@+id/id_tv_book_shortcontent"
+                        android:id="@+id/id_tv_book_main_kind"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
                         android:layout_alignParentRight="true"
@@ -83,18 +83,9 @@
                         android:textColor="#80000000"
                         android:textSize="10dp"
                         android:textStyle="normal"/>
+
                     <TextView
-                        android:id="@+id/id_tv_book_letter_number"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="3dp"
-                        android:text="书的字数"
-                        android:textColor="#80000000"
-                        android:textSize="10dp"
-                        android:textStyle="normal"/>
-                    <TextView
-                        android:id="@+id/id_tv_book_kind"
+                        android:id="@+id/id_tv_book_detail_kind"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
 
@@ -140,6 +131,7 @@
                         android:textSize="9dp"
                         android:textStyle="normal"/>
                     <TextView
+                        android:id="@+id/id_tv_book_content"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:text="简介"

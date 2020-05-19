@@ -18,10 +18,10 @@ import java.util.List;
 
 /**
  * @author LiangGao
- * @description:书架历史的适配器
+ * @description:Activity_Star的适配器,用来展示收藏的图书
  * @data:${DATA} 16:17
  */
-public class BookShelfHistoryRecyclerViewAdapter extends RecyclerView.Adapter<BookShelfHistoryRecyclerViewAdapter.MyViewHolder> {
+public class BookStarRecyclerViewAdapter extends RecyclerView.Adapter<BookStarRecyclerViewAdapter.MyViewHolder> {
     private List<String>book_post_path_list;//书的封面集合
     private List<String>book_name_list;//书的名字集合
     private List<String>book_author_list;//书的作者集合
@@ -34,7 +34,7 @@ public class BookShelfHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Bo
     private OnItemClickListener onItemClickListener;//接口1
     private OnItemLongClickListener onItemLongClickListener;//接口2
     private Context context;
-    public BookShelfHistoryRecyclerViewAdapter(Context context, List<String>book_post_path_list, List<String>book_name_list, List<String>book_author_list, List<String>book_main_kind_list, List<String>book_detail_kind_list, List<String>book_shortcontent_list){
+    public BookStarRecyclerViewAdapter(Context context, List<String>book_post_path_list, List<String>book_name_list, List<String>book_author_list, List<String>book_main_kind_list, List<String>book_detail_kind_list, List<String>book_shortcontent_list){
         inflater=LayoutInflater.from(context);
         this.book_post_path_list=book_post_path_list;
         this.book_name_list=book_name_list;
@@ -48,13 +48,13 @@ public class BookShelfHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Bo
 
     @NonNull
     @Override
-    public BookShelfHistoryRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public BookStarRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView=inflater.inflate(R.layout.part_activity_book_recycler,null);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BookShelfHistoryRecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final BookStarRecyclerViewAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.tvBookAuthor.setText(book_author_list.get(i));
         myViewHolder.tvBookName.setText(book_name_list.get(i));
         if(book_post_path_list.get(i)==null){
@@ -66,7 +66,7 @@ public class BookShelfHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Bo
         }else{
             Picasso
                     .with(context)
-                    .load(new File(book_post_path_list.get(i)))
+                    .load(book_post_path_list.get(i))
                     .placeholder(R.drawable.icon_arrow_return)//占位符
                     .error(R.drawable.img_bookshelf_everybook)//链接失效是加载的图片
                     .into(myViewHolder.tvBookPost);
@@ -77,28 +77,28 @@ public class BookShelfHistoryRecyclerViewAdapter extends RecyclerView.Adapter<Bo
         myViewHolder.tvBookKind.setText(book_detail_kind_list.get(i));
         myViewHolder.tvMainBookKind.setText(book_main_kind_list.get(i));
 
-        //判断是否在activity中设置监听，回调
-        if(onItemClickListener!=null){
-            myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    int position=myViewHolder.getLayoutPosition();
-                    onItemClickListener.onItemClick(myViewHolder.itemView,position);
-                }
-            });
+       //判断是否在activity中设置监听，回调
+       if(onItemClickListener!=null){
+           myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+               @Override
+               public void onClick(View v) {
+                   int position=myViewHolder.getLayoutPosition();
+                   onItemClickListener.onItemClick(myViewHolder.itemView,position);
+               }
+           });
 
-        }
-        if(onItemLongClickListener!=null){
-            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
-                @Override
-                public boolean onLongClick(View v) {
-                    int position=myViewHolder.getLayoutPosition();
-                    onItemLongClickListener.onItemLongClick(myViewHolder.itemView,position);
-                    return true;
-                }
-            });
+       }
+       if(onItemLongClickListener!=null){
+           myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+               @Override
+               public boolean onLongClick(View v) {
+                   int position=myViewHolder.getLayoutPosition();
+                   onItemLongClickListener.onItemLongClick(myViewHolder.itemView,position);
+                   return true;
+               }
+           });
 
-        }
+       }
     }
 
     @Override
