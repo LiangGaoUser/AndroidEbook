@@ -1,6 +1,7 @@
 package com.lianggao.whut.androidebook;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,7 +54,20 @@ public class Activity_More_Hot_Books extends FragmentActivity {
                     loadMoreBookAdapter.setOnItemClickListener(new LoadMoreBookAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-                            Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"点击了"+position+"本图书",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(Activity_More_Hot_Books.this, Activity_BookDetail.class);
+                            Book book=new Book();
+
+
+                            book.setBook_cover_path(loadMoreBookAdapter.getBookPostList().get(position));
+                            book.setBook_name(loadMoreBookAdapter.getBookNameList().get(position));
+                            book.setBook_short_content_path(loadMoreBookAdapter.getBookShortContentList().get(position));
+                            book.setBook_author(loadMoreBookAdapter.getBookAuthorList().get(position));
+                            book.setBook_main_kind(loadMoreBookAdapter.getBookMainKindList().get(position));
+                            book.setBook_detail_kind(loadMoreBookAdapter.getBookDetailKindListList().get(position));
+
+                            intent.putExtra("book",book);
+                            startActivity(intent);
                         }
                     });
                     loadMoreHotBookRecyclerView.setLoadMoreBookAdapter(loadMoreBookAdapter);

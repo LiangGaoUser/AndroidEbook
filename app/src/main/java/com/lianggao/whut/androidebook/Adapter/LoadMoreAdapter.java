@@ -534,7 +534,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMore1", userList2 + "");
 
                 Gson gson = new Gson();
 
@@ -582,7 +582,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMore2", userList2 + "");
 
                 Gson gson = new Gson();
 
@@ -622,7 +622,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMore3", userList2 + "");
 
                 Gson gson = new Gson();
 
@@ -660,7 +660,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMore4", userList2 + "");
 
                 Gson gson = new Gson();
 
@@ -698,7 +698,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMore5", userList2 + "");
 
                 Gson gson = new Gson();
 
@@ -736,7 +736,7 @@ public  class LoadMoreAdapter extends RecyclerView.Adapter<CommonRcViewHolder> {
                 postParam.add(new NameValuePair("currentTotalNumber", "10"));
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMore6", userList2 + "");
 
                 Gson gson = new Gson();
 

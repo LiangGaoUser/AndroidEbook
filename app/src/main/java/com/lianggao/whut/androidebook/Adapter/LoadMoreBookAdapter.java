@@ -106,7 +106,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
 
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("用户4##", userList2 + "");
                 currentTotalNumber+=userList2.size();
 
                 Gson gson = new Gson();
@@ -148,7 +148,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
 
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMoreBookAdapter", "LoadMoreRecommendBook"+userList2 + "");
                 currentTotalNumber+=userList2.size();
 
                 Gson gson = new Gson();
@@ -189,7 +189,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
 
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMoreBookAdapter", "LoadMoreHotBook"+userList2 + "");
                 currentTotalNumber+=userList2.size();
 
                 Gson gson = new Gson();
@@ -236,7 +236,7 @@ public  class LoadMoreBookAdapter extends RecyclerView.Adapter<CommonRcViewHolde
 
                 List<Book> userList2;
                 userList2 = HttpCaller.getInstance().postSyncList(Book.class, "http://192.168.1.4:8080/com.lianggao.whut/Get_Load_More_Servlet", postParam);
-                Log.i("用户4", userList2 + "");
+                Log.i("LoadMoreBookAdapter", "LoadMoreRankBook"+userList2 + "");
                 currentTotalNumber+=userList2.size();
 
                 Gson gson = new Gson();

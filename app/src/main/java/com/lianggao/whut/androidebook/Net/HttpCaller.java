@@ -215,12 +215,12 @@ public class HttpCaller {
         byte[] bytes = execute(builder,header);
         try {
             String result = new String(bytes, "utf-8");
-            Log.i("用户2",result.toString());
+            Log.i("HttpCaller",result.toString());
             if ( !TextUtils.isEmpty(result)) {
 
-                Log.i("用户","用户开始list");
+
                 List<T> tList=gson.fromJson(result,new TypeToken<List<T>>(){}.getType());
-                Log.i("用户**********",tList.toString());
+
                 /*
                 List<T>tList1=new LinkedList<>();
                 net.sf.json.JSONArray jsonArray= net.sf.json.JSONArray.fromObject(result);
