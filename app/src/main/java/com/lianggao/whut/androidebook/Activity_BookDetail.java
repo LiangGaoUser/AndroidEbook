@@ -31,6 +31,7 @@ import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Model.BookStar;
 import com.lianggao.whut.androidebook.Model.Result;
+import com.lianggao.whut.androidebook.Model.UserReadHistory;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.Utils.Util;
@@ -43,7 +44,9 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -95,6 +98,7 @@ public class Activity_BookDetail extends Activity{
     private final int MSG_IS_STAR=5;
     private final int MSG_ADD_STAR=6;
     private final int MSG_NOT_LOGINED=7;
+
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -395,6 +399,17 @@ public class Activity_BookDetail extends Activity{
                         message.what=MSG_NOT_LOGINED;
                         handler.sendMessage(message);
                     }else{
+                        //浏览记录上传服务器
+                        List<NameValuePair> postParam1 = new ArrayList<>();
+                        Calendar calendar = Calendar.getInstance(); // get current instance of the calendar
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                        String dataTime=formatter.format(calendar.getTime());
+                        postParam1.add(new NameValuePair("user_id", user_id));
+                        postParam1.add(new NameValuePair("book_name", book_name));
+                        postParam1.add(new NameValuePair("time", dataTime));
+                        Result result=HttpCaller.getInstance().postSyncResult(Result.class, "http://192.168.1.4:8080/com.lianggao.whut/Post_User_Read_History_Servlet",postParam1);
+                        //
+
                         if(fileIsExists(saveFilePath)){
                             System.out.println("本地已经存在文本文件");
                             message.what=MSG_DOWNLOADCHCHE_SUCCESS;
@@ -417,6 +432,8 @@ public class Activity_BookDetail extends Activity{
                             });
                             System.out.println("缓存书籍文件完成");
                         }
+
+
 
                     }
 
