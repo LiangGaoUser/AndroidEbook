@@ -2,25 +2,38 @@ package com.lianggao.whut.androidebook;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.bifan.txtreaderlib.ui.HwTxtPlayActivity;
 import com.google.gson.Gson;
 import com.lianggao.whut.androidebook.Adapter.BookStarRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Model.Book;
+import com.lianggao.whut.androidebook.Model.Result;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+
+import io.github.lizhangqu.coreprogress.ProgressUIListener;
+
+import static org.litepal.LitePalApplication.getContext;
 
 
 public class Activity_Search extends Activity {
@@ -49,8 +62,15 @@ public class Activity_Search extends Activity {
                     bookStarRecyclerViewAdapter.setOnItemClickListener(new BookStarRecyclerViewAdapter.OnItemClickListener(){
                         @Override
                         public void onItemClick(View view, int position) {
-                            /*String path=book_path_list.get(position);
-                            HwTxtPlayActivity.loadTxtFile(getApplicationContext(), path);*/
+                            String path=book_path_list.get(position);
+                            Intent intent=new Intent(getContext(), Activity_BookDetail.class);
+                            Gson gson=new Gson();
+                            String jsonStr=gson.toJson(bookList.get(position));
+                            Book book=new Book();
+                            book=gson.fromJson(jsonStr,Book.class);
+                            intent.putExtra("book",book);
+                            startActivity(intent);
+
                         }
                     });
 
@@ -97,7 +117,7 @@ public class Activity_Search extends Activity {
                     String jsonStr=gson.toJson(bookList.get(i));
                     Book book=new Book();
                     book=gson.fromJson(jsonStr,Book.class);
-                    Log.i("begin","开始"+book.toString());
+                    Log.i("begin","开始"+book.getBook_path());
                     book_name_list.add(book.getBook_name());
                     book_post_list.add(book.getBook_cover_path());
                     book_author_list.add(book.getBook_author());
@@ -115,6 +135,8 @@ public class Activity_Search extends Activity {
             }
         }.start();
     }
+
+
 
 
 

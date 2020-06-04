@@ -67,7 +67,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
     private TextView textViewSetting;
     private NiceImageView niceImageView;
     private PopupWindow pop;
-
+    private TextView textViewSign;
 
 
 
@@ -136,7 +136,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         textViewPlan=(TextView)rootView.findViewById(R.id.id_book_plan);
 
         textView=(TextView)rootView.findViewById(R.id.id_tv_name) ;
-
+        textViewSign=(TextView)rootView.findViewById(R.id.id_book_sign);
         Drawable back= getResources().getDrawable(R.drawable.icon_book_search2);
         Drawable yueli= getResources().getDrawable(R.drawable.icon_book_yueli);
         Drawable note= getResources().getDrawable(R.drawable.icon_book_note);
@@ -146,7 +146,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         Drawable plan= getResources().getDrawable(R.drawable.icon_book_plan);
         Drawable remind= getResources().getDrawable(R.drawable.icon_book_remind);
         Drawable setting= getResources().getDrawable(R.drawable.icon_book_setting);
-
+        Drawable sign= getResources().getDrawable(R.drawable.icon_book_sign);
 
         back.setBounds(0, 0, 50, 50);
         yueli.setBounds(0, 0, 50, 50);
@@ -157,7 +157,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         plan.setBounds(0, 0, 50, 50);
         remind.setBounds(0, 0, 50, 50);
         setting.setBounds(0, 0, 50, 50);
-
+        sign.setBounds(0, 0, 50, 50);
 
         textViewYueLi.setCompoundDrawables(null, yueli, null, null);
         textViewNote.setCompoundDrawables(null, note, null, null);
@@ -167,6 +167,7 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
         textViewRemind.setCompoundDrawables(remind, null, back, null);
         textViewSetting.setCompoundDrawables(setting, null, back, null);
         textViewPlan.setCompoundDrawables(plan, null, back, null);
+        textViewSign.setCompoundDrawables(sign, null, back, null);
 
         getSharePreference();
         niceImageView.setOnClickListener(new View.OnClickListener() {//点击头像进行登录

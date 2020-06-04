@@ -155,6 +155,21 @@
                 android:background="@color/colorGray"
                 android:layout_below="@+id/id_tv_book_post"/>
             <TextView
+                android:id="@+id/id_book_sign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_book_go"
+                android:text="每日签到"
+                android:gravity="left|center"
+                android:padding="15dp"
+                android:drawablePadding="10dp"
+                />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/colorGray"
+                android:layout_below="@+id/id_tv_book_post"/>
+            <TextView
                 android:id="@+id/id_book_remind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
