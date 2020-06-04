@@ -1,6 +1,7 @@
 package com.lianggao.whut.androidebook;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -24,6 +25,10 @@ public class Activity_SearchView extends Activity{
             @Override
             public void SearchAciton(String string) {
                 System.out.println("我收到了"+string);
+                Intent intent=new Intent(getApplicationContext(),Activity_Search.class);
+                intent.putExtra("book_name",string);
+                startActivity(intent);
+
             }
         });
         searchView.setOnClickBack(new bCallBack() {
