@@ -32,6 +32,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.lianggao.whut.androidebook.Activity_General_Thought;
 import com.lianggao.whut.androidebook.Activity_History;
+import com.lianggao.whut.androidebook.Activity_Sign;
 import com.lianggao.whut.androidebook.Activity_Star;
 import com.lianggao.whut.androidebook.Model.QQLoginManager;
 import com.lianggao.whut.androidebook.Model.Result;
@@ -202,7 +203,13 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
                 startActivity(intent);
             }
         });
-
+        textViewSign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), Activity_Sign.class);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
    /* @Override
