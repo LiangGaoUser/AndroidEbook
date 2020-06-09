@@ -2,34 +2,30 @@ package com.lianggao.whut.androidebook.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.lianggao.whut.androidebook.Activity_General_Thought;
 import com.lianggao.whut.androidebook.Activity_History;
 import com.lianggao.whut.androidebook.Activity_Sign;
@@ -40,7 +36,6 @@ import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
 import com.lianggao.whut.androidebook.R;
 import com.lianggao.whut.androidebook.Utils.Util;
-import com.lianggao.whut.androidebook.View.DrawableTextView;
 /*import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -54,8 +49,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager.QQLoginListener {
     private TextView textViewYueLi;
@@ -210,6 +203,53 @@ public class FragmentSelfInfo extends ViewPageFragment implements QQLoginManager
                 startActivity(intent);
             }
         });
+
+        textViewRemind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setTitle("提示")
+                        .setMessage("前往设置通知权限")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        })
+                        .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                                Intent intent = new Intent();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                                    intent.putExtra("android.provider.extra.APP_PACKAGE", getActivity().getPackageName());
+                                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {  //5.0
+                                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                                    intent.putExtra("app_package", getActivity().getPackageName());
+                                    intent.putExtra("app_uid", getActivity().getApplicationInfo().uid);
+
+                                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {  //4.4
+                                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                    intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                                } else if (Build.VERSION.SDK_INT >= 15) {
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                    intent.setData(Uri.fromParts("package", getActivity().getPackageName(), null));
+                                }
+                                startActivity(intent);
+
+                            }
+                        })
+                        .create();
+                alertDialog.show();
+                alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+            }
+        });
+
+
         return rootView;
     }
    /* @Override

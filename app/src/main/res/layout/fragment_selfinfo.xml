@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_book_go"
-                android:text="阅读提醒"
+                android:text="通知管理"
                 android:gravity="left|center"
                 android:padding="15dp"
                 android:drawablePadding="10dp"/>

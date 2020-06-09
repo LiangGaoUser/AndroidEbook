@@ -2,6 +2,7 @@ package com.lianggao.whut.androidebook;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.lianggao.whut.androidebook.Adapter.BookshelfKindRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
+import com.lianggao.whut.androidebook.Utils.DialogThridUtils;
+import com.lianggao.whut.androidebook.Utils.WeiboDialogUtils;
 import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ public class Activity_Star extends Activity {
     private List<String>book_main_kind_list;
     private List<String>book_detail_kind_list;
     private List<String>book_path_list;
-
+    private Dialog dialog;
     //
     private final int MSG_GET_NOVEL_SUCCESS=1;
     Handler handler=new Handler() {
@@ -69,6 +72,7 @@ public class Activity_Star extends Activity {
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(bookStarRecyclerViewAdapter);
+                    DialogThridUtils.closeDialog(dialog);
                     break;
 
             }
@@ -80,6 +84,7 @@ public class Activity_Star extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star);
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        dialog = WeiboDialogUtils.createLoadingDialog(Activity_Star.this, "加载中...");
         getBookStar();
     }
 

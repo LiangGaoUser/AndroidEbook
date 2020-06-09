@@ -1,6 +1,7 @@
 package com.lianggao.whut.androidebook;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import com.lianggao.whut.androidebook.Adapter.BookStarRecyclerViewAdapter;
 import com.lianggao.whut.androidebook.Model.Book;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
+import com.lianggao.whut.androidebook.Utils.DialogThridUtils;
+import com.lianggao.whut.androidebook.Utils.WeiboDialogUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -35,9 +38,10 @@ public class Activity_History extends Activity {
     private List<String>book_main_kind_list;
     private List<String>book_detail_kind_list;
     private List<String>book_path_list;
-
+    private Dialog dialog;
     //
     private final int MSG_GET_HISTORY_SUCCESS=1;
+
     Handler handler=new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -57,6 +61,8 @@ public class Activity_History extends Activity {
 
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     recyclerView.setAdapter(bookStarRecyclerViewAdapter);
+
+                    DialogThridUtils.closeDialog(dialog);
                     break;
 
             }
@@ -68,6 +74,7 @@ public class Activity_History extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star);
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        dialog = WeiboDialogUtils.createLoadingDialog(Activity_History.this, "加载中...");
         getBookHistory();
     }
 
