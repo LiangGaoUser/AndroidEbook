@@ -1,6 +1,7 @@
 package com.lianggao.whut.androidebook;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,7 +35,9 @@ import com.lianggao.whut.androidebook.Model.Result;
 import com.lianggao.whut.androidebook.Model.UserReadHistory;
 import com.lianggao.whut.androidebook.Net.HttpCaller;
 import com.lianggao.whut.androidebook.Net.NameValuePair;
+import com.lianggao.whut.androidebook.Utils.DialogThridUtils;
 import com.lianggao.whut.androidebook.Utils.Util;
+import com.lianggao.whut.androidebook.Utils.WeiboDialogUtils;
 import com.lianggao.whut.androidebook.Utils.bookShelfHistoryTableManger;
 import com.lianggao.whut.androidebook.Utils.bookShelfTableManger;
 import com.lianggao.whut.androidebook.View.BookNameTextView;
@@ -89,8 +92,8 @@ public class Activity_BookDetail extends Activity{
     private String book_name;
 
     public bookShelfTableManger bookshelfTableManger;
-
-
+    private Dialog dialogStartRead;
+    private Dialog dialogAddBookShelf;
     private final int MSG_DOWNLOAD_SUCCESS=1;
     private final int MSG_DOWNLOADCHCHE_SUCCESS=2;
     private final int MSG_ALREADY_HAVED=3;
@@ -104,13 +107,16 @@ public class Activity_BookDetail extends Activity{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MSG_DOWNLOAD_SUCCESS:
+                    DialogThridUtils.closeDialog(dialogAddBookShelf);
                     Toast.makeText(getContext(),"加入书架成功",Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_ALREADY_HAVED:
+                    DialogThridUtils.closeDialog(dialogAddBookShelf);
                     Toast.makeText(getContext(),"已经在书架中存在",Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_DOWNLOADCHCHE_SUCCESS:
                     Toast.makeText(getContext(),"打开成功",Toast.LENGTH_SHORT).show();
+                    DialogThridUtils.closeDialog(dialogStartRead);
                     String path=(String)msg.obj;
                     HwTxtPlayActivity.loadTxtFile(Activity_BookDetail.this, path);///storage/emulated/0/d.txt
                     break;
@@ -149,6 +155,7 @@ public class Activity_BookDetail extends Activity{
                     //开启一个新线程，下载封面文件和文本文件到本地文件夹
                     bookshelfTableManger=new bookShelfTableManger(getContext());
                     bookshelfTableManger.createDb();
+                    dialogAddBookShelf=WeiboDialogUtils.createLoadingDialog(Activity_BookDetail.this, "正在加入书架...");
 
 
                     new Thread(){
@@ -263,7 +270,7 @@ public class Activity_BookDetail extends Activity{
                     return true;
                 case R.id.navigation_begin_read:
                     //Toast.makeText(Activity_BookDetail.this,"正在下载，下载完成会自动打开，请稍后...",Toast.LENGTH_LONG).show();
-
+                    dialogStartRead = WeiboDialogUtils.createLoadingDialog(Activity_BookDetail.this, "加载中...");
                     startRead();
 
 

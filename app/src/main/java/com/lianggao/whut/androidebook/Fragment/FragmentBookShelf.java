@@ -267,7 +267,9 @@ public class FragmentBookShelf extends ViewPageFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("Fragment","FragmentBookShelf onResume");;
+        Log.i("Fragment","FragmentBookShelf onResume");
+        Log.i("Fragment","FragmentBookShelf is visible 重新加载本地书架");
+        getLocalBookShelf();
     }
     @Override
     public void onPause() {

@@ -68,6 +68,7 @@ public class Activity_Search extends Activity {
                             String jsonStr=gson.toJson(bookList.get(position));
                             Book book=new Book();
                             book=gson.fromJson(jsonStr,Book.class);
+                            Log.i("begin","开始2"+book.getBook_name()+book.getBook_short_content_path());
                             intent.putExtra("book",book);
                             startActivity(intent);
 
@@ -121,7 +122,7 @@ public class Activity_Search extends Activity {
                     book_name_list.add(book.getBook_name());
                     book_post_list.add(book.getBook_cover_path());
                     book_author_list.add(book.getBook_author());
-                    book_shortcontent_list.add(" ");
+                    book_shortcontent_list.add(book.getBook_short_content_path());
                     book_main_kind_list.add(book.getBook_main_kind());
                     book_detail_kind_list.add(book.getBook_detail_kind());
                     book_path_list.add(book.getBook_path());
